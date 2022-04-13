@@ -1,0 +1,32 @@
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+      <td mat-cell *matCellDef="let simulation"> {{simulation.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="creator">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Creator </th>
+      <td mat-cell *matCellDef="let simulation"> {{simulation.creator}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="creationDate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Date of creation </th>
+      <td mat-cell *matCellDef="let simulation"> {{simulation.creationDate}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="lastDeployDate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Date of last deploy </th>
+      <td mat-cell *matCellDef="let simulation"> {{simulation.lastDeployDate}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="numberStudents">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Number of students </th>
+      <td mat-cell *matCellDef="let simulation"> {{simulation.numberStudents}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columns"></tr>
+    <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+  </table>
+</div>

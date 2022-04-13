@@ -1,0 +1,85 @@
+<style>
+  :host {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 14px;
+    color: #333;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .spacer {
+    flex: 1;
+  }
+
+  .toolbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    background-color: #1976d2;
+    color: white;
+    font-weight: 600;
+  }
+
+  .toolbar img {
+    height: 30px;
+    margin: 0 8px;
+  }
+
+  .content {
+    margin: 82px auto 32px;
+    padding: 0 16px;
+    max-width: 960px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  a,
+  a:visited,
+  a:hover {
+    text-decoration: none;
+    color: white;
+  }
+
+  button {
+    background-color: transparent;
+    border: none;
+    color: white;
+  }
+</style>
+
+<!-- Toolbar -->
+<div class="toolbar" role="banner">
+  <h2 style="margin: 16px;">NEURONE Student Simulator</h2>
+    <div class="spacer"></div>
+    <button mat-button [matMenuTriggerFor]="userMenu" #uMenu="matMenuTrigger" aria-label="User menu" style="margin: 16px">
+      <img src="./assets/user.png" style="vertical-align: middle;">
+      {{username}}
+      <mat-icon style="vertical-align: middle;">
+        {{uMenu.menuOpen ? 'arrow_drop_up' : 'arrow_drop_down'}}
+      </mat-icon>
+    </button>
+    <mat-menu #userMenu="matMenu">
+      <button mat-menu-item disabled>
+        Account settings
+      </button>
+      <button mat-menu-item disabled>
+        Log out
+      </button>
+    </mat-menu>
+</div>
+
+<div class="content" role="main">
+  <mat-tab-group [@.disabled]="true">
+    <mat-tab label="Simulations"> <app-simulation-list></app-simulation-list> </mat-tab>
+    <mat-tab label="Models"> Models </mat-tab>
+  </mat-tab-group>
+</div>
