@@ -3,7 +3,7 @@ table {
 }
 
 body {
-    background-color: #FFF2E3;
+    background-color: #F0E3FF;
     padding: 1em 1em 1em 1em;
 }
 
@@ -11,7 +11,7 @@ h2 {
     text-align: center;
 }
 
-.simulationListTable {
+.modelListTable {
     padding: 0px 5em 0px 5em;
     max-height: 250px;
     overflow: auto;

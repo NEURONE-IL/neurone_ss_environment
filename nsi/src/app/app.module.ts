@@ -10,11 +10,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+import { ModelListComponent } from './components/model-list/model-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SimulationListComponent
+    SimulationListComponent,
+    ModelListComponent
   ],
   imports: [
     BrowserModule,
