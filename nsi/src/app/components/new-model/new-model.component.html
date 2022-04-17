@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<!-- <head>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jointjs/3.4.4/joint.css" />
+</head> -->
+
+<body>
+
+    <input id="clickMe" type="button" value="Page" onclick="addPage();" />
+    <input id="clickMe" type="button" value="Query" onclick="addQuery();" />
+    <input id="clickMe" type="button" value="Bookmark" onclick="addBookmark();" />
+    <input id="clickMe" type="button" value="Unbookmark" onclick="addUnbookmark();" />
+    <input id="clickMe" type="button" value="End" onclick="addEnd();" />
+    <input id="clickMe" type="button" value="Save as JSON" onclick="convertToJSON();" />
+
+    JSON:
+    <div id="JSONtext"></div>
+
+    <div id="modelEditor">
+
+        <script type="text/javascript">
+            function addPage() {
+                var rect = new joint.shapes.standard.Rectangle();
+                rect.position(100, 30);
+                rect.resize(100, 40);
+                rect.attr({
+                    body: {
+                        fill: 'lightgrey'
+                    },
+                    label: {
+                        text: 'P',
+                        fill: 'black'
+                    },
+                    text: { text: 'Parent', 'ref-y': 40, magnet: true}
+                });
+                rect.addTo(graph);
+            };
+
+            function addQuery() {
+                var rect = new joint.shapes.standard.Rectangle();
+                rect.position(100, 30);
+                rect.resize(100, 40);
+                rect.attr({
+                    body: {
+                        fill: 'purple'
+                    },
+                    label: {
+                        text: 'Q',
+                        fill: 'black',
+                    },
+                    text: { text: 'Parent', 'ref-y': 40, magnet: true}
+                });
+                rect.addTo(graph);
+            };
+
+            function addBookmark() {
+                var rect = new joint.shapes.basic.Image();
+                rect.position(100, 30);
+                rect.resize(100, 40);
+                rect.attr({
+                    body: {
+                        fill: 'green'
+                    },
+                    label: {
+                        text: 'B',
+                        fill: 'green',
+                    },
+                    text: {
+                        text: 'B',
+                        'ref-y': 5,
+                        magnet: true
+                    },
+                    image: {
+                        "xlink:href" : 'bookmark.png',
+                        width : 16,
+                        height : 8
+                    }
+                });
+                rect.addTo(graph);
+            };
+
+            function addUnbookmark() {
+                var rect = new joint.shapes.basic.Image();
+                rect.position(100, 30);
+                rect.resize(100, 40);
+                rect.attr({
+                    body: {
+                        fill: 'red'
+                    },
+                    label: {
+                        text: 'U',
+                        fill: 'red',
+                    },
+                    text: {
+                        text: 'U',
+                        'ref-y': 5,
+                        magnet: true
+                    },
+                    image: {
+                        "xlink:href" : 'unbookmark.png',
+                        width : 16,
+                        height : 8
+                    }
+                });
+                rect.addTo(graph);
+            };
+
+            function addEnd() {
+                var rect = new joint.shapes.standard.Rectangle();
+                rect.position(100, 30);
+                rect.resize(100, 40);
+                rect.attr({
+                    body: {
+                        fill: 'yellow'
+                    },
+                    label: {
+                        text: 'E',
+                        fill: 'black',
+                    },
+                    text: { text: 'Parent', 'ref-y': 40, magnet: true}
+                });
+                rect.addTo(graph);
+            };
+
+            function convertToJSON() {
+                const JSONTextItem = document.getElementById('JSONtext');
+                JSONTextItem.innerHTML = "";
+                JSONTextItem.insertAdjacentText('beforeend', JSON.stringify(graph.toJSON()));
+            }
+        </script>
+
+    </div>
+</body>
+</html>

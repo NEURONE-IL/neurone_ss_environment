@@ -11,12 +11,14 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { ModelListComponent } from './components/model-list/model-list.component';
+import { NewModelComponent } from './components/new-model/new-model.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SimulationListComponent,
-    ModelListComponent
+    ModelListComponent,
+    NewModelComponent
   ],
   imports: [
     BrowserModule,
