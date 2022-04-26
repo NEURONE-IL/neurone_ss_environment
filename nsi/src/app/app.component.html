@@ -34,14 +34,6 @@
     margin: 0 8px;
   }
 
-  .content {
-    margin: 82px auto 32px;
-    padding: 0 16px;
-    max-width: 960px;
-    flex-direction: column;
-    align-items: center;
-  }
-
   a,
   a:visited,
   a:hover {
@@ -58,7 +50,7 @@
 
 <!-- Toolbar -->
 <div class="toolbar" role="banner">
-  <h2 style="margin: 16px;">NEURONE Student Simulator</h2>
+  <h2 style="margin: 16px;"><a routerLink="/home">NEURONE Student Simulator</a></h2>
     <div class="spacer"></div>
     <button mat-button [matMenuTriggerFor]="userMenu" #uMenu="matMenuTrigger" aria-label="User menu" style="margin: 16px">
       <img src="./assets/user.png" style="vertical-align: middle;">
@@ -77,11 +69,4 @@
     </mat-menu>
 </div>
 
-<div class="content" role="main">
-  <mat-tab-group [@.disabled]="true">
-    <mat-tab label="Simulations"> <app-simulation-list></app-simulation-list> </mat-tab>
-    <mat-tab label="Models"> <app-model-list></app-model-list> </mat-tab>
-  </mat-tab-group>
-</div>
-
-<app-new-model></app-new-model>
+<router-outlet></router-outlet>
