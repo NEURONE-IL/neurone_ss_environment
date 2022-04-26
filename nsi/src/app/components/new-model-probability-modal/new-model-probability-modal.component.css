@@ -1,0 +1,12 @@
+probability-form {
+    width: 300px;
+}
+
+html {
+    display: table;
+}
+
+body {
+    text-align: center;
+    display: table-cell;
+}

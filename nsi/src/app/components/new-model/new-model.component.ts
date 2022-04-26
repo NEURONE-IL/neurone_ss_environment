@@ -3,6 +3,11 @@ import * as jQuery from 'jquery';
 import * as _ from 'lodash';
 import * as $ from 'backbone';
 import * as joint from 'jointjs';
+import { MatDialog } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms'; 
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { NewModelProbabilityModalComponent } from '../new-model-probability-modal/new-model-probability-modal.component';
 
 @Component({
   selector: 'app-new-model',
@@ -18,47 +23,111 @@ export class NewModelComponent implements OnInit, AfterViewInit {
   private bookmarkCount: number
   private unBookmarkCount: number
   private endCount: number
+  private paper: any
+  //
+  private dragStartPositionX: number
+  private dragStartPositionY: number
+  private dragging: boolean
 
-  constructor() {    
+  constructor(public dialog: MatDialog) {
     this.pageCount = 0;
     this.queryCount = 0;
     this.bookmarkCount = 0;
     this.unBookmarkCount = 0;
     this.endCount = 0;
+    this.paper = {};
+    //
+    this.dragStartPositionX = -1;
+    this.dragStartPositionY = -1;
+    this.dragging = false;
+  }
+
+  openDialog(linkView: any) {
+    const dialogRef = this.dialog.open(NewModelProbabilityModalComponent, {width: '25%'});
+    const sub = dialogRef.componentInstance.onSubmit.subscribe((value) => {
+      console.log(linkView);
+      linkView.model.label(0, { attrs: { text: { text: value } } });
+      dialogRef.close();
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      sub.unsubscribe();
+    });
   }
 
   ngOnInit(): void {
-    var namespace = joint.shapes;
+    var namespace = joint.shapes;    
 
     this.graph = new joint.dia.Graph({}, { cellNamespace: namespace });
-    this.pageCount = 0;
 
-    var paper = new joint.dia.Paper({
+    this.paper = new joint.dia.Paper({
         el: jQuery('#modelEditor'),
         model: this.graph,
         width: 1000,
         height: 400,
-        gridSize: 1,
+        gridSize: 10,
+        drawGrid: true,
         cellViewNamespace: namespace,
         perpendicularLinks: true,
-        linkPinning: false,
+        linkPinning: true,
+        snapLabels: true,
         defaultLink: new joint.dia.Link({
           router: { name: 'manhattan' },
           connection: { name: 'rounded' },
           attrs: {
             '.connection': {
               'stroke-width': 2
-            }
-          }
-        })
+            },
+            '.marker-target': { d: 'M 10 0 L 0 5 L 10 10 z' },
+          },
+          labels: [
+            { position: 0.5, attrs: { text: { text: '(probability required)' } } }
+          ]
+        }),
+        interactive: { vertexAdd: false, useLinkTools: true, labelMove: true }
     });
 
-    paper.on('cell:pointerclick', function(elementView) {
-      var currentElement = elementView.model;
-      //currentElement.attributes['ports'].groups.bottomPorts.attrs.portBody.fill = 'blue';
-      currentElement.attr('[port="topPort1"]/fill', 'blue');
-      console.log(currentElement);
+    this.paper.setGrid({
+        name: 'mesh',
+        args: { color: '#dedede' },
+    }).drawGrid();
+
+    console.log(this.paper);
+
+    // paper.on('blank:pointerdown',
+    //     function(event, x, y) {
+    //       dragging = true;
+    //       this.dragStartPositionX = x;
+    //       this.dragStartPositionY = y;
+    //       console.log("INICIO SELECCION");
+    //     }
+    // );
+
+    // paper.on('cell:pointerup blank:pointerup',
+    //   function(cellView, x, y) {
+    //     console.log("FIN SELECCION");
+    //     dragging = false;
+    // }),
+      
+    this.paper.on('cell:pointerclick', function(cellView: any) {
+      console.log(cellView);
+      //var ports = cellView.getPorts();
+      //cellView.portProp(ports[0], 'attrs/rect', {stroke: 'red'});
+      //this.portProp(topPorts[0], 'attrs/rect', {stroke: 'red'});
     });
+
+    this.paper.on('link:pointerdblclick', (linkView: any) => {
+      this.openDialog(linkView);
+    });
+
+    this.paper.on('cell:pointerclick', (elementView: any) => {
+        this.paper.hideTools();
+        elementView.showTools();
+    });
+
+    this.paper.on('blank:pointerclick', () => {
+        this.paper.hideTools();
+    });
+
   }
 
   ngAfterViewInit() {
@@ -76,8 +145,14 @@ BOTON EN FLECHA PARA AGREGAR TEXTO A FLECHA
 DIAGRAMA SCROLLABLE
 AL SELECCIONAR NODO, TIENE QUE PONERSE ENCIMA DE LOS DEMÁS
 FLECHAS CON UN SOLO SENTIDO
+SELECCIONAR VARIOS NODOS, Y PODER MOVERLOS O BORRARLOS
+UNDO, REDO
+SAVE AS PNG?
+FOREGROUND, BACKGROUND NODES
 */
   addPageNode(): void {
+    
+    this.paper.hideTools();
 
     this.pageCount = this.pageCount + 1;
 
@@ -222,10 +297,6 @@ FLECHAS CON UN SOLO SENTIDO
             attrs: { label: { text: 'bottomPort2' }}
         },
         { 
-            group: 'bottomPorts',
-            attrs: { label: { text: 'bottomPort3' }}
-        },
-        { 
             group: 'leftPorts',
             attrs: { label: { text: 'leftPort' }}
         },
@@ -237,9 +308,28 @@ FLECHAS CON UN SOLO SENTIDO
 
     pageNode.addTo(this.graph);
 
+    var elementView = pageNode.findView(this.paper);
+
+    var boundaryTool = new joint.elementTools.Boundary();
+    var removeButton = new joint.elementTools.Remove({
+
+    });
+
+    var toolsView = new joint.dia.ToolsView({
+        tools: [
+            boundaryTool,
+            removeButton
+        ]
+    });
+
+    elementView.addTools(toolsView);
+    elementView.hideTools();
+
   }
 
   addQueryNode(): void {
+    
+    this.paper.hideTools();
 
     this.queryCount = this.queryCount + 1;
 
@@ -384,10 +474,6 @@ FLECHAS CON UN SOLO SENTIDO
             attrs: { label: { text: 'bottomPort2' }}
         },
         { 
-            group: 'bottomPorts',
-            attrs: { label: { text: 'bottomPort3' }}
-        },
-        { 
             group: 'leftPorts',
             attrs: { label: { text: 'leftPort' }}
         },
@@ -399,9 +485,28 @@ FLECHAS CON UN SOLO SENTIDO
 
     queryNode.addTo(this.graph);
 
+    var elementView = queryNode.findView(this.paper);
+
+    var boundaryTool = new joint.elementTools.Boundary();
+    var removeButton = new joint.elementTools.Remove({
+
+    });
+
+    var toolsView = new joint.dia.ToolsView({
+        tools: [
+            boundaryTool,
+            removeButton
+        ]
+    });
+
+    elementView.addTools(toolsView);
+    elementView.hideTools();
+
   }
 
   addBookmarkNode(): void {
+    
+    this.paper.hideTools();
 
     this.bookmarkCount = this.bookmarkCount + 1;
 
@@ -553,9 +658,28 @@ FLECHAS CON UN SOLO SENTIDO
 
     bookmarkNode.addTo(this.graph);
 
+    var elementView = bookmarkNode.findView(this.paper);
+
+    var boundaryTool = new joint.elementTools.Boundary();
+    var removeButton = new joint.elementTools.Remove({
+
+    });
+
+    var toolsView = new joint.dia.ToolsView({
+        tools: [
+            boundaryTool,
+            removeButton
+        ]
+    });
+
+    elementView.addTools(toolsView);
+    elementView.hideTools();
+
   }
 
   addUnBookmarkNode(): void {
+    
+    this.paper.hideTools();
 
     this.unBookmarkCount = this.unBookmarkCount + 1;
 
@@ -707,9 +831,28 @@ FLECHAS CON UN SOLO SENTIDO
 
     unBookmarkNode.addTo(this.graph);
 
+    var elementView = unBookmarkNode.findView(this.paper);
+
+    var boundaryTool = new joint.elementTools.Boundary();
+    var removeButton = new joint.elementTools.Remove({
+
+    });
+
+    var toolsView = new joint.dia.ToolsView({
+        tools: [
+            boundaryTool,
+            removeButton
+        ]
+    });
+
+    elementView.addTools(toolsView);
+    elementView.hideTools();
+
   }
 
   addEndNode(): void {
+    
+    this.paper.hideTools();
 
     this.endCount = this.endCount + 1;
 
@@ -854,10 +997,6 @@ FLECHAS CON UN SOLO SENTIDO
             attrs: { label: { text: 'bottomPort2' }}
         },
         { 
-            group: 'bottomPorts',
-            attrs: { label: { text: 'bottomPort3' }}
-        },
-        { 
             group: 'leftPorts',
             attrs: { label: { text: 'leftPort' }}
         },
@@ -868,6 +1007,23 @@ FLECHAS CON UN SOLO SENTIDO
     ]);
 
     endNode.addTo(this.graph);
+
+    var elementView = endNode.findView(this.paper);
+
+    var boundaryTool = new joint.elementTools.Boundary();
+    var removeButton = new joint.elementTools.Remove({
+
+    });
+
+    var toolsView = new joint.dia.ToolsView({
+        tools: [
+            boundaryTool,
+            removeButton
+        ]
+    });
+
+    elementView.addTools(toolsView);
+    elementView.hideTools();
 
   }
 

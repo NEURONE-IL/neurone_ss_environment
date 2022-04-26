@@ -8,6 +8,6 @@ button {
     border: none;
     color: white;
     padding: 0.5em 1em 0.5em 1em;
-    min-width: 12em;
+    width: 12em;
     cursor: pointer;
 }
