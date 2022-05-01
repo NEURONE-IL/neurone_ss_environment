@@ -1,4 +1,37 @@
+/*  COSAS POR HACER:
+-REVISAR ORDEN DEL CODIGO:
+  -NEW-BEHAVIOR-MODEL
+  -STYLE DE APP-COMPONENT
+-TERMINAR FORMULARIO DE NUEVA SIMULACION Y AGREGAR VALIDACION
+-AGREGAR ICONOS DE DESPLIEGUE, COPIA Y BORRADO (Y HACER FUNCIONAR LOS DOS ULTIMOS)
+-TERMINAR LAS OTRAS VISTAS (PRIMERO FRONTEND)
+-HACER QUE RUTAS DE ACCESO A BACKEND Y SIMULADOR ESTÉN PARAMETRIZADAS EN FRONTEND
+-INTERNACIONALIZACIÓN I18
+
+DIAGRAMAS:
+-¿FALTA NODO DE INICIO? (SIN NUMEROS INCREMENTALES)
+-ORDENAR ICONOS DE TOOLBAR
+-CREAR FUNCION DE CONVERSION A JSON PARA SIMULADOR
+-CAMBIAR NOMBRE PROBABILIDAD
+-PROBABILIDADES EN ROJO CUANDO FALTEN
+-VALIDAR PROBABILIDAD EN MODAL
+
+-QUE NOMBRES DE FUNCS DE EVENTOS EMPIECEN CON ON
+-SIMPLIFICAR FLECHAS (SIN ESQUINAS DE COLORES)
+-QUE LAS FLECHAS A CREAR TENGAN COMO DESTINO SOLO LOS PUERTOS, NO EL CUERPO DEL ELEMENTO
+-ARREGLAR FORMATO DE SELECCION DE FLECHAS
+-SELECCIONAR VARIOS NODOS, Y PODER MOVERLOS O BORRARLOS
+-UNDO, REDO
+-SAVE AS PNG?
+-QUE UN PUERTO PUEDA TENER SOLO UN LINK (VALIDATECONNECTION)
+-NODO DE PAGINAS DE RESULTADOS
+-ZOOM?
+-NUMEROS DE NODOS DESPUES DE BORRAR
+-REDIRECT TO NEAREST PORT?
+*/
+
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Subscription, fromEvent } from 'rxjs';
 import * as jQuery from 'jquery';
 import * as _ from 'lodash';
 import * as $ from 'backbone';
@@ -7,16 +40,19 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms'; 
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { NewModelProbabilityModalComponent } from '../new-model-probability-modal/new-model-probability-modal.component';
+import { NewBehaviorModelProbabilityModalComponent } from '../new-behavior-model-probability-modal/new-behavior-model-probability-modal.component';
+import { HostListener } from '@angular/core';
 
 @Component({
-  selector: 'app-new-model',
-  templateUrl: './new-model.component.html',
-  styleUrls: ['./new-model.component.css']
+  selector: 'app-new-behavior-model',
+  templateUrl: './new-behavior-model.component.html',
+  styleUrls: ['./new-behavior-model.component.css']
 })
 
-export class NewModelComponent implements OnInit, AfterViewInit {
+export class NewBehaviorModelComponent implements OnInit, AfterViewInit {
 
+  public paperScale: number
+  public paperScaleString: string
   private graph: any
   private pageCount: number
   private queryCount: number
@@ -24,29 +60,33 @@ export class NewModelComponent implements OnInit, AfterViewInit {
   private unBookmarkCount: number
   private endCount: number
   private paper: any
+  private lastSelectedCell: string
   //
-  private dragStartPositionX: number
-  private dragStartPositionY: number
-  private dragging: boolean
+  private startWidth: number
+  private startHeight: number
+  private startPadding: number
 
   constructor(public dialog: MatDialog) {
+    this.paperScale = 1;
+    this.paperScaleString = "100";
     this.pageCount = 0;
     this.queryCount = 0;
     this.bookmarkCount = 0;
     this.unBookmarkCount = 0;
     this.endCount = 0;
     this.paper = {};
+    this.lastSelectedCell = '';
     //
-    this.dragStartPositionX = -1;
-    this.dragStartPositionY = -1;
-    this.dragging = false;
+    this.startWidth = 1000;
+    this.startHeight = 400;
+    this.startPadding = 200;
   }
 
   openDialog(linkView: any) {
-    const dialogRef = this.dialog.open(NewModelProbabilityModalComponent, {width: '25%'});
+    var currentProbability = linkView.model.attributes.labels[0].attrs.text.text;
+    const dialogRef = this.dialog.open(NewBehaviorModelProbabilityModalComponent, { width: '25%', data: { currentProbability: currentProbability } } );
     const sub = dialogRef.componentInstance.onSubmit.subscribe((value) => {
-      console.log(linkView);
-      linkView.model.label(0, { attrs: { text: { text: value } } });
+      linkView.model.label(0, { attrs: { text: { text: value.concat("%") } } });
       dialogRef.close();
     });
     dialogRef.afterClosed().subscribe(() => {
@@ -55,15 +95,16 @@ export class NewModelComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+
     var namespace = joint.shapes;    
 
     this.graph = new joint.dia.Graph({}, { cellNamespace: namespace });
 
     this.paper = new joint.dia.Paper({
-        el: jQuery('#modelEditor'),
+        el: jQuery('#behaviorModelEditor'),
         model: this.graph,
-        width: 1000,
-        height: 400,
+        width: this.startWidth,
+        height: this.startHeight,
         gridSize: 10,
         drawGrid: true,
         cellViewNamespace: namespace,
@@ -75,15 +116,19 @@ export class NewModelComponent implements OnInit, AfterViewInit {
           connection: { name: 'rounded' },
           attrs: {
             '.connection': {
-              'stroke-width': 2
+              'stroke-width': 2,
             },
-            '.marker-target': { d: 'M 10 0 L 0 5 L 10 10 z' },
+            '.marker-target': {
+              d: 'M 10 0 L 0 5 L 10 10 z',
+              'fill': 'blue',
+              'stroke': 'blue'
+            },
           },
           labels: [
-            { position: 0.5, attrs: { text: { text: '(probability required)' } } }
+            { position: 0.5, attrs: { text: { text: '(no value)', fill: 'red' } } }
           ]
         }),
-        interactive: { vertexAdd: false, useLinkTools: true, labelMove: true }
+        interactive: { useLinkTools: true, labelMove: true }
     });
 
     this.paper.setGrid({
@@ -93,70 +138,139 @@ export class NewModelComponent implements OnInit, AfterViewInit {
 
     console.log(this.paper);
 
-    // paper.on('blank:pointerdown',
-    //     function(event, x, y) {
-    //       dragging = true;
-    //       this.dragStartPositionX = x;
-    //       this.dragStartPositionY = y;
-    //       console.log("INICIO SELECCION");
-    //     }
+        //PAPEL DRAGGABLE (NO FUNCIONA TOTALMENTE)
+    // this.paper.on('blank:pointerdown',
+    //   (event: any, x: any, y: any) => {
+    //     this.dragStartPosition = { x:x, y:y };
+    //   }
     // );
 
-    // paper.on('cell:pointerup blank:pointerup',
-    //   function(cellView, x, y) {
-    //     console.log("FIN SELECCION");
-    //     dragging = false;
+    // this.paper.on('cell:pointerup blank:pointerup', (cellView: any, x: any, y: any) => {
+    //     this.dragStartPosition = { x:-1, y:-1 };
     // }),
-      
-    this.paper.on('cell:pointerclick', function(cellView: any) {
-      console.log(cellView);
-      //var ports = cellView.getPorts();
-      //cellView.portProp(ports[0], 'attrs/rect', {stroke: 'red'});
-      //this.portProp(topPorts[0], 'attrs/rect', {stroke: 'red'});
-    });
+
+    // jQuery("#behaviorModelEditor")
+    //   .mousemove((event: any) => {
+    //     console.log(event);
+    //     if ((this.dragStartPosition.x != -1) && (this.dragStartPosition.y != -1)) {
+    //       this.paper.translate(
+    //         event.offsetX - this.dragStartPosition.x, 
+    //         event.offsetY - this.dragStartPosition.y);
+    //     }
+    // });
+
+    // this.paper.on('cell:pointerclick', (cellView: any) => {
+
+        //CAMBIO DE COLOR DE PUERTOS (NO FUNCIONA TOTALMENTE)
+    //   if (this.lastSelectedCell != '') {
+    //     var cells = this.graph.getCells();
+    //     console.log(cells);
+    //     var cell = cells.filter((obj:any) => {
+    //       return obj.id === this.lastSelectedCell
+    //     })
+    //     console.log(cell);
+    //     console.log("WOW");
+    //     var portsToHide = cell.model.getPorts();
+    //     var portIdsToHide = [];
+    //     for (let i = 0; i < portsToHide.length; i++) {
+    //       portIdsToHide.push(portsToHide[i].id);
+    //     }
+    //     for (let i = 0; i < portIdsToHide.length; i++) {
+    //       cellView.model.portProp(portIdsToHide[i], 'attrs/portBody/opacity', 0);
+    //     }
+    //   }
+
+    //   var portsToShow = cellView.model.getPorts();
+    //   var portIdsToShow = [];
+    //   for (let i = 0; i < portsToShow.length; i++) {
+    //     portIdsToShow.push(portsToShow[i].id);
+    //   }
+    //   for (let i = 0; i < portIdsToShow.length; i++) {
+    //     cellView.model.portProp(portIdsToShow[i], 'attrs/portBody/opacity', 1);
+    //   }
+    //   cellView.model.toFront();
+    //   _.invoke(this.graph.getConnectedLinks(cellView.model), 'toFront');
+
+    // });
 
     this.paper.on('link:pointerdblclick', (linkView: any) => {
       this.openDialog(linkView);
     });
 
-    this.paper.on('cell:pointerclick', (elementView: any) => {
+    this.paper.on('cell:pointerclick cell:pointerdown', (elementView: any) => {
         this.paper.hideTools();
         elementView.showTools();
+        this.lastSelectedCell = elementView.id;
     });
 
     this.paper.on('blank:pointerclick', () => {
         this.paper.hideTools();
     });
 
+    this.graph.on('change:position', (evt: any) => {
+      if (this.paperScale < 1) {
+        this.paper.fitToContent({
+          minWidth: this.startWidth,
+          minHeight: this.startHeight,
+          padding: this.startPadding
+        });
+      } else {
+        this.paper.fitToContent({
+          minWidth: 1000 * this.paperScale,
+          minHeight: 400 * this.paperScale,
+          padding: 200 * this.paperScale
+        });
+      };
+    });
+
+    //var verticesTool = new joint.linkTools.Vertices();
+    //var toolsView = new joint.dia.ToolsView({
+    //    tools: [
+    //        verticesTool
+    //    ]
+    //});
+
+    //this.paper.on('link:mouseenter', (linkView: any) => {
+    //  linkView.addTools(toolsView);
+    //});
+
+    //this.paper.on('link:mouseleave', (linkView: any) => {
+    //  linkView.removeTools();
+    //});
+
+    // this.paper.on ('change:position', function() {
+    //    var l_portsIn = get ('inPorts');
+    //    if (l_portsIn.length>0) {
+    //        this.portProp (l_portsIn[0],'attrs/rect',{stroke: 'red' });
+    //    }
+    // }
+
   }
 
   ngAfterViewInit() {
   }
 
-/*  COSAS POR HACER:
-QUITAR CREACION DE CODOS DE FLECHAS, SIMPLIFICAR FLECHAS (SIN ESQUINAS DE COLORES)
-QUE LAS FLECHAS A CREAR TENGAN COMO DESTINO SOLO LOS PUERTOS, NO EL CUERPO DEL ELEMENTO
-QUE LOS PUERTOS DE UN NODO SE VEAN AL SELECCIONARLO, Y SE OCULTEN AL SELECCIONAR CUALQUIER OTRA COSA
-QUE LOS PUERTOS NO SE LINKEEN CONSIGO MISMOS
-DIAGRAMA SCROLLABLE
-AL SELECCIONAR NODO, TIENE QUE PONERSE ENCIMA DE LOS DEMÁS
-ARREGLAR FORMATO DE SELECCION DE FLECHAS
-SELECCIONAR VARIOS NODOS, Y PODER MOVERLOS O BORRARLOS
-UNDO, REDO
-SAVE AS PNG?
-QUE UN PUERTO PUEDA TENER SOLO UN LINK (VALIDATECONNECTION)
-PROBABILIDAD EN PORCENTAJE
-*/
+  @HostListener('document:keyup', ['$event'])
+  handleDeleteKeyboardEvent(event: KeyboardEvent) {
+    if (event.key === 'Delete') {
+      console.log("DELIT");
+
+    }
+  }
+
   addPageNode(): void {
     
     this.paper.hideTools();
+
+    var localPoint1 = this.paper.clientOffset();
+    console.log(localPoint1);
 
     this.pageCount = this.pageCount + 1;
 
     var pageNode = new joint.shapes.standard.BorderedImage({
       position: {
-        x: 100,
-        y: 30
+        x: Math.round(localPoint1.x) - 100,
+        y: Math.round(localPoint1.y) - 30
       },
       size: {
         width: 150,
@@ -171,15 +285,15 @@ PROBABILIDAD EN PORCENTAJE
           rx: 5,
           ry: 5,
         },
-        // body: {
-        //     //magnet: true
-        // },
+        body: {
+          magnet: false
+        },
         label: {
           text: 'P'.concat(this.pageCount.toString()),
           fill: 'black'
         },
         image: {
-          "xlink:href": "/assets/model_page.png",
+          "xlink:href": "/assets/behavior-model-page.png",
           refWidth: 0.7,
           refHeight: 0.7,
           refX: 0.15,
@@ -188,46 +302,6 @@ PROBABILIDAD EN PORCENTAJE
       },
       ports: {
         groups: {
-          'topPorts': {
-            position: 'top',
-            label: {
-              position: 'outside'
-            },
-            attrs: {
-              portBody: {
-                width: 10,
-                height: 10,
-                y: -5,
-                x: -5,
-                fill: 'green',
-                magnet: true
-              }
-            },
-            markup: [{
-              tagName: 'rect',
-              selector: 'portBody'
-            }]
-          },
-          'bottomPorts': {
-            position: 'bottom',
-            label: {
-              position: 'outside'
-            },
-            attrs: {
-              portBody: {
-                width: 10,
-                height: 10,
-                y: -5,
-                x: -5,
-                fill: 'green',
-                magnet: true
-              }
-            },
-            markup: [{
-              tagName: 'rect',
-              selector: 'portBody'
-            }]
-          },
           'leftPorts': {
             position: 'left',
             label: {
@@ -239,7 +313,7 @@ PROBABILIDAD EN PORCENTAJE
                 height: 10,
                 y: -5,
                 x: -5,
-                fill: 'green',
+                fill: 'black',
                 magnet: true
               }
             },
@@ -259,7 +333,7 @@ PROBABILIDAD EN PORCENTAJE
                 height: 10,
                 y: -5,
                 x: -5,
-                fill: 'green',
+                fill: 'black',
                 magnet: true
               }
             },
@@ -274,32 +348,20 @@ PROBABILIDAD EN PORCENTAJE
 
     pageNode.addPorts([
         { 
-            group: 'topPorts',
-            attrs: { label: { text: 'topPort1' }}
-        },
-        { 
-            group: 'topPorts',
-            attrs: { label: { text: 'topPort2' }}
-        },
-        { 
-            group: 'topPorts',
-            attrs: { label: { text: 'topPort3' }}
-        },
-        { 
-            group: 'bottomPorts',
-            attrs: { label: { text: 'bottomPort1' }}
-        },
-        { 
-            group: 'bottomPorts',
-            attrs: { label: { text: 'bottomPort2' }}
+            group: 'leftPorts',
+            attrs: { label: { text: 'leftPort1' }}
         },
         { 
             group: 'leftPorts',
-            attrs: { label: { text: 'leftPort' }}
+            attrs: { label: { text: 'leftPort2' }}
         },
         { 
             group: 'rightPorts',
-            attrs: { label: { text: 'rightPort' }}
+            attrs: { label: { text: 'rightPort1' }}
+        },
+        { 
+            group: 'rightPorts',
+            attrs: { label: { text: 'rightPort2' }}
         },
     ]);
 
@@ -356,7 +418,7 @@ PROBABILIDAD EN PORCENTAJE
           fill: 'black'
         },
         image: {
-          "xlink:href": "/assets/model_query.png",
+          "xlink:href": "/assets/behavior-model-query.png",
           refWidth: 0.7,
           refHeight: 0.7,
           refX: 0.15,
@@ -365,46 +427,6 @@ PROBABILIDAD EN PORCENTAJE
       },
       ports: {
         groups: {
-          'topPorts': {
-            position: 'top',
-            label: {
-              position: 'outside'
-            },
-            attrs: {
-              portBody: {
-                width: 10,
-                height: 10,
-                y: -5,
-                x: -5,
-                fill: 'green',
-                magnet: true
-              }
-            },
-            markup: [{
-              tagName: 'rect',
-              selector: 'portBody'
-            }]
-          },
-          'bottomPorts': {
-            position: 'bottom',
-            label: {
-              position: 'outside'
-            },
-            attrs: {
-              portBody: {
-                width: 10,
-                height: 10,
-                y: -5,
-                x: -5,
-                fill: 'green',
-                magnet: true
-              }
-            },
-            markup: [{
-              tagName: 'rect',
-              selector: 'portBody'
-            }]
-          },
           'leftPorts': {
             position: 'left',
             label: {
@@ -416,7 +438,7 @@ PROBABILIDAD EN PORCENTAJE
                 height: 10,
                 y: -5,
                 x: -5,
-                fill: 'green',
+                fill: 'black',
                 magnet: true
               }
             },
@@ -436,7 +458,7 @@ PROBABILIDAD EN PORCENTAJE
                 height: 10,
                 y: -5,
                 x: -5,
-                fill: 'green',
+                fill: 'black',
                 magnet: true
               }
             },
@@ -451,32 +473,20 @@ PROBABILIDAD EN PORCENTAJE
 
     queryNode.addPorts([
         { 
-            group: 'topPorts',
-            attrs: { label: { text: 'topPort1' }}
-        },
-        { 
-            group: 'topPorts',
-            attrs: { label: { text: 'topPort2' }}
-        },
-        { 
-            group: 'topPorts',
-            attrs: { label: { text: 'topPort3' }}
-        },
-        { 
-            group: 'bottomPorts',
-            attrs: { label: { text: 'bottomPort1' }}
-        },
-        { 
-            group: 'bottomPorts',
-            attrs: { label: { text: 'bottomPort2' }}
+            group: 'leftPorts',
+            attrs: { label: { text: 'leftPort1' }}
         },
         { 
             group: 'leftPorts',
-            attrs: { label: { text: 'leftPort' }}
+            attrs: { label: { text: 'leftPort2' }}
         },
         { 
             group: 'rightPorts',
-            attrs: { label: { text: 'rightPort' }}
+            attrs: { label: { text: 'rightPort1' }}
+        },
+        { 
+            group: 'rightPorts',
+            attrs: { label: { text: 'rightPort2' }}
         },
     ]);
 
@@ -533,7 +543,7 @@ PROBABILIDAD EN PORCENTAJE
           fill: 'black'
         },
         image: {
-          "xlink:href": "/assets/model_bookmark.png",
+          "xlink:href": "/assets/behavior-model-bookmark.png",
           refWidth: 0.7,
           refHeight: 0.7,
           refX: 0.15,
@@ -542,46 +552,6 @@ PROBABILIDAD EN PORCENTAJE
       },
       ports: {
         groups: {
-          'topPorts': {
-            position: 'top',
-            label: {
-              position: 'outside'
-            },
-            attrs: {
-              portBody: {
-                width: 10,
-                height: 10,
-                y: -5,
-                x: -5,
-                fill: 'green',
-                magnet: true
-              }
-            },
-            markup: [{
-              tagName: 'rect',
-              selector: 'portBody'
-            }]
-          },
-          'bottomPorts': {
-            position: 'bottom',
-            label: {
-              position: 'outside'
-            },
-            attrs: {
-              portBody: {
-                width: 10,
-                height: 10,
-                y: -5,
-                x: -5,
-                fill: 'green',
-                magnet: true
-              }
-            },
-            markup: [{
-              tagName: 'rect',
-              selector: 'portBody'
-            }]
-          },
           'leftPorts': {
             position: 'left',
             label: {
@@ -593,7 +563,7 @@ PROBABILIDAD EN PORCENTAJE
                 height: 10,
                 y: -5,
                 x: -5,
-                fill: 'green',
+                fill: 'black',
                 magnet: true
               }
             },
@@ -613,7 +583,7 @@ PROBABILIDAD EN PORCENTAJE
                 height: 10,
                 y: -5,
                 x: -5,
-                fill: 'green',
+                fill: 'black',
                 magnet: true
               }
             },
@@ -628,28 +598,20 @@ PROBABILIDAD EN PORCENTAJE
 
     bookmarkNode.addPorts([
         { 
-            group: 'topPorts',
-            attrs: { label: { text: 'topPort1' }}
-        },
-        { 
-            group: 'topPorts',
-            attrs: { label: { text: 'topPort2' }}
-        },
-        { 
-            group: 'bottomPorts',
-            attrs: { label: { text: 'bottomPort1' }}
-        },
-        { 
-            group: 'bottomPorts',
-            attrs: { label: { text: 'bottomPort2' }}
+            group: 'leftPorts',
+            attrs: { label: { text: 'leftPort1' }}
         },
         { 
             group: 'leftPorts',
-            attrs: { label: { text: 'leftPort' }}
+            attrs: { label: { text: 'leftPort2' }}
         },
         { 
             group: 'rightPorts',
-            attrs: { label: { text: 'rightPort' }}
+            attrs: { label: { text: 'rightPort1' }}
+        },
+        { 
+            group: 'rightPorts',
+            attrs: { label: { text: 'rightPort2' }}
         },
     ]);
 
@@ -698,15 +660,12 @@ PROBABILIDAD EN PORCENTAJE
           rx: 5,
           ry: 5,
         },
-        // body: {
-        //     //magnet: true
-        // },
         label: {
           text: 'U'.concat(this.unBookmarkCount.toString()),
           fill: 'black'
         },
         image: {
-          "xlink:href": "/assets/model_unbookmark.png",
+          "xlink:href": "/assets/behavior-model-unbookmark.png",
           refWidth: 0.7,
           refHeight: 0.7,
           refX: 0.15,
@@ -715,46 +674,6 @@ PROBABILIDAD EN PORCENTAJE
       },
       ports: {
         groups: {
-          'topPorts': {
-            position: 'top',
-            label: {
-              position: 'outside'
-            },
-            attrs: {
-              portBody: {
-                width: 10,
-                height: 10,
-                y: -5,
-                x: -5,
-                fill: 'green',
-                magnet: true
-              }
-            },
-            markup: [{
-              tagName: 'rect',
-              selector: 'portBody'
-            }]
-          },
-          'bottomPorts': {
-            position: 'bottom',
-            label: {
-              position: 'outside'
-            },
-            attrs: {
-              portBody: {
-                width: 10,
-                height: 10,
-                y: -5,
-                x: -5,
-                fill: 'green',
-                magnet: true
-              }
-            },
-            markup: [{
-              tagName: 'rect',
-              selector: 'portBody'
-            }]
-          },
           'leftPorts': {
             position: 'left',
             label: {
@@ -766,7 +685,7 @@ PROBABILIDAD EN PORCENTAJE
                 height: 10,
                 y: -5,
                 x: -5,
-                fill: 'green',
+                fill: 'black',
                 magnet: true
               }
             },
@@ -786,7 +705,7 @@ PROBABILIDAD EN PORCENTAJE
                 height: 10,
                 y: -5,
                 x: -5,
-                fill: 'green',
+                fill: 'black',
                 magnet: true
               }
             },
@@ -801,28 +720,20 @@ PROBABILIDAD EN PORCENTAJE
 
     unBookmarkNode.addPorts([
         { 
-            group: 'topPorts',
-            attrs: { label: { text: 'topPort1' }}
-        },
-        { 
-            group: 'topPorts',
-            attrs: { label: { text: 'topPort2' }}
-        },
-        { 
-            group: 'bottomPorts',
-            attrs: { label: { text: 'bottomPort1' }}
-        },
-        { 
-            group: 'bottomPorts',
-            attrs: { label: { text: 'bottomPort2' }}
+            group: 'leftPorts',
+            attrs: { label: { text: 'leftPort1' }}
         },
         { 
             group: 'leftPorts',
-            attrs: { label: { text: 'leftPort' }}
+            attrs: { label: { text: 'leftPort2' }}
         },
         { 
             group: 'rightPorts',
-            attrs: { label: { text: 'rightPort' }}
+            attrs: { label: { text: 'rightPort1' }}
+        },
+        { 
+            group: 'rightPorts',
+            attrs: { label: { text: 'rightPort2' }}
         },
     ]);
 
@@ -879,7 +790,7 @@ PROBABILIDAD EN PORCENTAJE
           fill: 'black'
         },
         image: {
-          "xlink:href": "/assets/model_end.png",
+          "xlink:href": "/assets/behavior-model-end.png",
           refWidth: 0.7,
           refHeight: 0.7,
           refX: 0.15,
@@ -888,46 +799,6 @@ PROBABILIDAD EN PORCENTAJE
       },
       ports: {
         groups: {
-          'topPorts': {
-            position: 'top',
-            label: {
-              position: 'outside'
-            },
-            attrs: {
-              portBody: {
-                width: 10,
-                height: 10,
-                y: -5,
-                x: -5,
-                fill: 'green',
-                magnet: true
-              }
-            },
-            markup: [{
-              tagName: 'rect',
-              selector: 'portBody'
-            }]
-          },
-          'bottomPorts': {
-            position: 'bottom',
-            label: {
-              position: 'outside'
-            },
-            attrs: {
-              portBody: {
-                width: 10,
-                height: 10,
-                y: -5,
-                x: -5,
-                fill: 'green',
-                magnet: true
-              }
-            },
-            markup: [{
-              tagName: 'rect',
-              selector: 'portBody'
-            }]
-          },
           'leftPorts': {
             position: 'left',
             label: {
@@ -939,7 +810,7 @@ PROBABILIDAD EN PORCENTAJE
                 height: 10,
                 y: -5,
                 x: -5,
-                fill: 'green',
+                fill: 'black',
                 magnet: true
               }
             },
@@ -959,7 +830,7 @@ PROBABILIDAD EN PORCENTAJE
                 height: 10,
                 y: -5,
                 x: -5,
-                fill: 'green',
+                fill: 'black',
                 magnet: true
               }
             },
@@ -974,32 +845,20 @@ PROBABILIDAD EN PORCENTAJE
 
     endNode.addPorts([
         { 
-            group: 'topPorts',
-            attrs: { label: { text: 'topPort1' }}
-        },
-        { 
-            group: 'topPorts',
-            attrs: { label: { text: 'topPort2' }}
-        },
-        { 
-            group: 'topPorts',
-            attrs: { label: { text: 'topPort3' }}
-        },
-        { 
-            group: 'bottomPorts',
-            attrs: { label: { text: 'bottomPort1' }}
-        },
-        { 
-            group: 'bottomPorts',
-            attrs: { label: { text: 'bottomPort2' }}
+            group: 'leftPorts',
+            attrs: { label: { text: 'leftPort1' }}
         },
         { 
             group: 'leftPorts',
-            attrs: { label: { text: 'leftPort' }}
+            attrs: { label: { text: 'leftPort2' }}
         },
         { 
             group: 'rightPorts',
-            attrs: { label: { text: 'rightPort' }}
+            attrs: { label: { text: 'rightPort1' }}
+        },
+        { 
+            group: 'rightPorts',
+            attrs: { label: { text: 'rightPort2' }}
         },
     ]);
 
@@ -1024,11 +883,34 @@ PROBABILIDAD EN PORCENTAJE
 
   }
 
-}
+  convertToJSON(): void {
+    console.log(JSON.stringify(this.graph.toJSON()));
+  }
 
-//     function convertToJSON() {
-//         const JSONTextItem = document.getElementById('JSONtext');
-//         JSONTextItem.innerHTML = "";
-//         JSONTextItem.insertAdjacentText('beforeend', JSON.stringify(graph.toJSON()));
-//     }
-// </script>
+  zoomIn(): void {
+    if (this.paperScale < 1.5) {
+      this.paperScale += 0.1;
+      this.paper.scale(this.paperScale, this.paperScale);
+      this.paperScaleString = (this.paperScale * 100).toFixed(0);
+    }
+  }
+
+  zoomOut(): void {
+    if (this.paperScale > 0.6) {
+      this.paperScale -= 0.1;
+      this.paper.scale(this.paperScale, this.paperScale);
+      this.paperScaleString = (this.paperScale * 100).toFixed(0);
+    }
+  }
+
+  restoreZoom(): void {
+    this.paperScale = 1;
+    this.paper.scale(this.paperScale, this.paperScale);
+    this.paperScaleString = (this.paperScale * 100).toFixed(0);
+  }
+
+  onScroll(evt:Event): number {
+    console.log("se movio")
+    return (evt.target as Element).scrollTop;
+  }
+}

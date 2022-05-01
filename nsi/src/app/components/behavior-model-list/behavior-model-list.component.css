@@ -1,5 +1,6 @@
 table {
     width: 100%;
+    table-layout: fixed;
 }
 
 body {
@@ -11,7 +12,7 @@ h2 {
     text-align: center;
 }
 
-.modelListTable {
+.behaviorModelListTable {
     padding: 0px 5em 0px 5em;
     max-height: 250px;
     overflow: auto;
@@ -31,4 +32,16 @@ h2 {
 
 .mat-cell {
     background-color: #E0E8F8;
+}
+
+.filter {
+    color: black;
+    background-color: transparent;
+    width: 5px;
+    position: relative;
+    left: -10px;
+}
+
+mat-icon {
+  padding: 0px 10px 0px 0px;
 }

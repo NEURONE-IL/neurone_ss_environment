@@ -7,3 +7,16 @@ body {
 mat-label {
     width: 300px;
 }
+
+mat-radio-button {
+    margin: 0 12px;
+}
+
+.radio {
+    text-align: left;
+    margin: 0 100px;
+}
+
+mat-slider {
+    width: 300px;
+}

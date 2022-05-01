@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule} from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatMenuModule } from '@angular/material/menu';
@@ -16,33 +17,36 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSliderModule } from '@angular/material/slider';
 
 import { AppComponent } from './app.component';
+import { BehaviorModelListComponent } from './components/behavior-model-list/behavior-model-list.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
-import { SimulationListComponent } from './components/simulation-list/simulation-list.component';
-import { ModelListComponent } from './components/model-list/model-list.component';
-import { NewModelProbabilityModalComponent } from './components/new-model-probability-modal/new-model-probability-modal.component';
-import { NewModelComponent } from './components/new-model/new-model.component';
+import { NewBehaviorModelComponent } from './components/new-behavior-model/new-behavior-model.component';
+import { NewBehaviorModelProbabilityModalComponent } from './components/new-behavior-model-probability-modal/new-behavior-model-probability-modal.component';
 import { NewSimulationComponent } from './components/new-simulation/new-simulation.component';
+import { SimulationListComponent } from './components/simulation-list/simulation-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    BehaviorModelListComponent,
     HomePageComponent,
-    SimulationListComponent,
-    ModelListComponent,
-    NewModelProbabilityModalComponent,
-    NewModelComponent,
-    NewSimulationComponent
+    NewBehaviorModelComponent,
+    NewBehaviorModelProbabilityModalComponent,
+    NewSimulationComponent,
+    SimulationListComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot([
       {path: 'home', component: HomePageComponent},
-      {path: 'new-model', component: NewModelComponent},
+      {path: 'new-behavior-model', component: NewBehaviorModelComponent},
       {path: 'new-simulation', component: NewSimulationComponent},
       {path: '**', redirectTo: 'home', pathMatch: 'full'},
     ]),
+    HttpClientModule,
     BrowserAnimationsModule,
     MatMenuModule,
     MatIconModule,
@@ -56,7 +60,9 @@ import { NewSimulationComponent } from './components/new-simulation/new-simulati
     MatToolbarModule,
     MatListModule,
     MatGridListModule,
-    MatSelectModule
+    MatSelectModule,
+    MatRadioModule,
+    MatSliderModule
   ],
   providers: [],
   bootstrap: [AppComponent]

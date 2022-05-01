@@ -1,0 +1,86 @@
+const BehaviorModel = require("../models/BehaviorModel");
+
+exports.createBehaviorModel = async (req, res) => {
+
+	try {
+		let behaviorModel;
+
+		// Creating simulation
+		behaviorModel = new BehaviorModel(req.body);
+
+		await behaviorModel.save();
+		res.send(behaviorModel);
+	} catch (error) {
+		console.log(error);
+		res.status(500).send("Error: createBehaviorModel method failed");
+	}
+
+}
+
+exports.getBehaviorModels = async (req, res) => {
+
+	try {
+		const behaviorModels = await BehaviorModel.find();
+		res.json(behaviorModels);
+	} catch (error) {
+		console.log(error);
+		res.status(500).send("Error: getBehaviorModels method failed");
+	}
+
+}
+
+exports.getBehaviorModel = async (req, res) => {
+
+	try {
+		let behaviorModel = await BehaviorModel.findById(req.params.id);
+
+		if (!behaviorModel) {
+			res.status(404).json({msg: "Error: Behavior model doesn't exist"});
+		}
+
+		res.json(behaviorModel);
+	} catch (error) {
+		console.log(error);
+		res.status(500).send("Error: getBehaviorModel method failed");
+	}
+
+}
+
+exports.updateBehaviorModel = async (req, res) => {
+
+	try {
+		const { name } = req.body;
+		let behaviorModel = await BehaviorModel.findById(req.params.id);
+
+		if (!behaviorModel) {
+			res.status(404).json({msg: "Error: Behavior model doesn't exist"});
+		}
+
+		behaviorModel.name = name;
+
+		behaviorModel = await BehaviorModel.findOneAndUpdate({ _id: req.params.id }, behaviorModel, { new: true });
+		res.json(behaviorModel);
+	} catch (error) {
+		console.log(error);
+		res.status(500).send("Error: updateBehaviorModel method failed");
+	}
+
+}
+
+exports.deleteBehaviorModel = async (req, res) => {
+
+	try {
+		let behaviorModel = await BehaviorModel.findById(req.params.id);
+
+		if (!behaviorModel) {
+			res.status(404).json({msg: "Error: Behavior model doesn't exist"});
+		}
+
+		await BehaviorModel.findOneAndRemove({ _id: req.params.id });
+		res.json({ msg: "Behavior model deleted" });
+	} catch (error) {
+		console.log(error);
+		res.status(500).send("Error: deleteBehaviorModel method failed");
+	}
+
+}

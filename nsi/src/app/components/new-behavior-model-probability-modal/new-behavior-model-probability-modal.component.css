@@ -10,3 +10,8 @@ body {
     text-align: center;
     display: table-cell;
 }
+
+.percent {
+    position: relative;
+    left: -10px;
+}

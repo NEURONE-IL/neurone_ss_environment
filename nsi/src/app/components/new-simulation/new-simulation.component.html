@@ -6,48 +6,68 @@
 		<br /><br />
 
 		<div class="form">
-        <mat-form-field [style.width.%]="70" appearance="fill">
-		  <mat-label>Simulation name</mat-label>
-		  <input matInput placeholder="Example: Simulation 1">
-		</mat-form-field>
-		<br>
-        <mat-form-field [style.width.%]="70" appearance="fill">
-		  <mat-label>Description</mat-label>
-		  <input matInput placeholder="Example: This is a simulation.">
-		</mat-form-field>
-		<br>
-        <mat-form-field [style.width.%]="70" appearance="fill">
-		  <mat-label>Number of students</mat-label>
-		  <input matInput placeholder="Example: 40.">
-		</mat-form-field>
-		<br>
-		<mat-form-field [style.width.%]="70" appearance="fill">
-		  <mat-label>Domain</mat-label>
-		  <mat-select>
-		    <mat-option value="one">Domain 1</mat-option>
-		    <mat-option value="two">Domain 2</mat-option>
-		    <mat-option value="two">Domain 3</mat-option>
-		  </mat-select>
-		</mat-form-field>
-		<br>
-		<mat-form-field [style.width.%]="70" appearance="fill">
-		  <mat-label>Task</mat-label>
-		  <mat-select>
-		    <mat-option value="one">Task 1</mat-option>
-		    <mat-option value="two">Task 2</mat-option>
-		    <mat-option value="two">Task 3</mat-option>
-		  </mat-select>
-		</mat-form-field>
-		<br>
-        <mat-form-field [style.width.%]="70" appearance="fill">
-		  <mat-label>Number of documents</mat-label>
-		  <input matInput placeholder="Example: 100.">
-		</mat-form-field>
-		<br>
-        <mat-form-field [style.width.%]="70" appearance="fill">
-		  <mat-label>Number of relevant documents</mat-label>
-		  <input matInput placeholder="Example: 15.">
-		</mat-form-field>
+	        <mat-form-field [style.width.%]="70" appearance="fill">
+				<mat-label>Simulation name</mat-label>
+				<input matInput placeholder="Example: Simulation 1" required minlength="4">
+			</mat-form-field>
+			<br>
+	        <mat-form-field [style.width.%]="70" appearance="fill">
+				<mat-label>Description</mat-label>
+				<input matInput placeholder="Example: This is a simulation" required>
+			</mat-form-field>
+			<br>
+	        <mat-form-field [style.width.%]="70" appearance="fill">
+				<mat-label>Number of students</mat-label>
+				<input matInput placeholder="Example: 40" required>
+			</mat-form-field>
+			<br>
+			<mat-form-field [style.width.%]="70" appearance="fill">
+			  	<mat-label>Domain</mat-label>
+			  	<mat-select>
+			    	<mat-option value="domain1">Domain 1</mat-option>
+				    <mat-option value="domain2">Domain 2</mat-option>
+				    <mat-option value="domain3">Domain 3</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<br>
+			<mat-form-field [style.width.%]="70" appearance="fill">
+				<mat-label>Task</mat-label>
+				<mat-select>
+			    	<mat-option value="task1">Task 1</mat-option>
+					<mat-option value="task2">Task 2</mat-option>
+					<mat-option value="task3">Task 3</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<br>
+	        <mat-form-field [style.width.%]="70" appearance="fill">
+			 	<mat-label>Number of documents</mat-label>
+				<input matInput placeholder="Example: 100" required>
+			</mat-form-field>
+			<br>
+	        <mat-form-field [style.width.%]="70" appearance="fill">
+				<mat-label>Number of relevant documents</mat-label>
+			 	<input matInput placeholder="Example: 15" required>
+			</mat-form-field>
+			<br><br>
+			<div class="radio">
+				<label style="margin: 0 30px;">Random generation of actions</label>
+				<mat-radio-group>
+					<mat-radio-button value="true">Yes</mat-radio-button>
+					<mat-radio-button value="false">No</mat-radio-button>
+				</mat-radio-group>
+			</div>
+			<br><br>
+	        <mat-form-field [style.width.%]="70" appearance="fill">
+				<mat-label>Length (mm:ss)</mat-label>
+			 	<input matInput placeholder="Example: 15" required>
+			</mat-form-field>
+			<br>
+	        <mat-form-field [style.width.%]="70" appearance="fill">
+				<mat-label>Interval (ms)</mat-label>
+			 	<input matInput placeholder="Example: 0.5" required>
+			</mat-form-field>
+			<br>
+			<mat-slider min="0.5" max="3" step="0.05" value="1"></mat-slider>
 		</div>
 
     	<br /><br />

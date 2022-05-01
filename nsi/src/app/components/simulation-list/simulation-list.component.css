@@ -1,5 +1,6 @@
 table {
     width: 100%;
+    table-layout: fixed;
 }
 
 body {
@@ -31,4 +32,28 @@ h2 {
 
 .mat-cell {
     background-color: #E0E8F8;
+}
+
+.filter {
+    color: black;
+    background-color: transparent;
+    width: 5px;
+    position: relative;
+    left: -10px;
+}
+
+.play_arrow {
+    color: green;
+}
+
+.stop {
+    color: red;
+}
+
+.autorenew {
+    color: orange;
+}
+
+mat-icon {
+  padding: 0px 10px 0px 0px;
 }

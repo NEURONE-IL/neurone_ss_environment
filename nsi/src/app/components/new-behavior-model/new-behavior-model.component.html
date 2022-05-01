@@ -1,0 +1,38 @@
+<html>
+    <body>
+
+        <button mat-raised-button color="primary" (click)="addPageNode()">
+            <img src="/assets/behavior-model-page.png" style="height: 30px"><br>Page
+        </button>
+        <button mat-raised-button color="primary" (click)="addQueryNode()">
+            <img src="/assets/behavior-model-query.png" style="height: 30px"><br>Query
+        </button>
+        <button mat-raised-button color="primary" (click)="addBookmarkNode()">
+            <img src="/assets/behavior-model-bookmark.png" style="height: 30px"><br>Bookmark
+        </button>
+        <button mat-raised-button color="primary" (click)="addUnBookmarkNode()">
+            <img src="/assets/behavior-model-unbookmark.png" style="height: 30px"><br>Unbookmark
+        </button>
+        <button mat-raised-button color="primary" (click)="addEndNode()">
+            <img src="/assets/behavior-model-end.png" style="height: 30px"><br>End
+        </button>
+        <button mat-raised-button color="primary" (click)="convertToJSON()">
+            <br>To JSON
+        </button>
+
+        <div id="behaviorModelContainer" style="width: 1000px; height: 400px; overflow: scroll;" (scroll)="scrollHandler($evt)">
+            <div id="behaviorModelEditor"></div>
+        </div>
+
+        <button mat-raised-button color="primary" (click)="zoomIn()">
+            <br>Zoom in
+        </button>
+        <button mat-raised-button color="primary" (click)="zoomOut()">
+            <br>Zoom out
+        </button>
+        <button mat-raised-button color="primary" (click)="restoreZoom()">
+            <br>Restore zoom
+        </button>
+        Zoom actual: {{this.paperScaleString}}%
+    </body>
+</html>

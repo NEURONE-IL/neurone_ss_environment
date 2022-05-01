@@ -51,22 +51,6 @@
 <!-- Toolbar -->
 <div class="toolbar" role="banner">
   <h2 style="margin: 16px;"><a routerLink="/home">NEURONE Student Simulator</a></h2>
-    <div class="spacer"></div>
-    <button mat-button [matMenuTriggerFor]="userMenu" #uMenu="matMenuTrigger" aria-label="User menu" style="margin: 16px">
-      <img src="./assets/user.png" style="vertical-align: middle;">
-      {{username}}
-      <mat-icon style="vertical-align: middle;">
-        {{uMenu.menuOpen ? 'arrow_drop_up' : 'arrow_drop_down'}}
-      </mat-icon>
-    </button>
-    <mat-menu #userMenu="matMenu">
-      <button mat-menu-item disabled>
-        Account settings
-      </button>
-      <button mat-menu-item disabled>
-        Log out
-      </button>
-    </mat-menu>
 </div>
 
 <router-outlet></router-outlet>

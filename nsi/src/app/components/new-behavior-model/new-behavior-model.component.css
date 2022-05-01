@@ -12,11 +12,11 @@ body {
     vertical-align: middle;
 }
 
-#modelEditor {
+#behaviorModelEditor {
     border-style: solid;
     border-color: black,
 }
 
-#modelImages {
+#behaviorModelImages {
     display: none;
 }
