@@ -21,7 +21,8 @@ export class BehaviorModelListComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort!: MatSort;
   filterInput: string = "";
 
-  constructor(private _behaviorModelService: BehaviorModelService) { }
+  constructor(private _behaviorModelService: BehaviorModelService) {
+  }
 
   ngOnInit(): void {
     this.getBehaviorModels();

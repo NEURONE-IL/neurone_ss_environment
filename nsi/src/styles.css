@@ -11,3 +11,7 @@ button {
     width: 12em;
     cursor: pointer;
 }
+
+button[disabled] {
+    background-color: lightblue;
+}

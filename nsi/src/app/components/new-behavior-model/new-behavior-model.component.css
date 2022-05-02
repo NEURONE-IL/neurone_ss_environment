@@ -9,14 +9,38 @@ html {
 
 body {
     display: table-cell;
-    vertical-align: middle;
 }
 
-#behaviorModelEditor {
+#behaviorModelContainer {
     border-style: solid;
-    border-color: black,
+    border-color: black;
+    max-width: 1000px;
+    height: 400px;
+    margin: auto;
+    background-color: #4778F4;
 }
 
 #behaviorModelImages {
     display: none;
+}
+
+.optionsContainer {
+    text-align: center;
+    background-color: #4778F4;
+    color: white;
+    width: 1030px;
+    border-radius: 5px;
+}
+
+button, #lastButton {
+    border-left: 1px white dotted;
+}
+
+#lastButton {
+    border-right: 1px white dotted;
+}
+
+mat-icon {
+    position: relative;
+    top: -5px;
 }

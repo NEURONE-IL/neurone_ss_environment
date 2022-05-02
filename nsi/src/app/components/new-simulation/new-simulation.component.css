@@ -17,6 +17,11 @@ mat-radio-button {
     margin: 0 100px;
 }
 
+.slider {
+    text-align: left;
+    margin: 0 0 0 100px;
+}
+
 mat-slider {
     width: 300px;
 }

@@ -5,25 +5,26 @@
 		<h3>General settings</h3>
 		<br /><br />
 
-		<div class="form">
+		<form [formGroup]="simulationForm" (ngSubmit)="addSimulation()">
 	        <mat-form-field [style.width.%]="70" appearance="fill">
 				<mat-label>Simulation name</mat-label>
-				<input matInput placeholder="Example: Simulation 1" required minlength="4">
+				<input matInput placeholder="Example: Simulation 1" required formControlName="name">
+				<mat-error *ngIf="simulationForm.get('name')?.hasError('required')">You must enter a name.</mat-error>
 			</mat-form-field>
 			<br>
 	        <mat-form-field [style.width.%]="70" appearance="fill">
 				<mat-label>Description</mat-label>
-				<input matInput placeholder="Example: This is a simulation" required>
+				<input matInput placeholder="Example: This is a simulation" required formControlName="description">
 			</mat-form-field>
 			<br>
 	        <mat-form-field [style.width.%]="70" appearance="fill">
 				<mat-label>Number of students</mat-label>
-				<input matInput placeholder="Example: 40" required>
+				<input matInput placeholder="Example: 40" required formControlName="numberStudents">
 			</mat-form-field>
 			<br>
 			<mat-form-field [style.width.%]="70" appearance="fill">
 			  	<mat-label>Domain</mat-label>
-			  	<mat-select>
+			  	<mat-select formControlName="domain">
 			    	<mat-option value="domain1">Domain 1</mat-option>
 				    <mat-option value="domain2">Domain 2</mat-option>
 				    <mat-option value="domain3">Domain 3</mat-option>
@@ -32,7 +33,7 @@
 			<br>
 			<mat-form-field [style.width.%]="70" appearance="fill">
 				<mat-label>Task</mat-label>
-				<mat-select>
+				<mat-select formControlName="task">
 			    	<mat-option value="task1">Task 1</mat-option>
 					<mat-option value="task2">Task 2</mat-option>
 					<mat-option value="task3">Task 3</mat-option>
@@ -41,17 +42,17 @@
 			<br>
 	        <mat-form-field [style.width.%]="70" appearance="fill">
 			 	<mat-label>Number of documents</mat-label>
-				<input matInput placeholder="Example: 100" required>
+				<input matInput placeholder="Example: 100" required formControlName="numberDocuments">
 			</mat-form-field>
 			<br>
 	        <mat-form-field [style.width.%]="70" appearance="fill">
 				<mat-label>Number of relevant documents</mat-label>
-			 	<input matInput placeholder="Example: 15" required>
+			 	<input matInput placeholder="Example: 15" required formControlName="numberRelevantDocuments">
 			</mat-form-field>
 			<br><br>
 			<div class="radio">
-				<label style="margin: 0 30px;">Random generation of actions</label>
-				<mat-radio-group>
+				<mat-label style="margin: 0 30px;">Random generation of actions</mat-label>
+				<mat-radio-group formControlName="randomActions">
 					<mat-radio-button value="true">Yes</mat-radio-button>
 					<mat-radio-button value="false">No</mat-radio-button>
 				</mat-radio-group>
@@ -59,23 +60,24 @@
 			<br><br>
 	        <mat-form-field [style.width.%]="70" appearance="fill">
 				<mat-label>Length (mm:ss)</mat-label>
-			 	<input matInput placeholder="Example: 15" required>
+			 	<input matInput placeholder="Example: 15" required formControlName="length">
 			</mat-form-field>
 			<br>
 	        <mat-form-field [style.width.%]="70" appearance="fill">
 				<mat-label>Interval (ms)</mat-label>
-			 	<input matInput placeholder="Example: 0.5" required>
+			 	<input matInput placeholder="Example: 0.5" required formControlName="interval">
 			</mat-form-field>
 			<br>
-			<mat-slider min="0.5" max="3" step="0.05" value="1"></mat-slider>
-		</div>
-
-    	<br /><br />
-
-        <div class="btn-group">
-            <button mat-raised-button color="primary" style="border-radius: 5px; width: 200px; margin-right: 10px;">Save simulation</button>
-            <button mat-raised-button style="background-color: '#595959'; border-radius: 5px; width: 200px; margin-left: 10px;" routerLink="/home-page" >Discard simulation</button>
-        </div>
+			<div class="slider"> <!-- PONER EVENTO PARA QUE SPEED SE ACTUALICE ALTIRO, CAMBIAR COLOR -->
+				<mat-label style="margin: 0 30px;">Speed</mat-label>
+				<mat-slider min="0.5" max="3" step="0.05" style="margin: 0 30px;" formControlName="speed" (input)="onSliderChange($event)"></mat-slider> {{simulationForm.value.speed}}
+			</div>
+    		<br /><br />
+	        <div class="btn-group">
+	            <button type="submit" [disabled]="simulationForm.invalid" mat-raised-button color="primary" style="border-radius: 5px; width: 200px; margin-right: 10px;">Save simulation</button>
+	            <button mat-raised-button style="background-color: '#595959'; border-radius: 5px; width: 200px; margin-left: 10px;" routerLink="/home-page" >Discard simulation</button>
+	        </div>
+		</form>
         <br><br>
     </body>
 </html>

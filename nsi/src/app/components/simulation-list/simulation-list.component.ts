@@ -32,7 +32,8 @@ export class SimulationListComponent implements OnInit {
       this.simulationList = data;
       for (let i = 0; i < this.simulationList.length; i++) {
         this.simulationList[i].creationDate = dayjs(this.simulationList[i].creationDate).format('YYYY/MM/DD HH:mm:ss');
-        if (this.simulationList[i].lastDeployDate != null) {
+        var lastDeployDate = new Date(this.simulationList[i].lastDeployDate).getTime();
+        if (lastDeployDate != 0) {
           this.simulationList[i].lastDeployDate = dayjs(this.simulationList[i].lastDeployDate).format('YYYY/MM/DD HH:mm:ss');
         } else {
           this.simulationList[i].lastDeployDate = "Never";

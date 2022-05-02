@@ -1,6 +1,6 @@
 export class Simulation {
 
-	_id: number;
+	_id?: number;
 	name: string;
 	description: string;
 	numberStudents: number;
@@ -28,8 +28,8 @@ export class Simulation {
 		this.length = length;
 		this.interval = interval;
 		this.speed = speed;
-		this.creationDate = creationDate.toString();
-		this.lastDeployDate = lastDeployDate.toString();
+		this.creationDate = creationDate
+		this.lastDeployDate = lastDeployDate;
 	}
 
 }

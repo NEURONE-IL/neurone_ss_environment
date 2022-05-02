@@ -49,13 +49,11 @@ const SimulationSchema = mongoose.Schema({
 	},
 	creationDate: {
 		type: Date,
-		required: false,
-		default: Date.now()
+		required: true
 	},
 	lastDeployDate: {
 		type: Date,
-		required: false,
-		default: null
+		required: true
 	}
 });
 

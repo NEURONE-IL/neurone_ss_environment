@@ -14,20 +14,22 @@ DIAGRAMAS:
 -CREAR FUNCION DE CONVERSION A JSON PARA SIMULADOR
 -CAMBIAR NOMBRE PROBABILIDAD
 -PROBABILIDADES EN ROJO CUANDO FALTEN
--VALIDAR PROBABILIDAD EN MODAL
+-VALIDAR PROBABILIDAD EN MODAL: SOLO PUEDE HABER UN LINK ENTRE DOS NODOS
 
+-MOVER CON LA MANO EL PAPER
+-RENAME SOLO SI ES NECESARIO (ESTUDIAR EJEMPLOS DE JSON DE SIMULADOR)
 -QUE NOMBRES DE FUNCS DE EVENTOS EMPIECEN CON ON
 -SIMPLIFICAR FLECHAS (SIN ESQUINAS DE COLORES)
--QUE LAS FLECHAS A CREAR TENGAN COMO DESTINO SOLO LOS PUERTOS, NO EL CUERPO DEL ELEMENTO
--ARREGLAR FORMATO DE SELECCION DE FLECHAS
 -SELECCIONAR VARIOS NODOS, Y PODER MOVERLOS O BORRARLOS
 -UNDO, REDO
 -SAVE AS PNG?
--QUE UN PUERTO PUEDA TENER SOLO UN LINK (VALIDATECONNECTION)
 -NODO DE PAGINAS DE RESULTADOS
--ZOOM?
 -NUMEROS DE NODOS DESPUES DE BORRAR
--REDIRECT TO NEAREST PORT?
+-NOTACION DE FLECHAS? ECM6SCRIPT
+-TECLAS DE BORRADO Y SELECCIONAR TODO?
+-TRATAR DE NO USAR ANY
+-TOOLTIPS PARA ICONOS EN TABLAS DE HOME
+-TRATAR DE USAR CONSTRUCTORES SOLO PARA INYECTAR DEPENDENCIAS
 */
 
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
@@ -41,7 +43,6 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms'; 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NewBehaviorModelProbabilityModalComponent } from '../new-behavior-model-probability-modal/new-behavior-model-probability-modal.component';
-import { HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-new-behavior-model',
@@ -65,8 +66,11 @@ export class NewBehaviorModelComponent implements OnInit, AfterViewInit {
   private startWidth: number
   private startHeight: number
   private startPadding: number
+  private scrollTop: number
+  private scrollLeft: number
+  private visiblePaper: any
 
-  constructor(public dialog: MatDialog) {
+  constructor(public dialog: MatDialog, private elementRef:ElementRef) {
     this.paperScale = 1;
     this.paperScaleString = "100";
     this.pageCount = 0;
@@ -80,6 +84,9 @@ export class NewBehaviorModelComponent implements OnInit, AfterViewInit {
     this.startWidth = 1000;
     this.startHeight = 400;
     this.startPadding = 200;
+    this.scrollTop = 0;
+    this.scrollLeft = 0;
+    this.visiblePaper = {x:0, y:0}
   }
 
   openDialog(linkView: any) {
@@ -250,27 +257,23 @@ export class NewBehaviorModelComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
   }
 
-  @HostListener('document:keyup', ['$event'])
-  handleDeleteKeyboardEvent(event: KeyboardEvent) {
-    if (event.key === 'Delete') {
-      console.log("DELIT");
-
-    }
-  }
+  //@HostListener('document:keyup', ['$event'])
+  //handleDeleteKeyboardEvent(event: KeyboardEvent) {
+  //  if (event.key === 'Delete') {
+  //    console.log("DELIT");
+  //
+  //  }
 
   addPageNode(): void {
     
     this.paper.hideTools();
 
-    var localPoint1 = this.paper.clientOffset();
-    console.log(localPoint1);
-
     this.pageCount = this.pageCount + 1;
 
     var pageNode = new joint.shapes.standard.BorderedImage({
       position: {
-        x: Math.round(localPoint1.x) - 100,
-        y: Math.round(localPoint1.y) - 30
+        x: (this.visiblePaper.x + 100),
+        y: (this.visiblePaper.y + 30)
       },
       size: {
         width: 150,
@@ -394,8 +397,8 @@ export class NewBehaviorModelComponent implements OnInit, AfterViewInit {
 
     var queryNode = new joint.shapes.standard.BorderedImage({
       position: {
-        x: 100,
-        y: 30
+        x: (this.visiblePaper.x + 100),
+        y: (this.visiblePaper.y + 30)
       },
       size: {
         width: 150,
@@ -519,8 +522,8 @@ export class NewBehaviorModelComponent implements OnInit, AfterViewInit {
 
     var bookmarkNode = new joint.shapes.standard.BorderedImage({
       position: {
-        x: 100,
-        y: 30
+        x: (this.visiblePaper.x + 100),
+        y: (this.visiblePaper.y + 30)
       },
       size: {
         width: 65,
@@ -644,8 +647,8 @@ export class NewBehaviorModelComponent implements OnInit, AfterViewInit {
 
     var unBookmarkNode = new joint.shapes.standard.BorderedImage({
       position: {
-        x: 100,
-        y: 30
+        x: (this.visiblePaper.x + 100),
+        y: (this.visiblePaper.y + 30)
       },
       size: {
         width: 65,
@@ -766,8 +769,8 @@ export class NewBehaviorModelComponent implements OnInit, AfterViewInit {
 
     var endNode = new joint.shapes.standard.BorderedImage({
       position: {
-        x: 100,
-        y: 30
+        x: (this.visiblePaper.x + 100),
+        y: (this.visiblePaper.y + 30)
       },
       size: {
         width: 150,
@@ -883,8 +886,58 @@ export class NewBehaviorModelComponent implements OnInit, AfterViewInit {
 
   }
 
+  // This method is executed once the diagram has been validated (in another method)
   convertToJSON(): void {
-    console.log(JSON.stringify(this.graph.toJSON()));
+    let origDiagram = this.graph.toJSON();
+    console.log(origDiagram);
+
+    interface LooseObject {
+        [key: string]: any
+    }
+
+    var formattedDiagram: LooseObject = {};
+
+    // Creation of node objects
+    for (let i = 0; i < origDiagram.cells.length; i++) {
+
+      if (origDiagram.cells[i].type == "standard.BorderedImage") {
+        var label = origDiagram.cells[i].attrs.label.text;
+
+        if (label.charAt(0) != "E") {
+          formattedDiagram[label] = {["T"]: 0}; // SE AGREGA ALTIRO LA TRANSICION A T - ATENCION FORMATO "0.0"
+        }
+      }
+
+    }
+
+    // Addition of link information between nodes
+    for (let i = 0; i < origDiagram.cells.length; i++) {
+
+      if (origDiagram.cells[i].type == "link") {
+
+        var origProbability = origDiagram.cells[i].labels[0].attrs.text.text;
+        var formattedProbability = parseInt(origProbability.slice(0, -1)) / 100;
+
+        for (let j = 0; j < origDiagram.cells.length; j++) {
+
+          if (origDiagram.cells[j].id == origDiagram.cells[i].source.id) {
+            var sourceNodeLabel = origDiagram.cells[j].attrs.label.text;
+          } else if (origDiagram.cells[j].id == origDiagram.cells[i].target.id) {
+            var targetNodeLabel = origDiagram.cells[j].attrs.label.text;
+          }
+        }
+
+        if (targetNodeLabel.charAt(0) != "E") {
+          formattedDiagram[sourceNodeLabel][targetNodeLabel] = formattedProbability;
+        } else {
+          formattedDiagram[sourceNodeLabel]["T"] = formattedProbability;
+        }
+        
+      }
+
+    }
+
+    console.log(formattedDiagram);
   }
 
   zoomIn(): void {
@@ -893,6 +946,20 @@ export class NewBehaviorModelComponent implements OnInit, AfterViewInit {
       this.paper.scale(this.paperScale, this.paperScale);
       this.paperScaleString = (this.paperScale * 100).toFixed(0);
     }
+    //PASAR A METODO PARA LLAMARLO EN TODOS LADOS
+    if (this.paperScale < 1) {
+      this.paper.fitToContent({
+        minWidth: this.startWidth,
+        minHeight: this.startHeight,
+        padding: this.startPadding
+      });
+    } else {
+      this.paper.fitToContent({
+        minWidth: 1000 * this.paperScale,
+        minHeight: 400 * this.paperScale,
+        padding: 200 * this.paperScale
+      });
+    };
   }
 
   zoomOut(): void {
@@ -901,16 +968,48 @@ export class NewBehaviorModelComponent implements OnInit, AfterViewInit {
       this.paper.scale(this.paperScale, this.paperScale);
       this.paperScaleString = (this.paperScale * 100).toFixed(0);
     }
+    //PASAR A METODO PARA LLAMARLO EN TODOS LADOS
+    if (this.paperScale < 1) {
+      this.paper.fitToContent({
+        minWidth: this.startWidth,
+        minHeight: this.startHeight,
+        padding: this.startPadding
+      });
+    } else {
+      this.paper.fitToContent({
+        minWidth: 1000 * this.paperScale,
+        minHeight: 400 * this.paperScale,
+        padding: 200 * this.paperScale
+      });
+    };
   }
 
   restoreZoom(): void {
     this.paperScale = 1;
     this.paper.scale(this.paperScale, this.paperScale);
     this.paperScaleString = (this.paperScale * 100).toFixed(0);
+    //PASAR A METODO PARA LLAMARLO EN TODOS LADOS
+    if (this.paperScale < 1) {
+      this.paper.fitToContent({
+        minWidth: this.startWidth,
+        minHeight: this.startHeight,
+        padding: this.startPadding
+      });
+    } else {
+      this.paper.fitToContent({
+        minWidth: 1000 * this.paperScale,
+        minHeight: 400 * this.paperScale,
+        padding: 200 * this.paperScale
+      });
+    };
   }
 
-  onScroll(evt:Event): number {
-    console.log("se movio")
-    return (evt.target as Element).scrollTop;
+  onScroll(event: Event): void {
+    const element = (event.target as HTMLDivElement);
+    this.scrollTop = element.scrollTop;
+    this.scrollLeft = element.scrollLeft;
+    this.visiblePaper.x = this.scrollLeft;
+    this.visiblePaper.y = this.scrollTop;
   }
+
 }
