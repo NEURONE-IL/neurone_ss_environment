@@ -15,11 +15,12 @@ import * as dayjs from 'dayjs';
 
 export class BehaviorModelListComponent implements OnInit {
 
-  behaviorModelList: BehaviorModel[] = [];
-  dataSource: any;
-  columns = ['name', 'creationDate', 'options'];
-  @ViewChild(MatSort, {static: true}) sort!: MatSort;
-  filterInput: string = "";
+  private behaviorModelList: BehaviorModel[] = [];
+  public dataSource: any;
+  public columns = ['name', 'creationDate', 'options'];
+  public filterInput: string = "";
+
+  @ViewChild(MatSort, {static: true}) private sort!: MatSort;
 
   constructor(private _behaviorModelService: BehaviorModelService) {
   }
@@ -28,27 +29,38 @@ export class BehaviorModelListComponent implements OnInit {
     this.getBehaviorModels();
   }
 
-  getBehaviorModels() {
-    this._behaviorModelService.getBehaviorModels().subscribe((data: any) => {
+  private getBehaviorModels = () => {
+
+    this._behaviorModelService.getBehaviorModels().subscribe((data: BehaviorModel[]) => {
+
       this.behaviorModelList = data;
+
       for (let i = 0; i < this.behaviorModelList.length; i++) {
         this.behaviorModelList[i].creationDate = dayjs(this.behaviorModelList[i].creationDate).format('YYYY/MM/DD HH:mm:ss');
       }
+
       this.dataSource = new MatTableDataSource<BehaviorModel>(this.behaviorModelList);
       this.dataSource.sort = this.sort;
+      this.dataSource.filterPredicate = (data: BehaviorModel, filter: string) => data.name.includes(filter);
+
     }, (error: any) => {
       console.log(error);
     })
+
   }
 
-  applyFilter(event: Event) {
+  public applyFilter = (event: Event) => {
+
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+
   }
 
-  removeFilter() {
+  public removeFilter = () => {
+
     this.filterInput = "";
     this.dataSource.filter = "";
+
   }
 
 }

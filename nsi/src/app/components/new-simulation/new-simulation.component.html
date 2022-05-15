@@ -1,83 +1,180 @@
 <html>
     <body>
+
     	<br /><br /><br /><br />
+
 		<h2>New simulation</h2>
 		<h3>General settings</h3>
+
 		<br /><br />
 
 		<form [formGroup]="simulationForm" (ngSubmit)="addSimulation()">
+
 	        <mat-form-field [style.width.%]="70" appearance="fill">
 				<mat-label>Simulation name</mat-label>
+
 				<input matInput placeholder="Example: Simulation 1" required formControlName="name">
-				<mat-error *ngIf="simulationForm.get('name')?.hasError('required')">You must enter a name.</mat-error>
+
+	            <button class="clear" *ngIf="simulationForm.get('name')?.value" matSuffix mat-icon-button (click)="this.clearTextInput('name')">
+              		<mat-icon>close</mat-icon>
+            	</button>
+
+				<mat-error *ngIf="simulationForm.get('name')?.hasError('required')">You must enter a name for the simulation.</mat-error>
+				<mat-error *ngIf="simulationForm.get('name')?.hasError('nameExists')">The simulation name already exists.</mat-error>
 			</mat-form-field>
-			<br>
+
+			<br><br>
+
 	        <mat-form-field [style.width.%]="70" appearance="fill">
 				<mat-label>Description</mat-label>
-				<input matInput placeholder="Example: This is a simulation" required formControlName="description">
+
+				<textarea matInput placeholder="Example: This is a simulation" required formControlName="description" rows="3"></textarea>
+
+	            <button class="clear" *ngIf="simulationForm.get('description')?.value" matSuffix mat-icon-button (click)="this.clearTextInput('description')">
+              		<mat-icon>close</mat-icon>
+            	</button>
+
+				<mat-error *ngIf="simulationForm.get('description')?.hasError('required')">You must enter a description for the simulation.</mat-error>
 			</mat-form-field>
-			<br>
+
+			<br><br>
+
 	        <mat-form-field [style.width.%]="70" appearance="fill">
 				<mat-label>Number of students</mat-label>
+
 				<input matInput placeholder="Example: 40" required formControlName="numberStudents">
+
+	            <button class="clear" *ngIf="simulationForm.get('numberStudents')?.value" matSuffix mat-icon-button (click)="this.clearTextInput('numberStudents')">
+              		<mat-icon>close</mat-icon>
+            	</button>
+
+				<mat-error *ngIf="simulationForm.get('numberStudents')?.hasError('required')">You must enter the number of students for the simulation.</mat-error>
+				<mat-error *ngIf="simulationForm.get('numberStudents')?.hasError('notNumber')">You must enter a number.</mat-error>
+				<mat-error *ngIf="simulationForm.get('numberStudents')?.hasError('notInteger')">You must enter an integer number.</mat-error>
+				<mat-error *ngIf="simulationForm.get('numberStudents')?.hasError('min')">You must enter a number greater than zero.</mat-error>
 			</mat-form-field>
-			<br>
+
+			<br><br>
+
 			<mat-form-field [style.width.%]="70" appearance="fill">
 			  	<mat-label>Domain</mat-label>
+
 			  	<mat-select formControlName="domain">
 			    	<mat-option value="domain1">Domain 1</mat-option>
 				    <mat-option value="domain2">Domain 2</mat-option>
 				    <mat-option value="domain3">Domain 3</mat-option>
 				</mat-select>
 			</mat-form-field>
-			<br>
+
+			<br><br>
+
 			<mat-form-field [style.width.%]="70" appearance="fill">
 				<mat-label>Task</mat-label>
+
 				<mat-select formControlName="task">
 			    	<mat-option value="task1">Task 1</mat-option>
 					<mat-option value="task2">Task 2</mat-option>
 					<mat-option value="task3">Task 3</mat-option>
 				</mat-select>
 			</mat-form-field>
-			<br>
+
+			<br><br>
+
 	        <mat-form-field [style.width.%]="70" appearance="fill">
 			 	<mat-label>Number of documents</mat-label>
-				<input matInput placeholder="Example: 100" required formControlName="numberDocuments">
+
+				<input matInput placeholder="Example: 100" required formControlName="numberDocuments" (change)="onNumberDocumentsChange()">
+
+	            <button class="clear" *ngIf="simulationForm.get('numberDocuments')?.value" matSuffix mat-icon-button (click)="this.clearTextInput('numberDocuments')">
+              		<mat-icon>close</mat-icon>
+            	</button>
+
+				<mat-error *ngIf="simulationForm.get('numberDocuments')?.hasError('required')">You must enter the number of documents for the simulation.</mat-error>
+				<mat-error *ngIf="simulationForm.get('numberDocuments')?.hasError('notNumber')">You must enter a number.</mat-error>
+				<mat-error *ngIf="simulationForm.get('numberDocuments')?.hasError('notInteger')">You must enter an integer number.</mat-error>
+				<mat-error *ngIf="simulationForm.get('numberDocuments')?.hasError('min')">You must enter a number greater than zero.</mat-error>
 			</mat-form-field>
-			<br>
+
+			<br><br>
+
 	        <mat-form-field [style.width.%]="70" appearance="fill">
 				<mat-label>Number of relevant documents</mat-label>
+
 			 	<input matInput placeholder="Example: 15" required formControlName="numberRelevantDocuments">
+
+	            <button class="clear" *ngIf="simulationForm.get('numberRelevantDocuments')?.value" matSuffix mat-icon-button (click)="this.clearTextInput('numberRelevantDocuments')">
+              		<mat-icon>close</mat-icon>
+            	</button>
+
+				<mat-error *ngIf="simulationForm.get('numberRelevantDocuments')?.hasError('required')">You must enter the number of relevant documents for the simulation.</mat-error>
+				<mat-error *ngIf="simulationForm.get('numberRelevantDocuments')?.hasError('notNumber')">You must enter a number.</mat-error>
+				<mat-error *ngIf="simulationForm.get('numberRelevantDocuments')?.hasError('notInteger')">You must enter an integer number.</mat-error>
+				<mat-error *ngIf="simulationForm.get('numberRelevantDocuments')?.hasError('min')">You must enter a number greater than zero.</mat-error>
+				<mat-error *ngIf="simulationForm.get('numberRelevantDocuments')?.hasError('lessThanNumberDocuments')">You must enter a number less than or equal to the number of documents of the simulation.</mat-error>
 			</mat-form-field>
+
 			<br><br>
+
 			<div class="radio">
 				<mat-label style="margin: 0 30px;">Random generation of actions</mat-label>
+
 				<mat-radio-group formControlName="randomActions">
 					<mat-radio-button value="true">Yes</mat-radio-button>
 					<mat-radio-button value="false">No</mat-radio-button>
 				</mat-radio-group>
 			</div>
+
 			<br><br>
+
 	        <mat-form-field [style.width.%]="70" appearance="fill">
 				<mat-label>Length (mm:ss)</mat-label>
-			 	<input matInput placeholder="Example: 15" required formControlName="length">
+
+			 	<input matInput placeholder="Example: 15" formControlName="length">
+
+	            <button class="clear" *ngIf="simulationForm.get('length')?.value" matSuffix mat-icon-button (click)="this.clearTextInput('length')">
+              		<mat-icon>close</mat-icon>
+            	</button>
+
+				<mat-error *ngIf="simulationForm.get('length')?.hasError('invalidLength')">You must enter a properly formatted length (mm:ss).</mat-error>
+				<mat-error *ngIf="simulationForm.get('length')?.hasError('maxLength')">The maximum length is 59:59.</mat-error>
 			</mat-form-field>
-			<br>
+
+			<br><br>
+
 	        <mat-form-field [style.width.%]="70" appearance="fill">
 				<mat-label>Interval (ms)</mat-label>
-			 	<input matInput placeholder="Example: 0.5" required formControlName="interval">
+
+			 	<input matInput placeholder="Example: 500" required formControlName="interval">
+
+	            <button class="clear" *ngIf="simulationForm.get('interval')?.value" matSuffix mat-icon-button (click)="this.clearTextInput('interval')">
+              		<mat-icon>close</mat-icon>
+            	</button>
+
+				<mat-error *ngIf="simulationForm.get('interval')?.hasError('required')">You must enter the desired interval between simulation actions.</mat-error>
+				<mat-error *ngIf="simulationForm.get('interval')?.hasError('notNumber')">You must enter a number.</mat-error>
+				<mat-error *ngIf="simulationForm.get('interval')?.hasError('notInteger')">You must enter an integer number.</mat-error>
+				<mat-error *ngIf="simulationForm.get('interval')?.hasError('min')">You must enter a number greater than zero.</mat-error>
 			</mat-form-field>
-			<br>
-			<div class="slider"> <!-- PONER EVENTO PARA QUE SPEED SE ACTUALICE ALTIRO, CAMBIAR COLOR -->
+
+			<br><br>
+
+			<div class="slider">
 				<mat-label style="margin: 0 30px;">Speed</mat-label>
+				
 				<mat-slider min="0.5" max="3" step="0.05" style="margin: 0 30px;" formControlName="speed" (input)="onSliderChange($event)"></mat-slider> {{simulationForm.value.speed}}
 			</div>
+
     		<br /><br />
+
 	        <div class="btn-group">
 	            <button type="submit" [disabled]="simulationForm.invalid" mat-raised-button color="primary" style="border-radius: 5px; width: 200px; margin-right: 10px;">Save simulation</button>
 	            <button mat-raised-button style="background-color: '#595959'; border-radius: 5px; width: 200px; margin-left: 10px;" routerLink="/home-page" >Discard simulation</button>
 	        </div>
+
 		</form>
+
         <br><br>
+
     </body>
+
 </html>

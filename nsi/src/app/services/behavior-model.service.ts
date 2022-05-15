@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 })
 
 export class BehaviorModelService {
+  
   url = "http://localhost:4000/api/behaviorModels/";
 
   constructor(private http: HttpClient) {
@@ -15,4 +16,5 @@ export class BehaviorModelService {
   getBehaviorModels(): Observable<any> {
     return this.http.get(this.url + "/get/");
   }
+
 }

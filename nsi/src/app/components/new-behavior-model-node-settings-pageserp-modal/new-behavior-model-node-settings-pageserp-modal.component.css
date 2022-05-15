@@ -1,0 +1,42 @@
+html {
+    display: table;
+}
+
+body {
+    text-align: left;
+    display: table-cell;
+}
+
+.percent {
+    position: relative;
+    left: -10px;
+}
+
+mat-error {
+    display: none;
+}
+
+form mat-error:first-child {
+    display: block;
+}
+
+mat-form-field {
+    width: 340px;
+}
+
+mat-radio-button {
+    margin: 0 12px;
+}
+
+.clear {
+    color: black;
+    background-color: transparent;
+    width: 5px;
+    position: relative;
+    left: -12px;
+}
+
+mat-icon {
+    position: relative;
+    top: 5px;
+}

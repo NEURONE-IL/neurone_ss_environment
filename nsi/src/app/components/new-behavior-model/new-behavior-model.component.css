@@ -32,15 +32,27 @@ body {
     border-radius: 5px;
 }
 
-button, #lastButton {
+button, .lastButton {
     border-left: 1px white dotted;
 }
 
-#lastButton {
+.lastButton {
     border-right: 1px white dotted;
+}
+
+.currentZoom {
+    border-left: 1px white dotted;
 }
 
 mat-icon {
     position: relative;
-    top: -5px;
+    top: 7px;
+}
+
+.additionalOptions {
+    text-align: right;
+}
+
+.additionalOptionsButton {
+    border-radius: 5px;
 }

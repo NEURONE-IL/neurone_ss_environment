@@ -7,11 +7,13 @@
   <br /><br />
 
   <div class="simulationListTable">
+
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
       <ng-container matColumnDef="filterTitle">>
         <th mat-header-cell *matHeaderCellDef [style.width.%]="20"
           [attr.colspan]="1">
-          Filter:
+          Filter by name:
         </th>
       </ng-container>
 
@@ -49,25 +51,30 @@
 
       <ng-container matColumnDef="deployOptions">
         <th mat-header-cell *matHeaderCellDef> Deploy options </th>
+
         <td mat-cell *matCellDef="let simulation">
-          <mat-icon class="play_arrow">play_arrow</mat-icon>
-          <mat-icon class="stop">stop</mat-icon>
-          <mat-icon class="autorenew">autorenew</mat-icon>
+          <mat-icon class="play_arrow" matTooltip="Deploy the simulation">play_arrow</mat-icon>
+          <mat-icon class="stop" matTooltip="Stop the deployed simulation">stop</mat-icon>
+          <mat-icon class="autorenew" matTooltip="Restart the deployment of the simulation">autorenew</mat-icon>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="otherOptions">
         <th mat-header-cell *matHeaderCellDef> Other options </th>
+
         <td mat-cell *matCellDef="let simulation">
-          <mat-icon class="content_copy">content_copy</mat-icon>
-          <mat-icon class="delete">delete</mat-icon>
+          <mat-icon class="content_copy" matTooltip="Make a copy of the simulation" (click)="openCopyNotificationModal(simulation._id, simulation.name)">content_copy</mat-icon>
+          <mat-icon class="delete" matTooltip="Delete the simulation" (click)="openDeleteConfirmModal(simulation._id, simulation.name)">delete</mat-icon>
+
         </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="['filterTitle', 'filterTextbox']"></tr>
       <tr mat-header-row *matHeaderRowDef="columns"></tr>
       <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+
     </table>
+
   </div>
 
   <br />

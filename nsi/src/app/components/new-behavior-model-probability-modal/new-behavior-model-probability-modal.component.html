@@ -1,17 +1,30 @@
 <html>
     <body>
+        <h3>Link properties</h3> 
         <div>
-          <label style="margin-right: 10px;">Likelihood of next state (1 to 99%):</label>
-          <mat-form-field style="margin-left: 10px;">
-            <input [(ngModel)]="currentProbability" matInput placeholder="Example: 50%"/>
-            <div class="percent" matSuffix>
-              %
-            </div>
-          </mat-form-field>
+          <form [formGroup]="probabilityForm" (ngSubmit)="onOKButtonClicked()">
+            <mat-label style="margin-right: 20px;">Likelihood of next state (1 to 100%):</mat-label>
+            <mat-form-field>
+              <input required formControlName="currentProbability" matInput placeholder="Example: 50%"/>
+              <div class="percent" matSuffix>
+              <button class="clear" *ngIf="probabilityForm.get('currentProbability')?.value" mat-icon-button (click)="this.clearTextInput('currentProbability')">
+                <mat-icon>close</mat-icon>
+              </button>
+                %
+              </div>
+              <mat-error *ngIf="probabilityForm.get('currentProbability')?.hasError('required')">You must enter the likelihood of moving to the next state.</mat-error>
+              <mat-error *ngIf="probabilityForm.get('currentProbability')?.hasError('notNumber')">You must enter a number.</mat-error>
+              <mat-error *ngIf="probabilityForm.get('currentProbability')?.hasError('notInteger')">You must enter an integer number.</mat-error>
+              <mat-error *ngIf="probabilityForm.get('currentProbability')?.hasError('min')">You must enter a number between 1 and 100.</mat-error>
+              <mat-error *ngIf="probabilityForm.get('currentProbability')?.hasError('max')">You must enter a number between 1 and 100.</mat-error>
+            </mat-form-field>
+          </form>
         </div>
 
-        <div class="btn-group">
-            <button mat-raised-button color="primary" style="border-radius: 5px; width: 80px; margin-right: 10px;" (click)="onOKButtonClicked()">OK</button>
+        <br><br>
+
+        <div class="btn-group" style="text-align: right">
+            <button type="submit" [disabled]="probabilityForm.invalid" mat-raised-button color="primary" style="border-radius: 5px; width: 80px; margin-right: 10px;" (click)="onOKButtonClicked()">OK</button>
             <button mat-raised-button mat-dialog-close style="background-color: '#595959'; border-radius: 5px; width: 80px; margin-left: 10px;">Cancel</button>
         </div>
     </body>

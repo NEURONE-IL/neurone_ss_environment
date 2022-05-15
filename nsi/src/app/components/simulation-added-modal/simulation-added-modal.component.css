@@ -1,0 +1,12 @@
+html {
+    display: table;
+}
+
+body {
+    text-align: center;
+    display: table-cell;
+}
+
+h3 {
+    text-align: left;
+}

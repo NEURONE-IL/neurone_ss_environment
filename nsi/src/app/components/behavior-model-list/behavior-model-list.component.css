@@ -44,4 +44,9 @@ h2 {
 
 mat-icon {
   padding: 0px 10px 0px 0px;
+  cursor: pointer;
+}
+
+.newBehaviorModelButton {
+  padding: 0px 68px 0px 0px;
 }

@@ -1,0 +1,28 @@
+<html>
+    <body>
+    	<h3>State properties</h3>	
+        <div>
+          <form [formGroup]="nodeSettingsForm" (ngSubmit)="onOKButtonClicked()">
+            <mat-label style="margin-right: 10px;">Name of state:</mat-label>
+            <mat-form-field style="margin-left: 90px;">
+              <input required formControlName="nodeName" matInput placeholder="Example: S1"/>
+
+              <button class="clear" *ngIf="nodeSettingsForm.get('nodeName')?.value" matSuffix mat-icon-button (click)="this.clearTextInput('nodeName')">
+          		  <mat-icon>close</mat-icon>
+        	  </button>
+
+              <mat-error *ngIf="nodeSettingsForm.get('nodeName')?.hasError('required')">You must enter the name of the state.</mat-error>
+              <mat-error *ngIf="nodeSettingsForm.get('nodeName')?.hasError('nameExists')">The state name already exists.</mat-error>
+            </mat-form-field>
+
+            <br><br><br>
+
+          </form>
+        </div>
+
+        <div class="btn-group" style="text-align: right">
+            <button type="submit" [disabled]="nodeSettingsForm.invalid" mat-raised-button color="primary" style="border-radius: 5px; width: 80px; margin-right: 10px;" (click)="onOKButtonClicked()">OK</button>
+            <button mat-raised-button mat-dialog-close style="background-color: '#595959'; border-radius: 5px; width: 80px; margin-left: 10px;">Cancel</button>
+        </div>
+    </body>
+</html>

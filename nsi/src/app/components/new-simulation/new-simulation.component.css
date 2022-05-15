@@ -25,3 +25,35 @@ mat-radio-button {
 mat-slider {
     width: 300px;
 }
+
+.clear {
+    color: black;
+    background-color: transparent;
+    width: 5px;
+    position: relative;
+    left: -10px;
+}
+
+mat-icon {
+  padding: 0px 10px 0px 0px;
+}
+
+mat-error {
+    display: none;
+}
+
+form mat-error:first-child {
+    display: block;
+}
+
+::ng-deep .mat-slider-thumb {
+    background-color: #2A57A1 !important;
+}
+
+::ng-deep .mat-slider-thumb-label {
+    background-color: #2A57A1 !important;
+}
+
+::ng-deep .mat-slider-track-fill {
+  background-color: #2A57A1 !important;
+} 

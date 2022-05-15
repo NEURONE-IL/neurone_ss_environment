@@ -3,40 +3,52 @@
 
         <br><br><br><br><br>
         <div class="optionsContainer">
-            <button mat-raised-button color="primary" (click)="addPageNode()">
-                <img src="/assets/behavior-model-page.png" style="height: 30px"><br>Page
-            </button>
-            <button mat-raised-button color="primary" (click)="addQueryNode()">
+            <button mat-raised-button color="primary" (click)="addQueryAction()">
                 <img src="/assets/behavior-model-query.png" style="height: 30px"><br>Query
             </button>
-            <button mat-raised-button color="primary" (click)="addBookmarkNode()">
+            <button mat-raised-button color="primary" (click)="addSERPAction()">
+                <img src="/assets/behavior-model-serp.png" style="height: 35px"><br>SERP
+            </button>
+            <button mat-raised-button color="primary" (click)="addPageAction()">
+                <img src="/assets/behavior-model-page.png" style="height: 30px"><br>Page
+            </button>
+            <button mat-raised-button color="primary" (click)="addBookmarkAction()">
                 <img src="/assets/behavior-model-bookmark.png" style="height: 30px"><br>Bookmark
             </button>
-            <button mat-raised-button color="primary" (click)="addUnBookmarkNode()">
+            <button mat-raised-button color="primary" (click)="addUnBookmarkAction()">
                 <img src="/assets/behavior-model-unbookmark.png" style="height: 30px"><br>Unbookmark
             </button>
-            <button id="lastButton" mat-raised-button color="primary" (click)="addEndNode()">
+            <button id="lastButton" mat-raised-button color="primary" (click)="addEndAction()">
                 <img src="/assets/behavior-model-end.png" style="height: 30px"><br>End
             </button>
 
-            <div id="behaviorModelContainer" style="width: 1000px; height: 400px; overflow: scroll;" (scroll)="onScroll($event)">
+            <div id="behaviorModelContainer" style="width: 1000px; height: 400px; overflow: scroll;" (scroll)="onScroll($event)" >
                 <div id="behaviorModelEditor"></div>
             </div>
 
-            <button class="zoomOptions" mat-raised-button color="primary" (click)="zoomIn()">
-                <br><span><mat-icon class="content_copy">zoom_in</mat-icon> Zoom in</span>
+            <button mat-raised-button color="primary" (click)="zoomInAction()">
+                <span><mat-icon class="content_copy">zoom_in</mat-icon> Zoom in</span>
             </button>
-            <button class="zoomOptions" mat-raised-button color="primary" (click)="zoomOut()">
-                <br><mat-icon class="content_copy">zoom_out</mat-icon> Zoom out
+            <button mat-raised-button color="primary" (click)="zoomOutAction()">
+                <mat-icon class="content_copy">zoom_out</mat-icon> Zoom out
             </button>
-            <button class="zoomOptions" mat-raised-button color="primary" (click)="restoreZoom()">
-                <br><mat-icon class="content_copy">zoom_out_map</mat-icon> Default view
+            <button class="lastButton" mat-raised-button color="primary" (click)="restoreZoomAction()">
+                <mat-icon class="content_copy">zoom_out_map</mat-icon> Default view
             </button>
-            Zoom actual: {{this.paperScaleString}}%
+            <span style="padding: 0px 20px;">
+                Current zoom: {{this.paperScaleString}}%
+            </span>    
+        </div>
+
+        <br><br>
+        <div class="additionalOptions">
+            <button class="additionalOptionsButton" mat-raised-button color="primary" (click)="validateModelAction()">
+                Validate model
+            </button>
         </div>
 
         <br><br><br>
-        <button mat-raised-button color="primary" (click)="convertToJSON()">
+        <button mat-raised-button color="primary" (click)="toJSONAction()">
             <br>To JSON
         </button>
     </body>

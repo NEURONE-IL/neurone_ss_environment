@@ -1,48 +1,31 @@
-/*  COSAS POR HACER:
--REVISAR ORDEN DEL CODIGO:
-  -NEW-BEHAVIOR-MODEL
-  -STYLE DE APP-COMPONENT
--TERMINAR FORMULARIO DE NUEVA SIMULACION Y AGREGAR VALIDACION
--AGREGAR ICONOS DE DESPLIEGUE, COPIA Y BORRADO (Y HACER FUNCIONAR LOS DOS ULTIMOS)
--TERMINAR LAS OTRAS VISTAS (PRIMERO FRONTEND)
--HACER QUE RUTAS DE ACCESO A BACKEND Y SIMULADOR ESTÉN PARAMETRIZADAS EN FRONTEND
--INTERNACIONALIZACIÓN I18
-
-DIAGRAMAS:
--¿FALTA NODO DE INICIO? (SIN NUMEROS INCREMENTALES)
--ORDENAR ICONOS DE TOOLBAR
--CREAR FUNCION DE CONVERSION A JSON PARA SIMULADOR
--CAMBIAR NOMBRE PROBABILIDAD
--PROBABILIDADES EN ROJO CUANDO FALTEN
--VALIDAR PROBABILIDAD EN MODAL: SOLO PUEDE HABER UN LINK ENTRE DOS NODOS
-
--MOVER CON LA MANO EL PAPER
--RENAME SOLO SI ES NECESARIO (ESTUDIAR EJEMPLOS DE JSON DE SIMULADOR)
--QUE NOMBRES DE FUNCS DE EVENTOS EMPIECEN CON ON
--SIMPLIFICAR FLECHAS (SIN ESQUINAS DE COLORES)
--SELECCIONAR VARIOS NODOS, Y PODER MOVERLOS O BORRARLOS
--UNDO, REDO
--SAVE AS PNG?
--NODO DE PAGINAS DE RESULTADOS
--NUMEROS DE NODOS DESPUES DE BORRAR
--NOTACION DE FLECHAS? ECM6SCRIPT
--TECLAS DE BORRADO Y SELECCIONAR TODO?
--TRATAR DE NO USAR ANY
--TOOLTIPS PARA ICONOS EN TABLAS DE HOME
--TRATAR DE USAR CONSTRUCTORES SOLO PARA INYECTAR DEPENDENCIAS
-*/
-
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { FormsModule } from '@angular/forms'; 
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { Subscription, fromEvent } from 'rxjs';
+
 import * as jQuery from 'jquery';
 import * as _ from 'lodash';
 import * as $ from 'backbone';
 import * as joint from 'jointjs';
+
 import { MatDialog } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
-import { FormsModule } from '@angular/forms'; 
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 import { NewBehaviorModelProbabilityModalComponent } from '../new-behavior-model-probability-modal/new-behavior-model-probability-modal.component';
+import { NewBehaviorModelNodeSettingsEndbookunbookModalComponent } from '../new-behavior-model-node-settings-endbookunbook-modal/new-behavior-model-node-settings-endbookunbook-modal.component';
+import { NewBehaviorModelNodeSettingsPageserpModalComponent } from '../new-behavior-model-node-settings-pageserp-modal/new-behavior-model-node-settings-pageserp-modal.component';
+import { NewBehaviorModelNodeSettingsQueryModalComponent } from '../new-behavior-model-node-settings-query-modal/new-behavior-model-node-settings-query-modal.component';
+import { addStartNode } from '../../services/jointjs-settings/addStartNode';
+import { addQueryNode } from '../../services/jointjs-settings/addQueryNode';
+import { addSERPNode } from '../../services/jointjs-settings/addSERPNode';
+import { addPageNode } from '../../services/jointjs-settings/addPageNode';
+import { addBookmarkNode } from '../../services/jointjs-settings/addBookmarkNode';
+import { addUnBookmarkNode } from '../../services/jointjs-settings/addUnBookmarkNode';
+import { addEndNode } from '../../services/jointjs-settings/addEndNode';
+import { convertToJSON } from '../../services/jointjs-settings/convertToJSON';
+import { validateModel } from '../../services/jointjs-settings/validateModel';
+import { zoomIn, zoomOut, restoreZoom } from '../../services/jointjs-settings/zoom';
 
 @Component({
   selector: 'app-new-behavior-model',
@@ -50,55 +33,44 @@ import { NewBehaviorModelProbabilityModalComponent } from '../new-behavior-model
   styleUrls: ['./new-behavior-model.component.css']
 })
 
-export class NewBehaviorModelComponent implements OnInit, AfterViewInit {
+export class NewBehaviorModelComponent implements OnInit {
 
+  private graph: joint.dia.Graph
+  private paper: joint.dia.Paper
   public paperScale: number
   public paperScaleString: string
-  private graph: any
-  private pageCount: number
   private queryCount: number
+  private sERPCount: number
+  private pageCount: number
   private bookmarkCount: number
   private unBookmarkCount: number
   private endCount: number
-  private paper: any
   private lastSelectedCell: string
-  //
   private startWidth: number
   private startHeight: number
   private startPadding: number
   private scrollTop: number
   private scrollLeft: number
-  private visiblePaper: any
+  private visiblePaper: visiblePaper
 
-  constructor(public dialog: MatDialog, private elementRef:ElementRef) {
+  constructor(public dialog: MatDialog, public snackbar: MatSnackBar, private elementRef: ElementRef) {
+    this.graph = new joint.dia.Graph();
+    this.paper = new joint.dia.Paper({model: this.graph});
     this.paperScale = 1;
     this.paperScaleString = "100";
-    this.pageCount = 0;
     this.queryCount = 0;
+    this.sERPCount = 0;
+    this.pageCount = 0;
     this.bookmarkCount = 0;
     this.unBookmarkCount = 0;
     this.endCount = 0;
-    this.paper = {};
     this.lastSelectedCell = '';
-    //
     this.startWidth = 1000;
     this.startHeight = 400;
     this.startPadding = 200;
     this.scrollTop = 0;
     this.scrollLeft = 0;
-    this.visiblePaper = {x:0, y:0}
-  }
-
-  openDialog(linkView: any) {
-    var currentProbability = linkView.model.attributes.labels[0].attrs.text.text;
-    const dialogRef = this.dialog.open(NewBehaviorModelProbabilityModalComponent, { width: '25%', data: { currentProbability: currentProbability } } );
-    const sub = dialogRef.componentInstance.onSubmit.subscribe((value) => {
-      linkView.model.label(0, { attrs: { text: { text: value.concat("%") } } });
-      dialogRef.close();
-    });
-    dialogRef.afterClosed().subscribe(() => {
-      sub.unsubscribe();
-    });
+    this.visiblePaper = {x: 0, y: 0}
   }
 
   ngOnInit(): void {
@@ -118,6 +90,7 @@ export class NewBehaviorModelComponent implements OnInit, AfterViewInit {
         perpendicularLinks: true,
         linkPinning: true,
         snapLabels: true,
+        //snapLinks: { radius: 20 },
         defaultLink: new joint.dia.Link({
           router: { name: 'manhattan' },
           connection: { name: 'rounded' },
@@ -135,7 +108,10 @@ export class NewBehaviorModelComponent implements OnInit, AfterViewInit {
             { position: 0.5, attrs: { text: { text: '(no value)', fill: 'red' } } }
           ]
         }),
-        interactive: { useLinkTools: true, labelMove: true }
+        interactive: { useLinkTools: true, labelMove: true },
+        //validateConnection: function(cellViewS, magnetS, cellViewT, magnetT, end, linkView) {
+        //  return cellViewS != cellViewT;
+        //}
     });
 
     this.paper.setGrid({
@@ -143,65 +119,14 @@ export class NewBehaviorModelComponent implements OnInit, AfterViewInit {
         args: { color: '#dedede' },
     }).drawGrid();
 
-    console.log(this.paper);
+    addStartNode({graph: this.graph, paper: this.paper, visiblePaperX: this.visiblePaper.x, visiblePaperY: this.visiblePaper.y});
 
-        //PAPEL DRAGGABLE (NO FUNCIONA TOTALMENTE)
-    // this.paper.on('blank:pointerdown',
-    //   (event: any, x: any, y: any) => {
-    //     this.dragStartPosition = { x:x, y:y };
-    //   }
-    // );
-
-    // this.paper.on('cell:pointerup blank:pointerup', (cellView: any, x: any, y: any) => {
-    //     this.dragStartPosition = { x:-1, y:-1 };
-    // }),
-
-    // jQuery("#behaviorModelEditor")
-    //   .mousemove((event: any) => {
-    //     console.log(event);
-    //     if ((this.dragStartPosition.x != -1) && (this.dragStartPosition.y != -1)) {
-    //       this.paper.translate(
-    //         event.offsetX - this.dragStartPosition.x, 
-    //         event.offsetY - this.dragStartPosition.y);
-    //     }
-    // });
-
-    // this.paper.on('cell:pointerclick', (cellView: any) => {
-
-        //CAMBIO DE COLOR DE PUERTOS (NO FUNCIONA TOTALMENTE)
-    //   if (this.lastSelectedCell != '') {
-    //     var cells = this.graph.getCells();
-    //     console.log(cells);
-    //     var cell = cells.filter((obj:any) => {
-    //       return obj.id === this.lastSelectedCell
-    //     })
-    //     console.log(cell);
-    //     console.log("WOW");
-    //     var portsToHide = cell.model.getPorts();
-    //     var portIdsToHide = [];
-    //     for (let i = 0; i < portsToHide.length; i++) {
-    //       portIdsToHide.push(portsToHide[i].id);
-    //     }
-    //     for (let i = 0; i < portIdsToHide.length; i++) {
-    //       cellView.model.portProp(portIdsToHide[i], 'attrs/portBody/opacity', 0);
-    //     }
-    //   }
-
-    //   var portsToShow = cellView.model.getPorts();
-    //   var portIdsToShow = [];
-    //   for (let i = 0; i < portsToShow.length; i++) {
-    //     portIdsToShow.push(portsToShow[i].id);
-    //   }
-    //   for (let i = 0; i < portIdsToShow.length; i++) {
-    //     cellView.model.portProp(portIdsToShow[i], 'attrs/portBody/opacity', 1);
-    //   }
-    //   cellView.model.toFront();
-    //   _.invoke(this.graph.getConnectedLinks(cellView.model), 'toFront');
-
-    // });
+    this.paper.on('element:pointerdblclick', (elementView: any) => {
+      this.openNodeSettingsModal(elementView);
+    });
 
     this.paper.on('link:pointerdblclick', (linkView: any) => {
-      this.openDialog(linkView);
+      this.openProbabilityModal(linkView);
     });
 
     this.paper.on('cell:pointerclick cell:pointerdown', (elementView: any) => {
@@ -230,781 +155,228 @@ export class NewBehaviorModelComponent implements OnInit, AfterViewInit {
       };
     });
 
-    //var verticesTool = new joint.linkTools.Vertices();
-    //var toolsView = new joint.dia.ToolsView({
-    //    tools: [
-    //        verticesTool
-    //    ]
-    //});
-
-    //this.paper.on('link:mouseenter', (linkView: any) => {
-    //  linkView.addTools(toolsView);
-    //});
-
-    //this.paper.on('link:mouseleave', (linkView: any) => {
-    //  linkView.removeTools();
-    //});
-
-    // this.paper.on ('change:position', function() {
-    //    var l_portsIn = get ('inPorts');
-    //    if (l_portsIn.length>0) {
-    //        this.portProp (l_portsIn[0],'attrs/rect',{stroke: 'red' });
-    //    }
-    // }
-
-  }
-
-  ngAfterViewInit() {
-  }
-
-  //@HostListener('document:keyup', ['$event'])
-  //handleDeleteKeyboardEvent(event: KeyboardEvent) {
-  //  if (event.key === 'Delete') {
-  //    console.log("DELIT");
-  //
-  //  }
-
-  addPageNode(): void {
-    
-    this.paper.hideTools();
-
-    this.pageCount = this.pageCount + 1;
-
-    var pageNode = new joint.shapes.standard.BorderedImage({
-      position: {
-        x: (this.visiblePaper.x + 100),
-        y: (this.visiblePaper.y + 30)
-      },
-      size: {
-        width: 150,
-        height: 65
-      },
-      attrs: {
-        background: {
-          fill: 'lightgrey'
-        },
-        border: {
-          stroke: 'black',
-          rx: 5,
-          ry: 5,
-        },
-        body: {
-          magnet: false
-        },
-        label: {
-          text: 'P'.concat(this.pageCount.toString()),
-          fill: 'black'
-        },
-        image: {
-          "xlink:href": "/assets/behavior-model-page.png",
-          refWidth: 0.7,
-          refHeight: 0.7,
-          refX: 0.15,
-          refY: 0.15
-        }
-      },
-      ports: {
-        groups: {
-          'leftPorts': {
-            position: 'left',
-            label: {
-              position: 'outside'
-            },
-            attrs: {
-              portBody: {
-                width: 10,
-                height: 10,
-                y: -5,
-                x: -5,
-                fill: 'black',
-                magnet: true
-              }
-            },
-            markup: [{
-              tagName: 'rect',
-              selector: 'portBody'
-            }]
-          },
-          'rightPorts': {
-            position: 'right',
-            label: {
-              position: 'outside'
-            },
-            attrs: {
-              portBody: {
-                width: 10,
-                height: 10,
-                y: -5,
-                x: -5,
-                fill: 'black',
-                magnet: true
-              }
-            },
-            markup: [{
-              tagName: 'rect',
-              selector: 'portBody'
-            }]
-          },
-        }
-      }
-    });
-
-    pageNode.addPorts([
-        { 
-            group: 'leftPorts',
-            attrs: { label: { text: 'leftPort1' }}
-        },
-        { 
-            group: 'leftPorts',
-            attrs: { label: { text: 'leftPort2' }}
-        },
-        { 
-            group: 'rightPorts',
-            attrs: { label: { text: 'rightPort1' }}
-        },
-        { 
-            group: 'rightPorts',
-            attrs: { label: { text: 'rightPort2' }}
-        },
-    ]);
-
-    pageNode.addTo(this.graph);
-
-    var elementView = pageNode.findView(this.paper);
-
-    var boundaryTool = new joint.elementTools.Boundary();
-    var removeButton = new joint.elementTools.Remove({
-
-    });
-
-    var toolsView = new joint.dia.ToolsView({
-        tools: [
-            boundaryTool,
-            removeButton
-        ]
-    });
-
-    elementView.addTools(toolsView);
-    elementView.hideTools();
-
-  }
-
-  addQueryNode(): void {
-    
-    this.paper.hideTools();
-
-    this.queryCount = this.queryCount + 1;
-
-    var queryNode = new joint.shapes.standard.BorderedImage({
-      position: {
-        x: (this.visiblePaper.x + 100),
-        y: (this.visiblePaper.y + 30)
-      },
-      size: {
-        width: 150,
-        height: 65
-      },
-      attrs: {
-        background: {
-          fill: '#b071eb'
-        },
-        border: {
-          stroke: 'black',
-          rx: 5,
-          ry: 5,
-        },
-        // body: {
-        //     //magnet: true
-        // },
-        label: {
-          text: 'Q'.concat(this.queryCount.toString()),
-          fill: 'black'
-        },
-        image: {
-          "xlink:href": "/assets/behavior-model-query.png",
-          refWidth: 0.7,
-          refHeight: 0.7,
-          refX: 0.15,
-          refY: 0.15
-        }
-      },
-      ports: {
-        groups: {
-          'leftPorts': {
-            position: 'left',
-            label: {
-              position: 'outside'
-            },
-            attrs: {
-              portBody: {
-                width: 10,
-                height: 10,
-                y: -5,
-                x: -5,
-                fill: 'black',
-                magnet: true
-              }
-            },
-            markup: [{
-              tagName: 'rect',
-              selector: 'portBody'
-            }]
-          },
-          'rightPorts': {
-            position: 'right',
-            label: {
-              position: 'outside'
-            },
-            attrs: {
-              portBody: {
-                width: 10,
-                height: 10,
-                y: -5,
-                x: -5,
-                fill: 'black',
-                magnet: true
-              }
-            },
-            markup: [{
-              tagName: 'rect',
-              selector: 'portBody'
-            }]
-          },
-        }
-      }
-    });
-
-    queryNode.addPorts([
-        { 
-            group: 'leftPorts',
-            attrs: { label: { text: 'leftPort1' }}
-        },
-        { 
-            group: 'leftPorts',
-            attrs: { label: { text: 'leftPort2' }}
-        },
-        { 
-            group: 'rightPorts',
-            attrs: { label: { text: 'rightPort1' }}
-        },
-        { 
-            group: 'rightPorts',
-            attrs: { label: { text: 'rightPort2' }}
-        },
-    ]);
-
-    queryNode.addTo(this.graph);
-
-    var elementView = queryNode.findView(this.paper);
-
-    var boundaryTool = new joint.elementTools.Boundary();
-    var removeButton = new joint.elementTools.Remove({
-
-    });
-
-    var toolsView = new joint.dia.ToolsView({
-        tools: [
-            boundaryTool,
-            removeButton
-        ]
-    });
-
-    elementView.addTools(toolsView);
-    elementView.hideTools();
-
-  }
-
-  addBookmarkNode(): void {
-    
-    this.paper.hideTools();
-
-    this.bookmarkCount = this.bookmarkCount + 1;
-
-    var bookmarkNode = new joint.shapes.standard.BorderedImage({
-      position: {
-        x: (this.visiblePaper.x + 100),
-        y: (this.visiblePaper.y + 30)
-      },
-      size: {
-        width: 65,
-        height: 65
-      },
-      attrs: {
-        background: {
-          fill: '#96bed4'
-        },
-        border: {
-          stroke: 'black',
-          rx: 5,
-          ry: 5,
-        },
-        // body: {
-        //     //magnet: true
-        // },
-        label: {
-          text: 'B'.concat(this.bookmarkCount.toString()),
-          fill: 'black'
-        },
-        image: {
-          "xlink:href": "/assets/behavior-model-bookmark.png",
-          refWidth: 0.7,
-          refHeight: 0.7,
-          refX: 0.15,
-          refY: 0.15
-        }
-      },
-      ports: {
-        groups: {
-          'leftPorts': {
-            position: 'left',
-            label: {
-              position: 'outside'
-            },
-            attrs: {
-              portBody: {
-                width: 10,
-                height: 10,
-                y: -5,
-                x: -5,
-                fill: 'black',
-                magnet: true
-              }
-            },
-            markup: [{
-              tagName: 'rect',
-              selector: 'portBody'
-            }]
-          },
-          'rightPorts': {
-            position: 'right',
-            label: {
-              position: 'outside'
-            },
-            attrs: {
-              portBody: {
-                width: 10,
-                height: 10,
-                y: -5,
-                x: -5,
-                fill: 'black',
-                magnet: true
-              }
-            },
-            markup: [{
-              tagName: 'rect',
-              selector: 'portBody'
-            }]
-          },
-        }
-      }
-    });
-
-    bookmarkNode.addPorts([
-        { 
-            group: 'leftPorts',
-            attrs: { label: { text: 'leftPort1' }}
-        },
-        { 
-            group: 'leftPorts',
-            attrs: { label: { text: 'leftPort2' }}
-        },
-        { 
-            group: 'rightPorts',
-            attrs: { label: { text: 'rightPort1' }}
-        },
-        { 
-            group: 'rightPorts',
-            attrs: { label: { text: 'rightPort2' }}
-        },
-    ]);
-
-    bookmarkNode.addTo(this.graph);
-
-    var elementView = bookmarkNode.findView(this.paper);
-
-    var boundaryTool = new joint.elementTools.Boundary();
-    var removeButton = new joint.elementTools.Remove({
-
-    });
-
-    var toolsView = new joint.dia.ToolsView({
-        tools: [
-            boundaryTool,
-            removeButton
-        ]
-    });
-
-    elementView.addTools(toolsView);
-    elementView.hideTools();
-
-  }
-
-  addUnBookmarkNode(): void {
-    
-    this.paper.hideTools();
-
-    this.unBookmarkCount = this.unBookmarkCount + 1;
-
-    var unBookmarkNode = new joint.shapes.standard.BorderedImage({
-      position: {
-        x: (this.visiblePaper.x + 100),
-        y: (this.visiblePaper.y + 30)
-      },
-      size: {
-        width: 65,
-        height: 65
-      },
-      attrs: {
-        background: {
-          fill: '#96bed4'
-        },
-        border: {
-          stroke: 'black',
-          rx: 5,
-          ry: 5,
-        },
-        label: {
-          text: 'U'.concat(this.unBookmarkCount.toString()),
-          fill: 'black'
-        },
-        image: {
-          "xlink:href": "/assets/behavior-model-unbookmark.png",
-          refWidth: 0.7,
-          refHeight: 0.7,
-          refX: 0.15,
-          refY: 0.15
-        }
-      },
-      ports: {
-        groups: {
-          'leftPorts': {
-            position: 'left',
-            label: {
-              position: 'outside'
-            },
-            attrs: {
-              portBody: {
-                width: 10,
-                height: 10,
-                y: -5,
-                x: -5,
-                fill: 'black',
-                magnet: true
-              }
-            },
-            markup: [{
-              tagName: 'rect',
-              selector: 'portBody'
-            }]
-          },
-          'rightPorts': {
-            position: 'right',
-            label: {
-              position: 'outside'
-            },
-            attrs: {
-              portBody: {
-                width: 10,
-                height: 10,
-                y: -5,
-                x: -5,
-                fill: 'black',
-                magnet: true
-              }
-            },
-            markup: [{
-              tagName: 'rect',
-              selector: 'portBody'
-            }]
-          },
-        }
-      }
-    });
-
-    unBookmarkNode.addPorts([
-        { 
-            group: 'leftPorts',
-            attrs: { label: { text: 'leftPort1' }}
-        },
-        { 
-            group: 'leftPorts',
-            attrs: { label: { text: 'leftPort2' }}
-        },
-        { 
-            group: 'rightPorts',
-            attrs: { label: { text: 'rightPort1' }}
-        },
-        { 
-            group: 'rightPorts',
-            attrs: { label: { text: 'rightPort2' }}
-        },
-    ]);
-
-    unBookmarkNode.addTo(this.graph);
-
-    var elementView = unBookmarkNode.findView(this.paper);
-
-    var boundaryTool = new joint.elementTools.Boundary();
-    var removeButton = new joint.elementTools.Remove({
-
-    });
-
-    var toolsView = new joint.dia.ToolsView({
-        tools: [
-            boundaryTool,
-            removeButton
-        ]
-    });
-
-    elementView.addTools(toolsView);
-    elementView.hideTools();
-
-  }
-
-  addEndNode(): void {
-    
-    this.paper.hideTools();
-
-    this.endCount = this.endCount + 1;
-
-    var endNode = new joint.shapes.standard.BorderedImage({
-      position: {
-        x: (this.visiblePaper.x + 100),
-        y: (this.visiblePaper.y + 30)
-      },
-      size: {
-        width: 150,
-        height: 65
-      },
-      attrs: {
-        background: {
-          fill: 'yellow'
-        },
-        border: {
-          stroke: 'black',
-          rx: 5,
-          ry: 5,
-        },
-        // body: {
-        //     //magnet: true
-        // },
-        label: {
-          text: 'E'.concat(this.endCount.toString()),
-          fill: 'black'
-        },
-        image: {
-          "xlink:href": "/assets/behavior-model-end.png",
-          refWidth: 0.7,
-          refHeight: 0.7,
-          refX: 0.15,
-          refY: 0.15
-        }
-      },
-      ports: {
-        groups: {
-          'leftPorts': {
-            position: 'left',
-            label: {
-              position: 'outside'
-            },
-            attrs: {
-              portBody: {
-                width: 10,
-                height: 10,
-                y: -5,
-                x: -5,
-                fill: 'black',
-                magnet: true
-              }
-            },
-            markup: [{
-              tagName: 'rect',
-              selector: 'portBody'
-            }]
-          },
-          'rightPorts': {
-            position: 'right',
-            label: {
-              position: 'outside'
-            },
-            attrs: {
-              portBody: {
-                width: 10,
-                height: 10,
-                y: -5,
-                x: -5,
-                fill: 'black',
-                magnet: true
-              }
-            },
-            markup: [{
-              tagName: 'rect',
-              selector: 'portBody'
-            }]
-          },
-        }
-      }
-    });
-
-    endNode.addPorts([
-        { 
-            group: 'leftPorts',
-            attrs: { label: { text: 'leftPort1' }}
-        },
-        { 
-            group: 'leftPorts',
-            attrs: { label: { text: 'leftPort2' }}
-        },
-        { 
-            group: 'rightPorts',
-            attrs: { label: { text: 'rightPort1' }}
-        },
-        { 
-            group: 'rightPorts',
-            attrs: { label: { text: 'rightPort2' }}
-        },
-    ]);
-
-    endNode.addTo(this.graph);
-
-    var elementView = endNode.findView(this.paper);
-
-    var boundaryTool = new joint.elementTools.Boundary();
-    var removeButton = new joint.elementTools.Remove({
-
-    });
-
-    var toolsView = new joint.dia.ToolsView({
-        tools: [
-            boundaryTool,
-            removeButton
-        ]
-    });
-
-    elementView.addTools(toolsView);
-    elementView.hideTools();
-
-  }
-
-  // This method is executed once the diagram has been validated (in another method)
-  convertToJSON(): void {
-    let origDiagram = this.graph.toJSON();
-    console.log(origDiagram);
-
-    interface LooseObject {
-        [key: string]: any
-    }
-
-    var formattedDiagram: LooseObject = {};
-
-    // Creation of node objects
-    for (let i = 0; i < origDiagram.cells.length; i++) {
-
-      if (origDiagram.cells[i].type == "standard.BorderedImage") {
-        var label = origDiagram.cells[i].attrs.label.text;
-
-        if (label.charAt(0) != "E") {
-          formattedDiagram[label] = {["T"]: 0}; // SE AGREGA ALTIRO LA TRANSICION A T - ATENCION FORMATO "0.0"
-        }
-      }
-
-    }
-
-    // Addition of link information between nodes
-    for (let i = 0; i < origDiagram.cells.length; i++) {
-
-      if (origDiagram.cells[i].type == "link") {
-
-        var origProbability = origDiagram.cells[i].labels[0].attrs.text.text;
-        var formattedProbability = parseInt(origProbability.slice(0, -1)) / 100;
-
-        for (let j = 0; j < origDiagram.cells.length; j++) {
-
-          if (origDiagram.cells[j].id == origDiagram.cells[i].source.id) {
-            var sourceNodeLabel = origDiagram.cells[j].attrs.label.text;
-          } else if (origDiagram.cells[j].id == origDiagram.cells[i].target.id) {
-            var targetNodeLabel = origDiagram.cells[j].attrs.label.text;
+    this.graph.on('change:source change:target', (link: any) => {
+      if (link.get('source').id && link.get('target').id) {
+
+        let diagram = this.graph.toJSON();
+        let sourceId = link.get('source').id;
+        let sourceTypeNode;
+        let targetId = link.get('target').id;
+        let targetTypeNode;
+
+        for (let i = 0; i < diagram.cells.length; i++) {
+          if (diagram.cells[i].id == sourceId) {
+            sourceTypeNode = diagram.cells[i].typeNode
+            break;
           }
         }
 
-        if (targetNodeLabel.charAt(0) != "E") {
-          formattedDiagram[sourceNodeLabel][targetNodeLabel] = formattedProbability;
-        } else {
-          formattedDiagram[sourceNodeLabel]["T"] = formattedProbability;
+        for (let i = 0; i < diagram.cells.length; i++) {
+          if (diagram.cells[i].id == targetId) {
+            targetTypeNode = diagram.cells[i].typeNode
+            break;
+          }
         }
-        
+
+        // VER SI SE PUEDE IMPLEMENTAR MAGNETISMO
+
+        // FALTA REVISAR LOS CASOS EN QUE SOURCELABEL YA ESTABA LINKEADO A OTRO NODO...
+
+        // Y PONER LAS PROBABILIDADES EN ROJO (O HACER QUE YA NO ESTEN EN ROJO)
+
+        // REVISANDO CUANDO LOS ENLACES EXISTENTES SE CREAN O BORRAN
+        // ¿TAL VEZ PASAR TODO ESTO A VALIDATECONNECTION Y ES MAS FACIL MANIPULAR LINKS?
+
+        if (sourceId == targetId) {
+          this.graph.getCell(link.id).remove();
+          this.snackbar.open('Invalid link', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
+          return;
+        }
+
+        if (sourceTypeNode == "start") {
+          if (targetTypeNode != "query") {
+            this.graph.getCell(link.id).remove();
+            this.snackbar.open('Invalid link', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
+          } else {
+            //PONER EN 100% Y HACER INMUTABLE
+            //this.graph.getCell(link.id).attr('text/text', '100%');
+            //this.graph.getCell(link.id).attr('text/fill', 'black');
+          }
+
+        } else if (sourceTypeNode == "query") {       
+          if ((targetTypeNode != "query") && (targetTypeNode != "page") && (targetTypeNode != "end")) {
+            this.graph.getCell(link.id).remove();
+            this.snackbar.open('Invalid link', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
+          }
+
+        } else if (sourceTypeNode == "page") {        
+          if ((targetTypeNode != "query") && (targetTypeNode != "page") && (targetTypeNode != "bookmark") && (targetTypeNode != "unBookmark") && (targetTypeNode != "end")) {
+            this.graph.getCell(link.id).remove();
+            this.snackbar.open('Invalid link', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
+          }
+
+        } else if (sourceTypeNode == "bookmark") {      
+          if ((targetTypeNode != "query") && (targetTypeNode != "page")) { // ¿¿¿Y TAL VEZ A END???
+            this.graph.getCell(link.id).remove();
+            this.snackbar.open('Invalid link', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
+          }
+
+        } else if (sourceTypeNode == "unBookmark") {    
+          if ((targetTypeNode != "query") && (targetTypeNode != "page")) { // ¿¿¿Y TAL VEZ A END???
+            this.graph.getCell(link.id).remove();
+            this.snackbar.open('Invalid link', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
+          }
+
+        } else if (sourceTypeNode == "end") {         
+          this.graph.getCell(link.id).remove();
+          this.snackbar.open('Invalid link', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
+        }
+
       }
+    })
 
+  }
+
+  private openProbabilityModal = (linkView: any) => {
+    var currentProbability = linkView.model.attributes.labels[0].attrs.text.text;
+    const dialogRef = this.dialog.open(NewBehaviorModelProbabilityModalComponent, { width: '40%', data: { currentProbability: currentProbability } } );
+    const sub = dialogRef.componentInstance.onSubmit.subscribe((value) => {
+      linkView.model.label(0, { attrs: { text: { text: value.concat("%") } } });
+      dialogRef.close();
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      sub.unsubscribe();
+    });
+  }
+
+  private openNodeSettingsModal = (elementView: any) => {
+    let typeNode = elementView.model.attributes.typeNode
+    if (typeNode == "start") {
+      return;
+    } else if (typeNode == "page") {
+      var nodeName = elementView.model.attributes.attrs.label.text;
+      var minTransitionTime = elementView.model.attributes.minTransitionTime;
+      var maxTransitionTime = elementView.model.attributes.maxTransitionTime;
+      var relevantPage = elementView.model.attributes.relevantPage;
+      var existingNodeNames = this.getNodeNames();
+
+      const dialogRef = this.dialog.open(NewBehaviorModelNodeSettingsPageserpModalComponent, { width: '49%', data: { nodeName: nodeName, minTransitionTime: minTransitionTime, maxTransitionTime: maxTransitionTime, relevantPage: relevantPage, existingNodeNames: existingNodeNames } } );
+      const sub = dialogRef.componentInstance.onSubmit.subscribe((value) => {
+        nodeName = value.nodeName;
+        minTransitionTime = value.minTransitionTime;
+        maxTransitionTime = value.maxTransitionTime;
+        relevantPage = value.relevantPage;
+        elementView.model.attr('label/text', value.nodeName);
+        elementView.model.attributes.minTransitionTime = value.minTransitionTime;
+        elementView.model.attributes.maxTransitionTime = value.maxTransitionTime;
+        elementView.model.attributes.relevantPage = value.relevantPage;
+        dialogRef.close();
+      });
+      dialogRef.afterClosed().subscribe(() => {
+        sub.unsubscribe();
+      });
+    } else if ((typeNode == "end") || (typeNode == "bookmark") || (typeNode == "unBookmark")) {
+      var nodeName = elementView.model.attributes.attrs.label.text;
+      var existingNodeNames = this.getNodeNames();
+
+      const dialogRef = this.dialog.open(NewBehaviorModelNodeSettingsEndbookunbookModalComponent, { width: '45%', data: { nodeName: nodeName, existingNodeNames: existingNodeNames } } );
+      const sub = dialogRef.componentInstance.onSubmit.subscribe((value) => {
+        nodeName = value.nodeName;
+        elementView.model.attr('label/text', value.nodeName);
+        dialogRef.close();
+      });
+      dialogRef.afterClosed().subscribe(() => {
+        sub.unsubscribe();
+      });
+    } else if (typeNode == "query") {
+      var nodeName = elementView.model.attributes.attrs.label.text;
+      var minTransitionTime = elementView.model.attributes.minTransitionTime;
+      var maxTransitionTime = elementView.model.attributes.maxTransitionTime;
+      var existingNodeNames = this.getNodeNames();
+
+      const dialogRef = this.dialog.open(NewBehaviorModelNodeSettingsQueryModalComponent, { width: '49%', data: { nodeName: nodeName, minTransitionTime: minTransitionTime, maxTransitionTime: maxTransitionTime, existingNodeNames: existingNodeNames } } );
+      const sub = dialogRef.componentInstance.onSubmit.subscribe((value) => {
+        nodeName = value.nodeName;
+        minTransitionTime = value.minTransitionTime;
+        maxTransitionTime = value.maxTransitionTime;
+        elementView.model.attr('label/text', value.nodeName);
+        elementView.model.attributes.minTransitionTime = value.minTransitionTime;
+        elementView.model.attributes.maxTransitionTime = value.maxTransitionTime;
+        dialogRef.close();
+      });
+      dialogRef.afterClosed().subscribe(() => {
+        sub.unsubscribe();
+      });
+    }
+  }
+
+  private getNodeNames = (): string[] => {
+    let diagram = this.graph.toJSON();
+    let nodeNames: string[] = [];
+
+    for (let i = 0; i < diagram.cells.length; i++) {
+      if (diagram.cells[i].type != "link") {
+        nodeNames.push(diagram.cells[i].attrs.label.text);
+      }
     }
 
-    console.log(formattedDiagram);
+    return nodeNames;
   }
 
-  zoomIn(): void {
-    if (this.paperScale < 1.5) {
-      this.paperScale += 0.1;
-      this.paper.scale(this.paperScale, this.paperScale);
-      this.paperScaleString = (this.paperScale * 100).toFixed(0);
-    }
-    //PASAR A METODO PARA LLAMARLO EN TODOS LADOS
-    if (this.paperScale < 1) {
-      this.paper.fitToContent({
-        minWidth: this.startWidth,
-        minHeight: this.startHeight,
-        padding: this.startPadding
-      });
-    } else {
-      this.paper.fitToContent({
-        minWidth: 1000 * this.paperScale,
-        minHeight: 400 * this.paperScale,
-        padding: 200 * this.paperScale
-      });
-    };
+  public addQueryAction = () => {
+    this.queryCount = addQueryNode({graph: this.graph, paper: this.paper, queryCount: this.queryCount, visiblePaperX: this.visiblePaper.x, visiblePaperY: this.visiblePaper.y});
   }
 
-  zoomOut(): void {
-    if (this.paperScale > 0.6) {
-      this.paperScale -= 0.1;
-      this.paper.scale(this.paperScale, this.paperScale);
-      this.paperScaleString = (this.paperScale * 100).toFixed(0);
-    }
-    //PASAR A METODO PARA LLAMARLO EN TODOS LADOS
-    if (this.paperScale < 1) {
-      this.paper.fitToContent({
-        minWidth: this.startWidth,
-        minHeight: this.startHeight,
-        padding: this.startPadding
-      });
-    } else {
-      this.paper.fitToContent({
-        minWidth: 1000 * this.paperScale,
-        minHeight: 400 * this.paperScale,
-        padding: 200 * this.paperScale
-      });
-    };
+  public addSERPAction = () => {
+    this.sERPCount = addSERPNode({graph: this.graph, paper: this.paper, sERPCount: this.sERPCount, visiblePaperX: this.visiblePaper.x, visiblePaperY: this.visiblePaper.y});
   }
 
-  restoreZoom(): void {
-    this.paperScale = 1;
-    this.paper.scale(this.paperScale, this.paperScale);
-    this.paperScaleString = (this.paperScale * 100).toFixed(0);
-    //PASAR A METODO PARA LLAMARLO EN TODOS LADOS
-    if (this.paperScale < 1) {
-      this.paper.fitToContent({
-        minWidth: this.startWidth,
-        minHeight: this.startHeight,
-        padding: this.startPadding
-      });
-    } else {
-      this.paper.fitToContent({
-        minWidth: 1000 * this.paperScale,
-        minHeight: 400 * this.paperScale,
-        padding: 200 * this.paperScale
-      });
-    };
+  public addPageAction = () => {
+    this.pageCount = addPageNode({graph: this.graph, paper: this.paper, pageCount: this.pageCount, visiblePaperX: this.visiblePaper.x, visiblePaperY: this.visiblePaper.y});
   }
 
-  onScroll(event: Event): void {
+  public addBookmarkAction = () => {
+    this.bookmarkCount = addBookmarkNode({graph: this.graph, paper: this.paper, bookmarkCount: this.bookmarkCount, visiblePaperX: this.visiblePaper.x, visiblePaperY: this.visiblePaper.y});
+  }
+
+  public addUnBookmarkAction = () => {
+    this.unBookmarkCount = addUnBookmarkNode({graph: this.graph, paper: this.paper, unBookmarkCount: this.unBookmarkCount, visiblePaperX: this.visiblePaper.x, visiblePaperY: this.visiblePaper.y});
+  }
+
+  public addEndAction = () => {
+    this.endCount = addEndNode({graph: this.graph, paper: this.paper, endCount: this.endCount, visiblePaperX: this.visiblePaper.x, visiblePaperY: this.visiblePaper.y});
+  }
+
+  public toJSONAction = () => {
+    convertToJSON(this.graph);
+  }
+
+  public validateModelAction = () => {
+    validateModel(this.graph);
+  }
+
+  public zoomInAction = () => {
+    var output = zoomIn({paper: this.paper, paperScale: this.paperScale, paperScaleString: this.paperScaleString, startWidth: this.startWidth, startHeight: this.startHeight, startPadding: this.startPadding});
+    this.paper = output.paper;
+    this.paperScale = output.paperScale;
+    this.paperScaleString = output.paperScaleString;
+  }
+
+  public zoomOutAction = () => {
+    var output = zoomOut({paper: this.paper, paperScale: this.paperScale, paperScaleString: this.paperScaleString, startWidth: this.startWidth, startHeight: this.startHeight, startPadding: this.startPadding});
+    this.paper = output.paper;
+    this.paperScale = output.paperScale;
+    this.paperScaleString = output.paperScaleString;
+  }
+
+  public restoreZoomAction = () => {
+    var output = restoreZoom({paper: this.paper, paperScale: this.paperScale, paperScaleString: this.paperScaleString, startWidth: this.startWidth, startHeight: this.startHeight, startPadding: this.startPadding});
+    this.paper = output.paper;
+    this.paperScale = output.paperScale;
+    this.paperScaleString = output.paperScaleString;
+  }
+
+  public onScroll(event: Event): void {
     const element = (event.target as HTMLDivElement);
     this.scrollTop = element.scrollTop;
     this.scrollLeft = element.scrollLeft;
@@ -1012,4 +384,9 @@ export class NewBehaviorModelComponent implements OnInit, AfterViewInit {
     this.visiblePaper.y = this.scrollTop;
   }
 
+}
+
+interface visiblePaper {
+  x: number,
+  y: number
 }

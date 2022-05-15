@@ -20,6 +20,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AppComponent } from './app.component';
 import { BehaviorModelListComponent } from './components/behavior-model-list/behavior-model-list.component';
@@ -28,6 +30,13 @@ import { NewBehaviorModelComponent } from './components/new-behavior-model/new-b
 import { NewBehaviorModelProbabilityModalComponent } from './components/new-behavior-model-probability-modal/new-behavior-model-probability-modal.component';
 import { NewSimulationComponent } from './components/new-simulation/new-simulation.component';
 import { SimulationListComponent } from './components/simulation-list/simulation-list.component';
+import { SimulationAddedModalComponent } from './components/simulation-added-modal/simulation-added-modal.component';
+import { SimulationDeletedModalComponent } from './components/simulation-deleted-modal/simulation-deleted-modal.component';
+import { SimulationCopiedModalComponent } from './components/simulation-copied-modal/simulation-copied-modal.component';
+import { SimulationDeleteConfirmModalComponent } from './components/simulation-delete-confirm-modal/simulation-delete-confirm-modal.component';
+import { NewBehaviorModelNodeSettingsQueryModalComponent } from './components/new-behavior-model-node-settings-query-modal/new-behavior-model-node-settings-query-modal.component';
+import { NewBehaviorModelNodeSettingsPageserpModalComponent } from './components/new-behavior-model-node-settings-pageserp-modal/new-behavior-model-node-settings-pageserp-modal.component';
+import { NewBehaviorModelNodeSettingsEndbookunbookModalComponent } from './components/new-behavior-model-node-settings-endbookunbook-modal/new-behavior-model-node-settings-endbookunbook-modal.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +46,14 @@ import { SimulationListComponent } from './components/simulation-list/simulation
     NewBehaviorModelComponent,
     NewBehaviorModelProbabilityModalComponent,
     NewSimulationComponent,
-    SimulationListComponent
+    SimulationListComponent,
+    SimulationAddedModalComponent,
+    SimulationDeletedModalComponent,
+    SimulationCopiedModalComponent,
+    SimulationDeleteConfirmModalComponent,
+    NewBehaviorModelNodeSettingsQueryModalComponent,
+    NewBehaviorModelNodeSettingsPageserpModalComponent,
+    NewBehaviorModelNodeSettingsEndbookunbookModalComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +80,9 @@ import { SimulationListComponent } from './components/simulation-list/simulation
     MatGridListModule,
     MatSelectModule,
     MatRadioModule,
-    MatSliderModule
+    MatSliderModule,
+    MatTooltipModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

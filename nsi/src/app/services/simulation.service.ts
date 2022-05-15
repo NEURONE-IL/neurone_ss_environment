@@ -8,6 +8,7 @@ import { Simulation } from '../models/simulation';
 })
 
 export class SimulationService {
+
   url = "http://localhost:4000/api/simulations/";
 
   constructor(private http: HttpClient) {
@@ -24,4 +25,5 @@ export class SimulationService {
   createSimulation(simulation: Simulation): Observable<any> {
     return this.http.post(this.url + "create/", simulation);
   }
+  
 }
