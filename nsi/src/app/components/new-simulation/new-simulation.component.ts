@@ -62,7 +62,11 @@ export class NewSimulationComponent implements OnInit {
       numberDocuments: this.simulationForm.get('numberDocuments')?.value,
       numberRelevantDocuments: this.simulationForm.get('numberRelevantDocuments')?.value,
       randomActions: this.simulationForm.get('randomActions')?.value,
+      expiration: true, // ATENCION
+      queryList: [], // ATENCION
+      behaviorModelId: '-1', // ATENCION
       length: this.lengthToSeconds(this.simulationForm.get('length')?.value),
+      sensibility: 90, // ATENCION
       interval: this.simulationForm.get('interval')?.value,
       speed: this.simulationForm.get('speed')?.value,
       creationDate: (new Date(Date.now())).toString(),

@@ -1,0 +1,52 @@
+body {
+    text-align: center;
+    margin: auto;
+    max-width: 800px;
+}
+
+mat-label {
+    width: 300px;
+}
+
+.clear {
+    color: black;
+    background-color: transparent;
+    width: 5px;
+    position: relative;
+    left: -10px;
+}
+
+mat-icon {
+  padding: 0px 5px 0px 0px;
+  cursor: pointer;
+}
+
+mat-error {
+    display: none;
+}
+
+form mat-error:first-child {
+    display: block;
+}
+
+mat-list {
+    text-align: left;
+    border-style: solid;
+    border-width: thin;
+    border-color: #787878;
+    width: 560px;
+    height: 200px;
+    overflow: auto;
+}
+
+.buttonSave {
+    background-color: green;
+}
+
+.buttonSave[disabled] {
+    background-color: lightgreen;
+}
+
+.queryList {
+    padding: 0px 120px;
+}

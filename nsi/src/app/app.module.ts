@@ -37,6 +37,7 @@ import { SimulationDeleteConfirmModalComponent } from './components/simulation-d
 import { NewBehaviorModelNodeSettingsQueryModalComponent } from './components/new-behavior-model-node-settings-query-modal/new-behavior-model-node-settings-query-modal.component';
 import { NewBehaviorModelNodeSettingsPageserpModalComponent } from './components/new-behavior-model-node-settings-pageserp-modal/new-behavior-model-node-settings-pageserp-modal.component';
 import { NewBehaviorModelNodeSettingsEndbookunbookModalComponent } from './components/new-behavior-model-node-settings-endbookunbook-modal/new-behavior-model-node-settings-endbookunbook-modal.component';
+import { QueryListComponent } from './components/query-list/query-list.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { NewBehaviorModelNodeSettingsEndbookunbookModalComponent } from './compo
     SimulationDeleteConfirmModalComponent,
     NewBehaviorModelNodeSettingsQueryModalComponent,
     NewBehaviorModelNodeSettingsPageserpModalComponent,
-    NewBehaviorModelNodeSettingsEndbookunbookModalComponent
+    NewBehaviorModelNodeSettingsEndbookunbookModalComponent,
+    QueryListComponent
   ],
   imports: [
     BrowserModule,
@@ -61,6 +63,7 @@ import { NewBehaviorModelNodeSettingsEndbookunbookModalComponent } from './compo
       {path: 'home', component: HomePageComponent},
       {path: 'new-behavior-model', component: NewBehaviorModelComponent},
       {path: 'new-simulation', component: NewSimulationComponent},
+      {path: 'query-list', component: QueryListComponent}, // TEMPORAL
       {path: '**', redirectTo: 'home', pathMatch: 'full'},
     ]),
     HttpClientModule,

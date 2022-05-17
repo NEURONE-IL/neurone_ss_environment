@@ -49,7 +49,7 @@ exports.getSimulation = async (req, res) => {
 exports.updateSimulation = async (req, res) => {
 
 	try {
-		const { name, description, numberStudents, domain, task, numberDocuments, numberRelevantDocuments, randomActions, length, interval, speed, lastDeployDate } = req.body;
+		const { name, description, numberStudents, domain, task, numberDocuments, numberRelevantDocuments, randomActions, expiration, queryList, behaviorModelId, length, sensibility, interval, speed, lastDeployDate } = req.body;
 		let simulation = await Simulation.findById(req.params.id);
 
 		if (!simulation) {
@@ -64,7 +64,11 @@ exports.updateSimulation = async (req, res) => {
 		simulation.numberDocuments = numberDocuments;
 		simulation.numberRelevantDocuments = numberRelevantDocuments;
 		simulation.randomActions = randomActions;
+		simulation.expiration = expiration;
+		simulation.queryList = queryList;
+		simulation.behaviorModelId = behaviorModelId;
 		simulation.length = length;
+		simulation.sensibility = sensibility;
 		simulation.interval = interval;
 		simulation.speed = speed;
 		simulation.lastDeployDate = lastDeployDate;

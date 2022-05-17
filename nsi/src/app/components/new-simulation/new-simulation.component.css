@@ -56,4 +56,12 @@ form mat-error:first-child {
 
 ::ng-deep .mat-slider-track-fill {
   background-color: #2A57A1 !important;
-} 
+}
+
+button {
+    background-color: green;
+}
+
+button[disabled] {
+    background-color: lightgreen;
+}

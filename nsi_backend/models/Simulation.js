@@ -29,13 +29,27 @@ const SimulationSchema = mongoose.Schema({
 		type: Number,
 		required: true
 	},
-	// List of queries
 	randomActions: {
 		type: Boolean,
 		required: true
 	},
-	// Behavior model
+	expiration: {
+		type: Boolean,
+		required: true
+	},
+	queryList: {
+		type: [String],
+		required: true
+	},
+	behaviorModelId: {
+		type: String,
+		required: true
+	},
 	length: {
+		type: Number,
+		required: true
+	},
+	sensibility: {
 		type: Number,
 		required: true
 	},

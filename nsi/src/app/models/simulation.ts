@@ -9,13 +9,17 @@ export class Simulation {
 	numberDocuments: number;
 	numberRelevantDocuments: number;
 	randomActions: boolean;
+	expiration: boolean;
+	queryList: string[];
+	behaviorModelId: string;
 	length: number;
+	sensibility: number;
 	interval: number;
 	speed: number;
 	creationDate: string;
 	lastDeployDate: string;
 
-	constructor(_id: string, name: string, description: string, numberStudents: number, domain: string, task: string, numberDocuments: number, numberRelevantDocuments: number, randomActions: boolean, length: number, interval: number, speed: number, creationDate: string, lastDeployDate: string) {
+	constructor(_id: string, name: string, description: string, numberStudents: number, domain: string, task: string, numberDocuments: number, numberRelevantDocuments: number, randomActions: boolean, expiration: boolean, queryList: string[], behaviorModelId: string, length: number, sensibility: number, interval: number, speed: number, creationDate: string, lastDeployDate: string) {
 		this._id = _id;
 		this.name = name;
 		this.description = description;
@@ -25,7 +29,11 @@ export class Simulation {
 		this.numberDocuments = numberDocuments;
 		this.numberRelevantDocuments = numberRelevantDocuments;
 		this.randomActions = randomActions;
+		this.expiration = expiration;
+		this.queryList = queryList;
+		this.behaviorModelId = behaviorModelId;
 		this.length = length;
+		this.sensibility = sensibility;
 		this.interval = interval;
 		this.speed = speed;
 		this.creationDate = creationDate

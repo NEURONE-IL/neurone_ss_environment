@@ -102,7 +102,11 @@ export class SimulationListComponent implements OnInit {
       numberDocuments: this.simulationList[i].numberDocuments,
       numberRelevantDocuments: this.simulationList[i].numberRelevantDocuments,
       randomActions: this.simulationList[i].randomActions,
+      expiration: this.simulationList[i].expiration, // ATENCION
+      queryList: this.simulationList[i].queryList, // ATENCION
+      behaviorModelId: this.simulationList[i].behaviorModelId, // ATENCION
       length: this.simulationList[i].length,
+      sensibility: this.simulationList[i].sensibility,
       interval: this.simulationList[i].interval,
       speed: this.simulationList[i].speed,
       creationDate: (new Date(Date.now())).toString(),
