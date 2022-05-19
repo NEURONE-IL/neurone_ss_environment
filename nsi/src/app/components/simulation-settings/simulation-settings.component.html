@@ -1,0 +1,53 @@
+<html>
+    <br /><br /><br /><br />
+    <h2 style="text-align: center;">Simulation "{{simulationForm?.get('name')?.value}}"</h2>
+    <body>
+
+      <br>
+
+      <form [formGroup]="simulationForm!">
+
+      <br>
+        <mat-label style="margin-right: 10px; vertical-align: text-top">Description:</mat-label>
+        <mat-form-field style="margin-left: 162px;" appearance="fill">
+          <textarea required [disabled]="true" formControlName="description" matInput></textarea>
+        </mat-form-field>
+
+        <br>
+
+        <mat-label style="margin-right: 10px;">Creation date:</mat-label>
+        <mat-form-field style="margin-left: 150px;">
+          <input required [disabled]="true" formControlName="creationDate" matInput/>
+        </mat-form-field>
+
+        <br>
+
+        <mat-label style="margin-right: 10px;">Date of last deploy:</mat-label>
+        <mat-form-field style="margin-left: 118px;">
+          <input required [disabled]="true" formControlName="lastDeployDate" matInput/>
+        </mat-form-field>
+      </form>
+
+      <br><br><br>
+
+      <div class="btn-group" style="text-align: center">
+        <button mat-raised-button color="primary" (click)="configureSimulation()" style="margin-right: 20px;">
+            Configure
+        </button>
+        <button type="submit" class="submitButton" mat-raised-button color="primary" style="margin-right: 20px;">
+            Deploy
+        </button>
+        <button mat-raised-button color="primary" (click)="deleteSimulation()" style="background-color: 'red';">
+            Delete
+        </button>
+      </div>
+
+      <br><br>
+
+      <div style="text-align: right; margin-right: 65px;">
+        <button class="additionalOptionsButton" mat-raised-button color="primary" routerLink="/home-page" style="background-color: '#595959';">
+            Return
+        </button>
+      </div>
+    </body>
+</html>

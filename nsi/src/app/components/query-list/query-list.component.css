@@ -39,12 +39,21 @@ mat-list {
     overflow: auto;
 }
 
+.mat-list-item {
+    max-height: 35px;
+}
+
 .buttonSave {
     background-color: green;
 }
 
 .buttonSave[disabled] {
     background-color: lightgreen;
+    cursor: default;
+}
+
+button[disabled] {
+    cursor: default;
 }
 
 .queryList {

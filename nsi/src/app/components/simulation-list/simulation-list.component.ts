@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { MatTableDataSource } from '@angular/material/table';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, MatSortable } from '@angular/material/sort';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
@@ -27,11 +27,13 @@ export class SimulationListComponent implements OnInit {
   public columns = ['name', 'creationDate', 'lastDeployDate', 'numberStudents', 'deployOptions', 'otherOptions'];
   public dataSource: any;
   public filterInput: string = "";
+  private firstSort = true;
 
   @ViewChild(MatSort, {static: true}) private sort!: MatSort;
 
   constructor(private _simulationService: SimulationService,
-              private _matDialog: MatDialog)
+              private _matDialog: MatDialog,
+              private router: Router)
   { }
 
   ngOnInit(): void {
@@ -60,9 +62,12 @@ export class SimulationListComponent implements OnInit {
       }    
 
       this.dataSource = new MatTableDataSource<Simulation>(this.simulationList);
+      if (this.firstSort === true) {
+        this.sort.sort(({ id: 'creationDate', start: 'desc'}) as MatSortable);
+        this.firstSort = false;
+      }
       this.dataSource.sort = this.sort;
       this.dataSource.filterPredicate = (data: Simulation, filter: string) => data.name.includes(filter);
-
     }, (error: any) => {
       console.log(error);
     })
@@ -93,8 +98,29 @@ export class SimulationListComponent implements OnInit {
       }
     }
 
+    let newName = this.simulationList[i].name.concat(" copy");
+    let nameAlreadyExists = true;
+    let copyCount = 1;
+
+    let j = 0;
+
+    while (nameAlreadyExists == true) {   
+      nameAlreadyExists = false;
+      for (j = 0; j < this.simulationList.length; j++) {
+        if (this.simulationList[j].name.toLowerCase() === newName.trim().toLowerCase()) {
+          nameAlreadyExists = true;
+          copyCount = copyCount + 1;
+          if (newName.slice(-4) !== "copy") {
+            newName = newName.substring(0, newName.lastIndexOf(" "));
+          }
+          newName = newName.concat(" " + copyCount.toString());
+          break;
+        }
+      }
+    }
+
     const SIMULATION: Simulation = {
-      name: this.simulationList[i].name.concat(" copy"),
+      name: newName,
       description: this.simulationList[i].description,
       numberStudents: this.simulationList[i].numberStudents,
       domain: this.simulationList[i].domain,
@@ -102,9 +128,9 @@ export class SimulationListComponent implements OnInit {
       numberDocuments: this.simulationList[i].numberDocuments,
       numberRelevantDocuments: this.simulationList[i].numberRelevantDocuments,
       randomActions: this.simulationList[i].randomActions,
-      expiration: this.simulationList[i].expiration, // ATENCION
-      queryList: this.simulationList[i].queryList, // ATENCION
-      behaviorModelId: this.simulationList[i].behaviorModelId, // ATENCION
+      expiration: this.simulationList[i].expiration,
+      queryList: Object.assign([], this.simulationList[i].queryList),
+      behaviorModelId: this.simulationList[i].behaviorModelId,
       length: this.simulationList[i].length,
       sensibility: this.simulationList[i].sensibility,
       interval: this.simulationList[i].interval,
@@ -164,6 +190,12 @@ export class SimulationListComponent implements OnInit {
       sub.unsubscribe();
     });
 
+  }
+
+  public goToSimulationSettings = (_id: string) => {
+    this.router.navigate(['/', 'simulation-settings'], { state:
+      { _id: _id
+     }});
   }
 
 }

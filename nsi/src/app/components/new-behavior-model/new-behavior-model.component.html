@@ -1,7 +1,31 @@
 <html>
     <body>
 
-        <br><br><br><br><br>
+        <br /><br /><br /><br />
+
+        <div class="title" style="text-align: center;">
+            <h2>New behavior model</h2>
+            <h3>Model design</h3>
+        </div> 
+
+        <br /><br />
+
+
+        <form [formGroup]="behaviorModelForm">
+            <mat-form-field [style.width.%]="50" appearance="fill" appearance="outline">
+                <mat-label>Model name:</mat-label>
+
+                <input matInput placeholder="Example: Model 1" required formControlName="name">
+
+                <button class="clear" *ngIf="behaviorModelForm.get('name')?.value" matSuffix mat-icon-button (click)="this.clearTextInput('name')">
+                    <mat-icon>close</mat-icon>
+                </button>
+
+                <mat-error *ngIf="behaviorModelForm.get('name')?.hasError('required')">You must enter a name.</mat-error>
+                <mat-error *ngIf="behaviorModelForm.get('name')?.hasError('nameExists')">The model name already exists.</mat-error>
+            </mat-form-field>
+        </form>
+
         <div class="optionsContainer">
             <button mat-raised-button color="primary" (click)="addQueryAction()">
                 <img src="/assets/behavior-model-query.png" style="height: 30px"><br>Query
@@ -40,14 +64,41 @@
             </span>    
         </div>
 
+        <br><br><br>
+
+        <h3 style="text-align: center;">Model validation</h3>
+        <div class="validationStatus" style="text-align: left;">
+            <p *ngIf="modelValid == false && errorMessages.length == 0">Status: Waiting to start validation check.</p>
+            <p *ngIf="modelValid == false && errorMessages.length > 0" style="color: red;">Status: The model has errors.</p>
+            <p *ngIf="modelValid == true">Status: The model is valid.</p>
+        </div>
+        <div class="validationList">
+                <mat-list>
+                    <mat-list-item *ngFor="let errorMessage of errorMessages">
+                        <table style="width: 100%;">
+                            <tr>
+                                <td><span style="text-align: left;">{{errorMessage}}</span></td>
+                            </tr>
+                        </table>
+                    </mat-list-item>
+                </mat-list>
+        </div>
+
         <br><br>
+
         <div class="additionalOptions">
-            <button class="additionalOptionsButton" mat-raised-button color="primary" (click)="validateModelAction()">
+            <button type="button" class="additionalOptionsButton" mat-raised-button color="primary" (click)="validateModelAction()" style="margin-right: 20px;">
                 Validate model
+            </button>
+            <button type="submit" form="behaviorModelForm" class="submitButton" [disabled]="behaviorModelForm.invalid || (modelValid == false)" class="additionalOptionsButton" (click)="addBehaviorModel()" mat-raised-button color="primary" style="margin-right: 20px; background-color: 'green';">
+                Save model
+            </button>
+            <button type="button" class="additionalOptionsButton" mat-raised-button color="primary" routerLink="/home-page" style="background-color: '#595959';">
+                Discard model
             </button>
         </div>
 
-        <br><br><br>
+        <br><br><br><br><br><br><br><br>
         <button mat-raised-button color="primary" (click)="toJSONAction()">
             <br>To JSON
         </button>

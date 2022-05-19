@@ -1,0 +1,35 @@
+body {
+    text-align: left;
+    margin: auto;
+    max-width: 650px;
+}
+
+mat-label {
+    width: 300px;
+}
+
+button {
+    border-radius: 5px;
+}
+
+button[disabled] {
+    background-color: lightgreen;
+    cursor: default;
+}
+
+input[disabled] {
+    color: black;
+}
+
+form {
+    padding-left: 100px;
+    background-color: #D3DCF2;
+    border-radius: 5px;
+}
+
+textarea {
+    max-height: 200px;
+    overflow: auto;
+    max-width: 100px;
+    overflow-wrap: normal;
+}

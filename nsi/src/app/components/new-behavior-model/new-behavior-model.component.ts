@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import { FormsModule } from '@angular/forms'; 
+import { FormBuilder, FormGroup, Validators, ValidatorFn, ValidationErrors, AbstractControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { Subscription, fromEvent } from 'rxjs';
 
@@ -12,10 +13,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+import { BehaviorModel } from '../../models/behavior-model';
+import { BehaviorModelService } from '../../services/behavior-model.service';
+
 import { NewBehaviorModelProbabilityModalComponent } from '../new-behavior-model-probability-modal/new-behavior-model-probability-modal.component';
 import { NewBehaviorModelNodeSettingsEndbookunbookModalComponent } from '../new-behavior-model-node-settings-endbookunbook-modal/new-behavior-model-node-settings-endbookunbook-modal.component';
 import { NewBehaviorModelNodeSettingsPageserpModalComponent } from '../new-behavior-model-node-settings-pageserp-modal/new-behavior-model-node-settings-pageserp-modal.component';
 import { NewBehaviorModelNodeSettingsQueryModalComponent } from '../new-behavior-model-node-settings-query-modal/new-behavior-model-node-settings-query-modal.component';
+import { BehaviorModelAddedModalComponent } from '../behavior-model-added-modal/behavior-model-added-modal.component';
 import { addStartNode } from '../../services/jointjs-settings/addStartNode';
 import { addQueryNode } from '../../services/jointjs-settings/addQueryNode';
 import { addSERPNode } from '../../services/jointjs-settings/addSERPNode';
@@ -52,8 +57,12 @@ export class NewBehaviorModelComponent implements OnInit {
   private scrollTop: number
   private scrollLeft: number
   private visiblePaper: visiblePaper
+  public behaviorModelForm: FormGroup
+  private behaviorModelExistingNames: string[] = []
+  public modelValid = false;
+  public errorMessages: string[] = [];
 
-  constructor(public dialog: MatDialog, public snackbar: MatSnackBar, private elementRef: ElementRef) {
+  constructor(private fb: FormBuilder, public dialog: MatDialog, public snackbar: MatSnackBar, private elementRef: ElementRef, private _behaviorModelService: BehaviorModelService, private router: Router) {
     this.graph = new joint.dia.Graph();
     this.paper = new joint.dia.Paper({model: this.graph});
     this.paperScale = 1;
@@ -71,11 +80,80 @@ export class NewBehaviorModelComponent implements OnInit {
     this.scrollTop = 0;
     this.scrollLeft = 0;
     this.visiblePaper = {x: 0, y: 0}
+
+    this.behaviorModelForm = this.fb.group({
+      name: ['', [Validators.required, this.existingNameValidator()]]
+    });
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
 
-    var namespace = joint.shapes;    
+  // CODIGO DE PRUEBA PARA SABER COMO CARGAR UN GRAFICO A PARTIR DEL JSON 
+
+    // var tempGraph = '';
+    // let behaviorModelList = await this._behaviorModelService.getBehaviorModels().toPromise();
+    // for (let i = 0; i < behaviorModelList.length; i++) {
+    //   this.behaviorModelExistingNames.push(behaviorModelList[i].name);
+    //   if (i == 0) {
+    //     tempGraph = behaviorModelList[i].model;
+    //     console.log(this.graph);
+    //   }
+    // }
+    
+    // var namespace = joint.shapes;
+
+    // this.graph = new joint.dia.Graph({}, { cellNamespace: namespace });
+
+    // this.paper = new joint.dia.Paper({
+    //     el: jQuery('#behaviorModelEditor'),
+    //     model: this.graph,
+    //     width: this.startWidth,
+    //     height: this.startHeight,
+    //     gridSize: 10,
+    //     drawGrid: true,
+    //     cellViewNamespace: namespace,
+    //     perpendicularLinks: true,
+    //     linkPinning: true,
+    //     snapLabels: true,
+    //     //snapLinks: { radius: 20 },
+    //     defaultLink: new joint.dia.Link({
+    //       router: { name: 'manhattan' },
+    //       connection: { name: 'rounded' },
+    //       attrs: {
+    //         '.connection': {
+    //           'stroke-width': 2,
+    //         },
+    //         '.marker-target': {
+    //           d: 'M 10 0 L 0 5 L 10 10 z',
+    //           'fill': 'blue',
+    //           'stroke': 'blue'
+    //         },
+    //       },
+    //       labels: [
+    //         { position: 0.5, attrs: { text: { text: '(no value)', fill: 'red' } } }
+    //       ]
+    //     }),
+    //     interactive: { useLinkTools: true, labelMove: true },
+    //     //validateConnection: function(cellViewS, magnetS, cellViewT, magnetT, end, linkView) {
+    //     //  return cellViewS != cellViewT;
+    //     //}
+    // });
+
+    // this.paper.setGrid({
+    //     name: 'mesh',
+    //     args: { color: '#dedede' },
+    // }).drawGrid();
+
+    // this.graph.fromJSON(JSON.parse(tempGraph));
+
+    // CODIGO NORMAL A CONTINUACION:
+
+    let behaviorModelNamesList = await this._behaviorModelService.getBehaviorModelsIdsNames().toPromise();
+    for (let i = 0; i < behaviorModelNamesList.length; i++) {
+      this.behaviorModelExistingNames.push(behaviorModelNamesList[i].name);
+    }
+
+    var namespace = joint.shapes;
 
     this.graph = new joint.dia.Graph({}, { cellNamespace: namespace });
 
@@ -216,13 +294,13 @@ export class NewBehaviorModelComponent implements OnInit {
           }
 
         } else if (sourceTypeNode == "bookmark") {      
-          if ((targetTypeNode != "query") && (targetTypeNode != "page")) { // ¿¿¿Y TAL VEZ A END???
+          if ((targetTypeNode != "query") && (targetTypeNode != "page") && (targetTypeNode != "end")) {
             this.graph.getCell(link.id).remove();
             this.snackbar.open('Invalid link', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
           }
 
         } else if (sourceTypeNode == "unBookmark") {    
-          if ((targetTypeNode != "query") && (targetTypeNode != "page")) { // ¿¿¿Y TAL VEZ A END???
+          if ((targetTypeNode != "query") && (targetTypeNode != "page") && (targetTypeNode != "end")) {
             this.graph.getCell(link.id).remove();
             this.snackbar.open('Invalid link', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
           }
@@ -352,7 +430,43 @@ export class NewBehaviorModelComponent implements OnInit {
   }
 
   public validateModelAction = () => {
-    validateModel(this.graph);
+    this.errorMessages = validateModel(this.graph);
+    if (this.errorMessages.length > 0) {
+      this.modelValid = false;
+    } else {
+      this.modelValid = true;
+    }
+  }
+
+  public addBehaviorModel = () => {
+    const BEHAVIORMODEL: BehaviorModel = {
+      name: this.behaviorModelForm.get('name')?.value,
+      model: JSON.stringify(this.graph.toJSON()),
+      creationDate: (new Date(Date.now())).toString()
+    };
+
+    this._behaviorModelService.createBehaviorModel(BEHAVIORMODEL).subscribe(data => {
+      console.log("Behavior model added");
+      this.openSuccessModal();
+    }), (error: any) => {
+      console.log(error);
+      this.router.navigate(['/', 'new-behavior-model']);
+    }
+  }
+
+  private openSuccessModal = () => {
+
+    const dialogRef = this.dialog.open(BehaviorModelAddedModalComponent, { width: '25%' } );
+    const sub = dialogRef.componentInstance.onSubmit.subscribe((value: any) => {
+      dialogRef.close();
+      this.router.navigate(['/', 'home'], { state: {
+        goToBehaviorModelsTab: true
+      }});
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      sub.unsubscribe();
+    });
+
   }
 
   public zoomInAction = () => {
@@ -382,6 +496,39 @@ export class NewBehaviorModelComponent implements OnInit {
     this.scrollLeft = element.scrollLeft;
     this.visiblePaper.x = this.scrollLeft;
     this.visiblePaper.y = this.scrollTop;
+  }
+
+  private existingNameValidator = (): ValidatorFn => {
+
+    return (control: AbstractControl): ValidationErrors | null => {
+
+      let value = control.value.trim();
+
+      if (!value) {
+          return null;
+      }
+
+      let nameDoesntExist = true;
+
+      for (let i = 0; i < this.behaviorModelExistingNames.length; i++) {
+        if (this.behaviorModelExistingNames[i].toLowerCase() === value.toLowerCase()) {
+          nameDoesntExist = false;
+          break;
+        }
+      }
+
+      const forbidden = !nameDoesntExist;
+
+      return forbidden ? {nameExists: {value: value}} : null;
+      
+    };
+
+  }
+
+  public clearTextInput = (input: string) => {
+
+    this.behaviorModelForm.patchValue({[input]: ''});
+
   }
 
 }

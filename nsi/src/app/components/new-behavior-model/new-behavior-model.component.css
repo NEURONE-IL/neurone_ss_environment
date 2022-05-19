@@ -56,3 +56,35 @@ mat-icon {
 .additionalOptionsButton {
     border-radius: 5px;
 }
+
+.clear {
+    color: black;
+    background-color: transparent;
+    width: 5px;
+    position: relative;
+    left: -10px;
+    top: -6px;
+}
+
+form {
+    text-align: center;
+}
+
+button[disabled] {
+    background-color: lightgreen!important;
+    cursor: default;
+}
+
+mat-list {
+    text-align: left;
+    border-style: solid;
+    border-width: thin;
+    border-color: #787878;
+    width: 1030px;
+    height: 200px;
+    overflow: auto;
+}
+
+.mat-list-item {
+    max-height: 35px;
+}

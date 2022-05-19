@@ -31,7 +31,8 @@ mat-slider {
     background-color: transparent;
     width: 5px;
     position: relative;
-    left: -10px;
+    left: -14px;
+    top: 4px;
 }
 
 mat-icon {
@@ -58,10 +59,16 @@ form mat-error:first-child {
   background-color: #2A57A1 !important;
 }
 
-button {
+.submit {
     background-color: green;
 }
 
 button[disabled] {
     background-color: lightgreen;
+    cursor: default;
+}
+
+.percent {
+    position: relative;
+    left: -10px;
 }

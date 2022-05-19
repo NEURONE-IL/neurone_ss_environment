@@ -14,8 +14,16 @@ export class SimulationService {
   constructor(private http: HttpClient) {
   }
 
+  getSimulation(_id: string): Observable<any> {
+    return this.http.get(this.url + "get/" + _id);
+  }
+
   getSimulations(): Observable<any> {
     return this.http.get(this.url + "get/");
+  }
+
+  getSimulationNames(): Observable<any> {
+    return this.http.get(this.url + "getnames/");
   }
 
   deleteSimulation(id: string): Observable<any> {

@@ -29,6 +29,22 @@ exports.getBehaviorModels = async (req, res) => {
 
 }
 
+exports.getBehaviorModelsIDsAndNames = async (req, res) => {
+
+	try {
+		const behaviorModels = await BehaviorModel.find();
+		let behaviorModelIDsAndNames = [];
+		for (let i = 0; i < behaviorModels.length; i++) {
+	        behaviorModelIDsAndNames.push({_id: behaviorModels[i]._id, name: behaviorModels[i].name});
+	    }
+		res.json(behaviorModelIDsAndNames);
+	} catch (error) {
+		console.log(error);
+		res.status(500).send("Error: getBehaviorModelsIDsAndNames method failed");
+	}
+
+}
+
 exports.getBehaviorModel = async (req, res) => {
 
 	try {

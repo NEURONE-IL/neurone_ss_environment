@@ -1,5 +1,5 @@
 <div class="content" role="main">
-  <mat-tab-group [@.disabled]="true">
+  <mat-tab-group [@.disabled]="true" [(selectedIndex)]="selectedTab">
     <mat-tab label="Simulations"> <app-simulation-list></app-simulation-list> </mat-tab>
     <mat-tab label="Behavior models"> <app-behavior-model-list></app-behavior-model-list> </mat-tab>
   </mat-tab-group>

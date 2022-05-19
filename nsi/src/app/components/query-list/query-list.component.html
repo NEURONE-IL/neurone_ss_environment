@@ -15,7 +15,7 @@
 	        <mat-form-field [style.width.%]="70" appearance="fill">
 				<mat-label>Query</mat-label>
 
-				<input matInput placeholder="Example: What is a neural network?" required formControlName="query">
+				<input matInput placeholder="Example: What is a neural network?" required formControlName="query" (input)="onInputChange()">
 
 	            <button class="clear" *ngIf="queryForm.get('query')?.value" matSuffix mat-icon-button (click)="this.clearTextInput('query')">
               		<mat-icon>close</mat-icon>
@@ -26,7 +26,7 @@
 			</mat-form-field>
 
 	        <div class="btn-group">
-	            <button type="submit" [disabled]="queryForm.invalid" mat-raised-button color="primary" style="border-radius: 5px; width: 200px; margin-left: 360px;">Add query</button>
+	            <button type="submit" #submitQuery [disabled]="queryForm.invalid || forceDisableSubmitButton" mat-raised-button color="primary" style="border-radius: 5px; width: 200px; margin-left: 360px;">Add query</button>
 	        </div>
 
 	    </form>
@@ -38,8 +38,8 @@
 			  	<mat-list-item *ngFor="let query of queryList">
 			  		<table style="width: 100%;">
 			  			<tr>
-			  				<td style="width: 80%;">{{query}}</td>
-			    			<td style="width: 20%;"><span style="text-align: left;"><mat-icon class="delete" matTooltip="Delete the query" (click)="deleteQuery(query)">delete</mat-icon></span></td>
+			  				<td style="width: 95%;">{{query}}</td>
+			    			<td style="width: 5%;"><span style="text-align: left;"><mat-icon class="delete" matTooltip="Delete the query" (click)="deleteQuery(query)">delete</mat-icon></span></td>
 			    		</tr>
 			    	</table>
 			  	</mat-list-item>
@@ -54,7 +54,7 @@
 
 		<div class="btn-group" style="text-align: right; margin-right: 120px;">
             <button class="buttonSave" [disabled]="queryList.length == 0" mat-raised-button color="primary" style="border-radius: 5px; width: 200px; margin-right: 10px;" (click)="saveQueryList()">Save changes</button>
-            <button mat-raised-button style="background-color: '#595959'; border-radius: 5px; width: 200px; margin-left: 10px;" routerLink="/home-page" >Discard changes</button>
+            <button mat-raised-button style="background-color: '#595959'; border-radius: 5px; width: 200px; margin-left: 10px;" (click)="discardQueryList()" >Discard changes</button>
             <!-- EL SEGUNDO BOTON TIENE QUE LLEVAR DE VUELTA A NEW SIMULATION O EDIT SIMULATION -->
 	    </div>
 

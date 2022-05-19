@@ -38,6 +38,11 @@ import { NewBehaviorModelNodeSettingsQueryModalComponent } from './components/ne
 import { NewBehaviorModelNodeSettingsPageserpModalComponent } from './components/new-behavior-model-node-settings-pageserp-modal/new-behavior-model-node-settings-pageserp-modal.component';
 import { NewBehaviorModelNodeSettingsEndbookunbookModalComponent } from './components/new-behavior-model-node-settings-endbookunbook-modal/new-behavior-model-node-settings-endbookunbook-modal.component';
 import { QueryListComponent } from './components/query-list/query-list.component';
+import { BehaviorModelAddedModalComponent } from './components/behavior-model-added-modal/behavior-model-added-modal.component';
+import { BehaviorModelCopiedModalComponent } from './components/behavior-model-copied-modal/behavior-model-copied-modal.component';
+import { BehaviorModelDeleteConfirmModalComponent } from './components/behavior-model-delete-confirm-modal/behavior-model-delete-confirm-modal.component';
+import { BehaviorModelDeletedModalComponent } from './components/behavior-model-deleted-modal/behavior-model-deleted-modal.component';
+import { SimulationSettingsComponent } from './components/simulation-settings/simulation-settings.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +60,12 @@ import { QueryListComponent } from './components/query-list/query-list.component
     NewBehaviorModelNodeSettingsQueryModalComponent,
     NewBehaviorModelNodeSettingsPageserpModalComponent,
     NewBehaviorModelNodeSettingsEndbookunbookModalComponent,
-    QueryListComponent
+    QueryListComponent,
+    BehaviorModelAddedModalComponent,
+    BehaviorModelCopiedModalComponent,
+    BehaviorModelDeleteConfirmModalComponent,
+    BehaviorModelDeletedModalComponent,
+    SimulationSettingsComponent
   ],
   imports: [
     BrowserModule,
@@ -63,9 +73,11 @@ import { QueryListComponent } from './components/query-list/query-list.component
       {path: 'home', component: HomePageComponent},
       {path: 'new-behavior-model', component: NewBehaviorModelComponent},
       {path: 'new-simulation', component: NewSimulationComponent},
-      {path: 'query-list', component: QueryListComponent}, // TEMPORAL
-      {path: '**', redirectTo: 'home', pathMatch: 'full'},
-    ]),
+      {path: 'query-list', component: QueryListComponent},
+      {path: 'simulation-settings', component: SimulationSettingsComponent},
+      {path: '**', redirectTo: 'home', pathMatch: 'full'}],
+      {scrollPositionRestoration: 'enabled'}
+    ),
     HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,

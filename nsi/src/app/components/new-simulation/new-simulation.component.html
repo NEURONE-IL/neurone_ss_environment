@@ -115,10 +115,28 @@
 
 			<br><br>
 
+			<span style="padding: 0 243px 0 0; text-align: left;" *ngIf="(checkQueryLength() != 0) || !queryListAccessed">List of queries</span>
+			<span style="color: red; padding: 0 243px 0 0; text-align: left;" *ngIf="(checkQueryLength() === 0) && queryListAccessed">List of queries</span>
+            <button mat-raised-button color="primary" style="border-radius: 5px; width: 200px; margin-right: 10px;" (click)="openQueryListPage()">Configure</button>
+			<p style="color: red; font-size: 11px; font-family: roboto; text-align: left; margin-left: 130px" *ngIf="(checkQueryLength() === 0) && queryListAccessed">You must add a list of queries.<p>
+
+			<br>
+
 			<div class="radio">
 				<mat-label style="margin: 0 30px;">Random generation of actions</mat-label>
 
-				<mat-radio-group formControlName="randomActions">
+				<mat-radio-group formControlName="randomActions" style="margin-left: 125px">
+					<mat-radio-button value="true">Yes</mat-radio-button>
+					<mat-radio-button value="false">No</mat-radio-button>
+				</mat-radio-group>
+			</div>
+
+			<br><br><br>
+
+			<div class="radio">
+				<mat-label style="margin: 0 30px;">Expiration</mat-label>
+
+				<mat-radio-group formControlName="expiration" style="margin-left: 250px">
 					<mat-radio-button value="true">Yes</mat-radio-button>
 					<mat-radio-button value="false">No</mat-radio-button>
 				</mat-radio-group>
@@ -137,6 +155,37 @@
 
 				<mat-error *ngIf="simulationForm.get('length')?.hasError('invalidLength')">You must enter a properly formatted length (mm:ss).</mat-error>
 				<mat-error *ngIf="simulationForm.get('length')?.hasError('maxLength')">The maximum length is 59:59.</mat-error>
+			</mat-form-field>
+
+			<br><br>
+
+			<mat-form-field [style.width.%]="70" appearance="fill">
+				<mat-label>Behavior model</mat-label>
+
+				<mat-select formControlName="behaviorModelId">
+			    	<mat-option *ngFor="let behaviorModelIdName of behaviorModelIdNameList" value="{{behaviorModelIdName._id}}">{{behaviorModelIdName.name}}</mat-option>
+				</mat-select>
+			</mat-form-field>
+
+			<br><br>
+
+	        <mat-form-field [style.width.%]="70" appearance="fill">
+				<mat-label>Sensibility (percentage)</mat-label>
+
+				<input matInput placeholder="Example: 50" required formControlName="sensibility">
+
+              	<div class="percent" matSuffix>
+		            <button class="clear" *ngIf="simulationForm.get('sensibility')?.value" matSuffix mat-icon-button (click)="this.clearTextInput('sensibility')">
+	              		<mat-icon>close</mat-icon>
+	            	</button>
+	                %
+	             </div>
+
+				<mat-error *ngIf="simulationForm.get('sensibility')?.hasError('required')">You must enter the sensibility for the simulation.</mat-error>
+				<mat-error *ngIf="simulationForm.get('sensibility')?.hasError('notNumber')">You must enter a number.</mat-error>
+				<mat-error *ngIf="simulationForm.get('sensibility')?.hasError('notInteger')">You must enter an integer number.</mat-error>
+				<mat-error *ngIf="simulationForm.get('sensibility')?.hasError('min')">You must enter a number between 1 and 100.</mat-error>
+				<mat-error *ngIf="simulationForm.get('sensibility')?.hasError('max')">You must enter a number between 1 and 100.</mat-error>
 			</mat-form-field>
 
 			<br><br>
@@ -167,7 +216,7 @@
     		<br /><br />
 
 	        <div class="btn-group">
-	            <button type="submit" [disabled]="simulationForm.invalid" mat-raised-button color="primary" style="border-radius: 5px; width: 200px; margin-right: 10px;">Save simulation</button>
+	            <button id="submit" type="submit" [disabled]="simulationForm.invalid || (checkQueryLength() === 0)" mat-raised-button color="primary" style="border-radius: 5px; width: 200px; margin-right: 10px;">Save simulation</button>
 	            <button mat-raised-button style="background-color: '#595959'; border-radius: 5px; width: 200px; margin-left: 10px;" routerLink="/home-page" >Discard simulation</button>
 	        </div>
 

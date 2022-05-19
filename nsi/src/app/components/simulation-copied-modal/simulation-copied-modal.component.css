@@ -3,10 +3,14 @@ html {
 }
 
 body {
-    text-align: center;
+    text-align: left;
     display: table-cell;
 }
 
 h3 {
     text-align: left;
+}
+
+.buttonContainer {
+    text-align: center;
 }

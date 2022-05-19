@@ -29,6 +29,22 @@ exports.getSimulations = async (req, res) => {
 
 }
 
+exports.getSimulationNames = async (req, res) => {
+
+	try {
+		const simulations = await Simulation.find();
+		let simulationNames = [];
+		for (let i = 0; i < simulations.length; i++) {
+	        simulationNames.push(simulations[i].name);
+	     }
+		res.json(simulationNames);
+	} catch (error) {
+		console.log(error);
+		res.status(500).send("Error: getSimulationNames method failed");
+	}
+
+}
+
 exports.getSimulation = async (req, res) => {
 
 	try {
