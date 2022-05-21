@@ -21,6 +21,8 @@ import { NewBehaviorModelNodeSettingsEndbookunbookModalComponent } from '../new-
 import { NewBehaviorModelNodeSettingsPageserpModalComponent } from '../new-behavior-model-node-settings-pageserp-modal/new-behavior-model-node-settings-pageserp-modal.component';
 import { NewBehaviorModelNodeSettingsQueryModalComponent } from '../new-behavior-model-node-settings-query-modal/new-behavior-model-node-settings-query-modal.component';
 import { BehaviorModelAddedModalComponent } from '../behavior-model-added-modal/behavior-model-added-modal.component';
+import { BehaviorModelHasErrorsModalComponent } from '../behavior-model-has-errors-modal/behavior-model-has-errors-modal.component';
+
 import { addStartNode } from '../../services/jointjs-settings/addStartNode';
 import { addQueryNode } from '../../services/jointjs-settings/addQueryNode';
 import { addSERPNode } from '../../services/jointjs-settings/addSERPNode';
@@ -148,7 +150,7 @@ export class NewBehaviorModelComponent implements OnInit {
 
     // CODIGO NORMAL A CONTINUACION:
 
-    let behaviorModelNamesList = await this._behaviorModelService.getBehaviorModelsIdsNames().toPromise();
+    let behaviorModelNamesList = await this._behaviorModelService.getBehaviorModelsProperties().toPromise();
     for (let i = 0; i < behaviorModelNamesList.length; i++) {
       this.behaviorModelExistingNames.push(behaviorModelNamesList[i].name);
     }
@@ -256,6 +258,55 @@ export class NewBehaviorModelComponent implements OnInit {
           }
         }
 
+        // ASIGNAR 100% A LINK ENTRE START Y OTRO NODO
+
+        if (sourceTypeNode === "start") {
+          link.label(0, { attrs: { text: { text: "100%", fill: "black" } } });
+        }
+
+        // PARA EVITAR ENLACES DOBLES ENTRE UN NODO Y OTRO (SOLO EN EL MISMO SENTIDO -- REVISAR SI TAMBIEN SE DEBE IMPEDIR QUE SEAN EN OTRO SENTIDO -- VALE DECIR, BUCLES -- PARECE QUE NO SE DEBEN HACER)
+
+        for (let i = 0; i < diagram.cells.length; i++) {
+          if (diagram.cells[i].type == "link") {
+            if ((diagram.cells[i].source.id === sourceId)
+             && (diagram.cells[i].target.id === targetId)
+             && (diagram.cells[i].id !== link.id)) {
+              this.graph.getCell(link.id).remove();
+              this.snackbar.open('Link already exists', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
+              return;
+            }
+          }
+        }
+
+        // (REVISAR SI ESTO ES NECESARIO) CODIGO PARA EVITAR QUE NODOS TIPO QUERY LINKEEN A MAS DE UN NODO TIPO PAGE/SERP, Y A MAS DE UN NODO TIPO QUERY (HACER LO MISMO PARA LOS DEMAS TIPOS DE NODOS)
+
+        if (sourceTypeNode == "query") {
+          for (let i = 0; i < diagram.cells.length; i++) {
+            if ((diagram.cells[i].type == "link") && (diagram.cells[i].id !== link.id)) {
+              let targetType = '';
+              for (let j = 0; j < diagram.cells.length; j++) {
+                if (diagram.cells[j].id == diagram.cells[i].target.id) {
+                  targetType = diagram.cells[j].typeNode;
+                }
+              }
+              if (targetTypeNode === "page") {
+                if ((diagram.cells[i].source.id === sourceId) && (targetType === "page")) {
+                  this.graph.getCell(link.id).remove();
+                  this.snackbar.open('A query node must be linked to only one page/SERP node', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
+                  return;
+                }
+              }
+              else if (targetTypeNode === "query") {
+                if ((diagram.cells[i].source.id === sourceId) && (targetType === "query")) {
+                  this.graph.getCell(link.id).remove();
+                  this.snackbar.open('A query node must be linked to only one query node', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
+                  return;
+                }
+              }
+            }
+          }
+        }
+
         // VER SI SE PUEDE IMPLEMENTAR MAGNETISMO
 
         // FALTA REVISAR LOS CASOS EN QUE SOURCELABEL YA ESTABA LINKEADO A OTRO NODO...
@@ -316,6 +367,13 @@ export class NewBehaviorModelComponent implements OnInit {
   }
 
   private openProbabilityModal = (linkView: any) => {
+    // EVITAR EDICION DE LINK ENTRE NODO START Y OTRO NODO
+    let linkSourceId = linkView.model.attributes.source.id;
+    let sourceTypeNode = this.graph.getCell(linkSourceId).attributes['typeNode'];
+    if (sourceTypeNode === "start") {
+      return;
+    }
+
     var currentProbability = linkView.model.attributes.labels[0].attrs.text.text;
     const dialogRef = this.dialog.open(NewBehaviorModelProbabilityModalComponent, { width: '40%', data: { currentProbability: currentProbability } } );
     const sub = dialogRef.componentInstance.onSubmit.subscribe((value) => {
@@ -429,29 +487,51 @@ export class NewBehaviorModelComponent implements OnInit {
     convertToJSON(this.graph);
   }
 
-  public validateModelAction = () => {
+  public addBehaviorModel = () => {
     this.errorMessages = validateModel(this.graph);
     if (this.errorMessages.length > 0) {
       this.modelValid = false;
     } else {
       this.modelValid = true;
     }
-  }
 
-  public addBehaviorModel = () => {
     const BEHAVIORMODEL: BehaviorModel = {
       name: this.behaviorModelForm.get('name')?.value,
       model: JSON.stringify(this.graph.toJSON()),
+      valid: this.modelValid,
       creationDate: (new Date(Date.now())).toString()
     };
 
-    this._behaviorModelService.createBehaviorModel(BEHAVIORMODEL).subscribe(data => {
-      console.log("Behavior model added");
-      this.openSuccessModal();
-    }), (error: any) => {
-      console.log(error);
-      this.router.navigate(['/', 'new-behavior-model']);
+    if (this.modelValid == true) {
+      this._behaviorModelService.createBehaviorModel(BEHAVIORMODEL).subscribe(data => {
+        this.openSuccessModal();
+      }), (error: any) => {
+        console.log(error);
+        this.router.navigate(['/', 'new-behavior-model']);
+      }
+    } else {
+      const dialogRef = this.dialog.open(BehaviorModelHasErrorsModalComponent, { width: '45%' } );
+      const sub = dialogRef.componentInstance.onSubmit.subscribe((value: any) => {
+        dialogRef.close();
+        if (value == true) {
+          this._behaviorModelService.createBehaviorModel(BEHAVIORMODEL).subscribe(data => {
+            this.openSuccessModal();
+          }), (error: any) => {
+            console.log(error);
+            this.router.navigate(['/', 'new-behavior-model']);
+          }
+        }
+      });
+      dialogRef.afterClosed().subscribe(() => {
+        sub.unsubscribe();
+      });
     }
+  }
+
+  public discardModel = () => {
+    this.router.navigate(['/', 'home'], { state: {
+      goToBehaviorModelsTab: true
+    }});
   }
 
   private openSuccessModal = () => {

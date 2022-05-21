@@ -43,6 +43,8 @@ import { BehaviorModelCopiedModalComponent } from './components/behavior-model-c
 import { BehaviorModelDeleteConfirmModalComponent } from './components/behavior-model-delete-confirm-modal/behavior-model-delete-confirm-modal.component';
 import { BehaviorModelDeletedModalComponent } from './components/behavior-model-deleted-modal/behavior-model-deleted-modal.component';
 import { SimulationSettingsComponent } from './components/simulation-settings/simulation-settings.component';
+import { BehaviorModelHasErrorsModalComponent } from './components/behavior-model-has-errors-modal/behavior-model-has-errors-modal.component';
+import { SimulationNoValidModelsModalComponent } from './components/simulation-no-valid-models-modal/simulation-no-valid-models-modal.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +67,9 @@ import { SimulationSettingsComponent } from './components/simulation-settings/si
     BehaviorModelCopiedModalComponent,
     BehaviorModelDeleteConfirmModalComponent,
     BehaviorModelDeletedModalComponent,
-    SimulationSettingsComponent
+    SimulationSettingsComponent,
+    BehaviorModelHasErrorsModalComponent,
+    SimulationNoValidModelsModalComponent
   ],
   imports: [
     BrowserModule,

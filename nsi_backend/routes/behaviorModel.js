@@ -5,7 +5,7 @@ const behaviorModelController = require("../controllers/behaviorModelController"
 // api/behaviormodels
 router.post("/create/", behaviorModelController.createBehaviorModel);
 router.get("/get/", behaviorModelController.getBehaviorModels);
-router.get("/getidsnames/", behaviorModelController.getBehaviorModelsIDsAndNames);
+router.get("/getproperties/", behaviorModelController.getBehaviorModelsProperties);
 router.get("/get/:id", behaviorModelController.getBehaviorModel);
 router.put("/update/:id", behaviorModelController.updateBehaviorModel);
 router.delete("/delete/:id", behaviorModelController.deleteBehaviorModel);

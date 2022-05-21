@@ -13,14 +13,6 @@ const SimulationSchema = mongoose.Schema({
 		type: Number,
 		required: true
 	},
-	domain: {
-		type: String,
-		required: true
-	},
-	task: {
-		type: String,
-		required: true
-	},
 	numberDocuments: {
 		type: Number,
 		required: true

@@ -22,7 +22,7 @@ export class BehaviorModelListComponent implements OnInit {
 
   private behaviorModelList: BehaviorModel[] = [];
   public dataSource: any;
-  public columns = ['name', 'creationDate', 'options'];
+  public columns = ['name', 'creationDate', 'valid', 'options'];
   public filterInput: string = "";
   private firstSort = true;
 
@@ -108,6 +108,7 @@ export class BehaviorModelListComponent implements OnInit {
     const BEHAVIORMODEL: BehaviorModel = {
       name: newName,
       model: '{}',
+      valid: this.behaviorModelList[i].valid,
       creationDate: (new Date(Date.now())).toString()
     }
 

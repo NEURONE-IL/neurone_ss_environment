@@ -50,3 +50,23 @@ mat-icon {
 .newBehaviorModelButton {
   padding: 0px 68px 0px 0px;
 }
+
+.check {
+    color: green;
+    cursor: default;
+    transform: scale(1.1);
+}
+
+.close {
+    color: #803434;
+    cursor: default;
+    transform: scale(1.1);
+}
+
+.copy {
+    color: black;
+}
+
+.delete {
+    color: red;
+}

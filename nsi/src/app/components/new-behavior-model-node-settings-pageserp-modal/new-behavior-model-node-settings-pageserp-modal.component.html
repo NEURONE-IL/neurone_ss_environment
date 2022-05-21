@@ -5,7 +5,7 @@
           <form [formGroup]="nodeSettingsForm" (ngSubmit)="onOKButtonClicked()">
             <mat-label style="margin-right: 10px;">Name of state:</mat-label>
             <mat-form-field style="margin-left: 162px;">
-              <input required formControlName="nodeName" matInput placeholder="Example: S1"/>
+              <input required formControlName="nodeName" matInput placeholder="Example: S1" maxlength="40"/>
 
               <button class="clear" *ngIf="nodeSettingsForm.get('nodeName')?.value" matSuffix mat-icon-button (click)="this.clearTextInput('nodeName')">
           		  <mat-icon>close</mat-icon>
@@ -15,7 +15,11 @@
               <mat-error *ngIf="nodeSettingsForm.get('nodeName')?.hasError('nameExists')">The state name already exists.</mat-error>
             </mat-form-field>
 
-            <br><br>
+            <div style="font-size: 12px; font-family: roboto; text-align: left; margin-left: 278px; margin-top: -15px;" *ngIf="nodeSettingsForm.get('nodeName')?.value.length == 40">You have reached the maximum number of characters.</div>
+
+            <div style="color: white; font-size: 12px; font-family: roboto; text-align: left; margin-left: 278px; margin-top: -15px;" *ngIf="nodeSettingsForm.get('nodeName')?.value.length < 40">.</div>
+
+            <br>
 
             <mat-label style="margin-right: 10px;">Minimum transition time (seconds):</mat-label>
             <mat-form-field style="margin-left: 13px;">

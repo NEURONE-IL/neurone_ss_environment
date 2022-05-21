@@ -1,34 +1,34 @@
 <html>
     <br /><br /><br /><br />
-    <h2 style="text-align: center;">Simulation "{{simulationForm?.get('name')?.value}}"</h2>
+    <h2 style="text-align: center;">Simulation "{{simulationName}}"</h2>
     <body>
 
       <br>
 
-      <form [formGroup]="simulationForm!">
+      <div id="simulationInfo">
+        <mat-grid-list cols="3" rowHeight="30px">
+          <mat-grid-tile [colspan]="1" [rowspan]="5">
+            <mat-label id="descriptionLabel"><b>Description:</b></mat-label>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="2" [rowspan]="5">
+            <div id="descriptionInfo">{{simulationDescription}}</div>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="1" [rowspan]="2">
+            <mat-label><b>Creation date:</b></mat-label>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="2" [rowspan]="2">
+            <div class="info">{{simulationCreationDate}}</div>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="1" [rowspan]="2">
+            <mat-label><b>Date of last deploy:</b></mat-label>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="2" [rowspan]="2">
+            <div class="info">{{simulationLastDeployDate}}</div>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
 
       <br>
-        <mat-label style="margin-right: 10px; vertical-align: text-top">Description:</mat-label>
-        <mat-form-field style="margin-left: 162px;" appearance="fill">
-          <textarea required [disabled]="true" formControlName="description" matInput></textarea>
-        </mat-form-field>
-
-        <br>
-
-        <mat-label style="margin-right: 10px;">Creation date:</mat-label>
-        <mat-form-field style="margin-left: 150px;">
-          <input required [disabled]="true" formControlName="creationDate" matInput/>
-        </mat-form-field>
-
-        <br>
-
-        <mat-label style="margin-right: 10px;">Date of last deploy:</mat-label>
-        <mat-form-field style="margin-left: 118px;">
-          <input required [disabled]="true" formControlName="lastDeployDate" matInput/>
-        </mat-form-field>
-      </form>
-
-      <br><br><br>
 
       <div class="btn-group" style="text-align: center">
         <button mat-raised-button color="primary" (click)="configureSimulation()" style="margin-right: 20px;">
@@ -37,12 +37,12 @@
         <button type="submit" class="submitButton" mat-raised-button color="primary" style="margin-right: 20px;">
             Deploy
         </button>
-        <button mat-raised-button color="primary" (click)="deleteSimulation()" style="background-color: 'red';">
+        <button mat-raised-button color="primary" (click)="openDeleteConfirmModal()" style="background-color: 'red';">
             Delete
         </button>
       </div>
 
-      <br><br>
+      <br><br><br><br>
 
       <div style="text-align: right; margin-right: 65px;">
         <button class="additionalOptionsButton" mat-raised-button color="primary" routerLink="/home-page" style="background-color: '#595959';">

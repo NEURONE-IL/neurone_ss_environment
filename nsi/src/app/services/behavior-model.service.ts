@@ -18,8 +18,8 @@ export class BehaviorModelService {
     return this.http.get(this.url + "/get/");
   }
 
-  getBehaviorModelsIdsNames(): Observable<any> {
-    return this.http.get(this.url + "/getidsnames/");
+  getBehaviorModelsProperties(): Observable<any> {
+    return this.http.get(this.url + "/getproperties/");
   }
 
   deleteBehaviorModel(id: string): Observable<any> {

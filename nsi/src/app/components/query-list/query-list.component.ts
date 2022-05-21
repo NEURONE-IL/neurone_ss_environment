@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidatorFn, ValidationErrors, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -16,7 +16,9 @@ export class QueryListComponent implements OnInit {
   public forceDisableSubmitButton: boolean = false;
   private simulationSettings: simulationSettings;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  @ViewChild('queryListRef') queryListRef!: ElementRef;
+
+  constructor(private fb: FormBuilder, private router: Router, private _renderer2: Renderer2) {
 
     this.queryForm = this.fb.group({
       query: ['', [Validators.required, this.existingQueryValidator()]]
@@ -75,6 +77,9 @@ export class QueryListComponent implements OnInit {
     this.queryForm.controls['query'].setValue('');
     this.queryForm.controls['query'].setErrors(null);
     this.forceDisableSubmitButton = true;
+    setTimeout(() => {
+      this._renderer2.setProperty(this.queryListRef.nativeElement.children[0], 'scrollTop', this.queryListRef.nativeElement.children[0].scrollHeight);
+    });
 
   }
 
@@ -113,7 +118,7 @@ export class QueryListComponent implements OnInit {
 
   public clearTextInput = (input: string) => {
 
-    this.queryForm.reset();
+    this.queryForm.get('query')?.patchValue('');
 
   }
 

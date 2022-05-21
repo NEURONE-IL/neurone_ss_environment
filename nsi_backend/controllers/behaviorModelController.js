@@ -5,7 +5,7 @@ exports.createBehaviorModel = async (req, res) => {
 	try {
 		let behaviorModel;
 
-		// Creating simulation
+		// Creating behavior model
 		behaviorModel = new BehaviorModel(req.body);
 
 		await behaviorModel.save();
@@ -29,15 +29,15 @@ exports.getBehaviorModels = async (req, res) => {
 
 }
 
-exports.getBehaviorModelsIDsAndNames = async (req, res) => {
+exports.getBehaviorModelsProperties = async (req, res) => {
 
 	try {
 		const behaviorModels = await BehaviorModel.find();
-		let behaviorModelIDsAndNames = [];
+		let behaviorModelsProperties = [];
 		for (let i = 0; i < behaviorModels.length; i++) {
-	        behaviorModelIDsAndNames.push({_id: behaviorModels[i]._id, name: behaviorModels[i].name});
+	        behaviorModelsProperties.push({_id: behaviorModels[i]._id, name: behaviorModels[i].name, valid: behaviorModels[i].valid});
 	    }
-		res.json(behaviorModelIDsAndNames);
+		res.json(behaviorModelsProperties);
 	} catch (error) {
 		console.log(error);
 		res.status(500).send("Error: getBehaviorModelsIDsAndNames method failed");
@@ -74,6 +74,7 @@ exports.updateBehaviorModel = async (req, res) => {
 
 		behaviorModel.name = name;
 		behaviorModel.model = model;
+		behaviorModel.valid = valid;
 
 		behaviorModel = await BehaviorModel.findOneAndUpdate({ _id: req.params.id }, behaviorModel, { new: true });
 		res.json(behaviorModel);

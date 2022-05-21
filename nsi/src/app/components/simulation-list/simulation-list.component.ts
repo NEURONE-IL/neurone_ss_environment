@@ -11,9 +11,13 @@ import * as dayjs from 'dayjs';
 import { Simulation } from '../../models/simulation';
 import { SimulationService } from '../../services/simulation.service';
 
+import { BehaviorModel } from '../../models/behavior-model';
+import { BehaviorModelService } from '../../services/behavior-model.service';
+
 import { SimulationCopiedModalComponent } from '../simulation-copied-modal/simulation-copied-modal.component';
 import { SimulationDeleteConfirmModalComponent } from '../simulation-delete-confirm-modal/simulation-delete-confirm-modal.component';
 import { SimulationDeletedModalComponent } from '../simulation-deleted-modal/simulation-deleted-modal.component';
+import { SimulationNoValidModelsModalComponent } from '../simulation-no-valid-models-modal/simulation-no-valid-models-modal.component';
 
 @Component({
   selector: 'app-simulation-list',
@@ -33,7 +37,8 @@ export class SimulationListComponent implements OnInit {
 
   constructor(private _simulationService: SimulationService,
               private _matDialog: MatDialog,
-              private router: Router)
+              private router: Router,
+              private _behaviorModelService: BehaviorModelService)
   { }
 
   ngOnInit(): void {
@@ -123,8 +128,6 @@ export class SimulationListComponent implements OnInit {
       name: newName,
       description: this.simulationList[i].description,
       numberStudents: this.simulationList[i].numberStudents,
-      domain: this.simulationList[i].domain,
-      task: this.simulationList[i].task,
       numberDocuments: this.simulationList[i].numberDocuments,
       numberRelevantDocuments: this.simulationList[i].numberRelevantDocuments,
       randomActions: this.simulationList[i].randomActions,
@@ -196,6 +199,27 @@ export class SimulationListComponent implements OnInit {
     this.router.navigate(['/', 'simulation-settings'], { state:
       { _id: _id
      }});
+  }
+
+  public async goToNewSimulation() {
+    let behaviorModelsProperties = await this._behaviorModelService.getBehaviorModelsProperties().toPromise();
+    let behaviorModelsPropertiesFiltered = behaviorModelsProperties.filter(function(obj: any) { //FALTA INTERFAZ PARA NO PONER ANY
+      return obj.valid != false;
+    });
+
+    if (behaviorModelsPropertiesFiltered.length == 0) {
+      const dialogRef = this._matDialog.open(SimulationNoValidModelsModalComponent, { width: '30%' } );
+
+      const sub = dialogRef.componentInstance.onSubmit.subscribe(() => {
+        dialogRef.close();
+      });
+
+      dialogRef.afterClosed().subscribe(() => {
+        sub.unsubscribe();
+      });
+    } else {
+      this.router.navigate(['/', 'new-simulation']);
+    }
   }
 
 }

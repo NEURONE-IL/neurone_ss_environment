@@ -15,7 +15,7 @@
 	        <mat-form-field [style.width.%]="70" appearance="fill">
 				<mat-label>Query</mat-label>
 
-				<input matInput placeholder="Example: What is a neural network?" required formControlName="query" (input)="onInputChange()">
+				<input matInput placeholder="Example: What is a neural network?" required formControlName="query" (input)="onInputChange()" maxlength="200">
 
 	            <button class="clear" *ngIf="queryForm.get('query')?.value" matSuffix mat-icon-button (click)="this.clearTextInput('query')">
               		<mat-icon>close</mat-icon>
@@ -25,6 +25,10 @@
 				<mat-error *ngIf="queryForm.get('query')?.hasError('queryExists')">The query already exists on the list.</mat-error>
 			</mat-form-field>
 
+			<div style="font-size: 11px; font-family: roboto; text-align: left; margin-left: 130px; margin-top: -15px;" *ngIf="queryForm.get('query')?.value.length == 200">You have reached the maximum number of characters.</div>
+
+            <div style="color: white; font-size: 11px; font-family: roboto; text-align: left; margin-left: 130px; margin-top: -15px;" *ngIf="queryForm.get('query')?.value.length < 200">.</div>
+
 	        <div class="btn-group">
 	            <button type="submit" #submitQuery [disabled]="queryForm.invalid || forceDisableSubmitButton" mat-raised-button color="primary" style="border-radius: 5px; width: 200px; margin-left: 360px;">Add query</button>
 	        </div>
@@ -33,7 +37,7 @@
 
 	    <br><br>
 
-	    <div class="queryList">
+	    <div class="queryList" #queryListRef>
 			<mat-list>
 			  	<mat-list-item *ngFor="let query of queryList">
 			  		<table style="width: 100%;">

@@ -23,7 +23,7 @@ export class NewSimulationComponent implements OnInit {
   private simulationExistingNames: string[] = [];
   private queryList: string[] = [];
   public queryListAccessed: boolean = false;
-  public behaviorModelIdNameList: behaviorModelIDsNames[] | null = null;
+  public behaviorModelsPropertiesList: behaviorModelProperties[] | null = null;
 
   constructor(private fb: FormBuilder, private _simulationService: SimulationService, private _behaviorModelService: BehaviorModelService, public dialog: MatDialog, private router: Router) {
 
@@ -33,8 +33,6 @@ export class NewSimulationComponent implements OnInit {
         name: [simulationSettings['name'], [Validators.required, this.existingNameValidator()]],
         description: [simulationSettings['description'], Validators.required],
         numberStudents: [simulationSettings['numberStudents'], [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1)]],
-        domain: [simulationSettings['domain'], Validators.required],
-        task: [simulationSettings['task'], Validators.required],
         numberDocuments: [simulationSettings['numberDocuments'], [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1)]],
         numberRelevantDocuments: [{value: simulationSettings['numberRelevantDocuments'], disabled: true}, [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1), this.lessThanNumberDocumentsValidator()]],
         randomActions: [simulationSettings['randomActions'], Validators.required],
@@ -56,8 +54,6 @@ export class NewSimulationComponent implements OnInit {
       name: ['', [Validators.required, this.existingNameValidator()]],
       description: ['', Validators.required],
       numberStudents: ['', [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1)]],
-      domain: ['', Validators.required],
-      task: ['', Validators.required],
       numberDocuments: ['', [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1)]],
       numberRelevantDocuments: [{value: '', disabled: true}, [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1), this.lessThanNumberDocumentsValidator()]],
       randomActions: ['', Validators.required],
@@ -86,8 +82,11 @@ export class NewSimulationComponent implements OnInit {
      this.revalidateControl(field);
     })
 
-    let behaviorModelsIdsNames = await this._behaviorModelService.getBehaviorModelsIdsNames().toPromise();
-    this.behaviorModelIdNameList = Object.assign([], behaviorModelsIdsNames);
+    let behaviorModelsProperties = await this._behaviorModelService.getBehaviorModelsProperties().toPromise();
+    let behaviorModelsPropertiesFiltered = behaviorModelsProperties.filter(function(obj: behaviorModelProperties) {
+      return obj.valid != false;
+    });
+    this.behaviorModelsPropertiesList = Object.assign([], behaviorModelsPropertiesFiltered);
 
   }
 
@@ -97,8 +96,6 @@ export class NewSimulationComponent implements OnInit {
       name: this.simulationForm.get('name')?.value,
       description: this.simulationForm.get('description')?.value,
       numberStudents: this.simulationForm.get('numberStudents')?.value,
-      domain: this.simulationForm.get('domain')?.value,
-      task: this.simulationForm.get('task')?.value,
       numberDocuments: this.simulationForm.get('numberDocuments')?.value,
       numberRelevantDocuments: this.simulationForm.get('numberRelevantDocuments')?.value,
       randomActions: this.simulationForm.get('randomActions')?.value,
@@ -304,8 +301,6 @@ export class NewSimulationComponent implements OnInit {
       { name: this.simulationForm.get('name')?.value,
         description: this.simulationForm.get('description')?.value,
         numberStudents: this.simulationForm.get('numberStudents')?.value,
-        domain: this.simulationForm.get('domain')?.value,
-        task: this.simulationForm.get('task')?.value,
         numberDocuments: this.simulationForm.get('numberDocuments')?.value,
         numberRelevantDocuments: this.simulationForm.get('numberRelevantDocuments')?.value,
         randomActions: this.simulationForm.get('randomActions')?.value,
@@ -340,7 +335,8 @@ export class NewSimulationComponent implements OnInit {
 
 }
 
-interface behaviorModelIDsNames {
+interface behaviorModelProperties {
   _id: string,
-  name: string
+  name: string,
+  valid: boolean
 }

@@ -49,13 +49,21 @@ h2 {
 }
 
 .stop {
-    color: red;
+    color: blue;
     transform: scale(1.3);
 }
 
 .autorenew {
     color: orange;
     transform: scale(1.2);
+}
+
+.copy {
+    color: black;
+}
+
+.delete {
+    color: red;
 }
 
 mat-icon {
@@ -66,3 +74,7 @@ mat-icon {
 .newSimulationButton {
   padding: 0px 68px 0px 0px;
 }
+
+/*.simulationName:hover {
+    text-decoration: underline;
+}*/

@@ -4,8 +4,6 @@ export class Simulation {
 	name: string;
 	description: string;
 	numberStudents: number;
-	domain: string;
-	task: string;
 	numberDocuments: number;
 	numberRelevantDocuments: number;
 	randomActions: boolean;
@@ -19,13 +17,11 @@ export class Simulation {
 	creationDate: string;
 	lastDeployDate: string;
 
-	constructor(_id: string, name: string, description: string, numberStudents: number, domain: string, task: string, numberDocuments: number, numberRelevantDocuments: number, randomActions: boolean, expiration: boolean, queryList: string[], behaviorModelId: string, length: number, sensibility: number, interval: number, speed: number, creationDate: string, lastDeployDate: string) {
+	constructor(_id: string, name: string, description: string, numberStudents: number, numberDocuments: number, numberRelevantDocuments: number, randomActions: boolean, expiration: boolean, queryList: string[], behaviorModelId: string, length: number, sensibility: number, interval: number, speed: number, creationDate: string, lastDeployDate: string) {
 		this._id = _id;
 		this.name = name;
 		this.description = description;
 		this.numberStudents = numberStudents;
-		this.domain = domain;
-		this.task = task;
 		this.numberDocuments = numberDocuments;
 		this.numberRelevantDocuments = numberRelevantDocuments;
 		this.randomActions = randomActions;
