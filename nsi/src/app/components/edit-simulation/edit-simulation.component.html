@@ -3,7 +3,7 @@
 
     	<br /><br /><br /><br />
 
-		<h2>New simulation</h2>
+		<h2>Edit simulation "{{simulationInitialName}}"</h2>
 		<h3>General settings</h3>
 
 		<br /><br />
@@ -99,10 +99,10 @@
 
 			<br><br>
 
-			<span style="padding: 0 243px 0 0; text-align: left;" *ngIf="(checkQueryLength() != 0) || !queryListAccessed">List of queries</span>
-			<span style="color: red; padding: 0 243px 0 0; text-align: left;" *ngIf="(checkQueryLength() === 0) && queryListAccessed">List of queries</span>
+			<span style="padding: 0 243px 0 0; text-align: left;" *ngIf="(checkQueryLength() != 0) || !queryListEmpty">List of queries</span>
+			<span style="color: red; padding: 0 243px 0 0; text-align: left;" *ngIf="(checkQueryLength() === 0) && queryListEmpty">List of queries</span>
             <button mat-raised-button color="primary" style="border-radius: 5px; width: 200px; margin-right: 10px; background-color: #4778F4;" (click)="openQueryListPage()">Configure</button>
-			<p style="color: red; font-size: 11px; font-family: roboto; text-align: left; margin-left: 130px" *ngIf="(checkQueryLength() === 0) && queryListAccessed">You must add a list of queries.<p>
+			<p style="color: red; font-size: 11px; font-family: roboto; text-align: left; margin-left: 130px" *ngIf="(checkQueryLength() === 0) && queryListEmpty">You must add a list of queries.<p>
 
 			<br>
 
@@ -200,8 +200,8 @@
     		<br /><br />
 
 	        <div class="btn-group" style="padding: 0 0 0 140px;">
-	            <button id="submit" type="submit" [disabled]="simulationForm.invalid || (checkQueryLength() === 0)" mat-raised-button color="primary" style="border-radius: 5px; width: 200px; margin-right: 10px;">Save simulation</button>
-	            <button mat-raised-button style="background-color: '#595959'; border-radius: 5px; width: 200px; margin-left: 10px;" routerLink="/home-page" >Discard simulation</button>
+	            <button id="submit" type="submit" [disabled]="simulationForm.invalid || (checkQueryLength() === 0)" mat-raised-button color="primary" style="border-radius: 5px; width: 200px; margin-right: 10px;">Save changes</button>
+	            <button mat-raised-button style="background-color: '#595959'; border-radius: 5px; width: 200px; margin-left: 10px;" (click)="discardChanges()">Discard changes</button>
 	        </div>
 
 		</form>

@@ -55,7 +55,10 @@ export class SimulationSettingsComponent implements OnInit {
   }
 
   public configureSimulation = () => {
-
+    this.router.navigate(['/', 'edit-simulation'], { state:
+      { _id: this._id,
+        startEdit: true
+     }});
   }
 
   public openDeleteConfirmModal = () => {

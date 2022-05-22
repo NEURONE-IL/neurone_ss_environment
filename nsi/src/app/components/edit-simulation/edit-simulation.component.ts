@@ -9,49 +9,93 @@ import { SimulationService } from '../../services/simulation.service';
 import { BehaviorModel } from '../../models/behavior-model';
 import { BehaviorModelService } from '../../services/behavior-model.service';
 
-import { SimulationAddedModalComponent } from '../simulation-added-modal/simulation-added-modal.component';
+import { SimulationEditedModalComponent } from '../simulation-edited-modal/simulation-edited-modal.component';
 
 @Component({
-  selector: 'app-new-simulation',
-  templateUrl: './new-simulation.component.html',
-  styleUrls: ['./new-simulation.component.css']
+  selector: 'app-edit-simulation',
+  templateUrl: './edit-simulation.component.html',
+  styleUrls: ['./edit-simulation.component.css']
 })
 
-export class NewSimulationComponent implements OnInit {
+export class EditSimulationComponent implements OnInit {
 
   public simulationForm: FormGroup;
+  public simulationInitialName: string = '';
   private simulationExistingNames: string[] = [];
   private queryList: string[] = [];
-  public queryListAccessed: boolean = false;
+  public queryListEmpty: boolean = false;
   public behaviorModelsPropertiesList: behaviorModelProperties[] | null = null;
+  private _id: string = '';
+  private creationDate: string = '';
+  private lastDeployDate: string = '';
 
   constructor(private fb: FormBuilder, private _simulationService: SimulationService, private _behaviorModelService: BehaviorModelService, public dialog: MatDialog, private router: Router) {
 
     if (this.router.getCurrentNavigation()?.extras.state! !== undefined) {
-      let simulationSettings = this.router.getCurrentNavigation()?.extras.state!;
-      this.simulationForm = this.fb.group({
-        name: [simulationSettings['name'], [Validators.required, this.existingNameValidator()]],
-        description: [simulationSettings['description'], Validators.required],
-        numberStudents: [simulationSettings['numberStudents'], [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1)]],
-        numberDocuments: [simulationSettings['numberDocuments'], [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1)]],
-        numberRelevantDocuments: [{value: simulationSettings['numberRelevantDocuments'], disabled: true}, [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1), this.lessThanNumberDocumentsValidator()]],
-        randomActions: [simulationSettings['randomActions'], Validators.required],
-        expiration: [simulationSettings['expiration'], Validators.required],
-        behaviorModelId: [simulationSettings['behaviorModelId'], Validators.required],
-        length: [simulationSettings['length'], [this.lengthValidator(), this.maxLengthValidator()]],
-        sensibility: [simulationSettings['sensibility'], [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1), Validators.max(100)]],
-        interval: [simulationSettings['interval'], [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1)]],
-        speed: [simulationSettings['speed']]
-      });
 
-      this.queryList = Object.assign([], simulationSettings['queryList']);
-      this.queryListAccessed = true;
+      if (this.router.getCurrentNavigation()?.extras.state!['startEdit'] == true) {
+        this._id = this.router.getCurrentNavigation()?.extras.state!['_id'];
+        this._simulationService.getSimulation(this._id).subscribe((data: Simulation) => {
+          this.simulationForm = this.fb.group({
+            name: [data.name, [Validators.required, this.existingNameValidator()]],
+            description: [data.description, Validators.required],
+            numberStudents: [data.numberStudents, [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1)]],
+            numberDocuments: [data.numberDocuments, [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1)]],
+            numberRelevantDocuments: [{value: data.numberRelevantDocuments, disabled: false}, [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1), this.lessThanNumberDocumentsValidator()]],
+            randomActions: [data.randomActions.toString(), Validators.required],
+            expiration: [data.expiration.toString(), Validators.required],
+            behaviorModelId: [data.behaviorModelId, Validators.required],
+            length: [this.secondsToLength(data.length), [this.lengthValidator(), this.maxLengthValidator()]],
+            sensibility: [data.sensibility, [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1), Validators.max(100)]],
+            interval: [data.interval, [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1)]],
+            speed: [data.speed]
+          });
 
-      this.onNumberDocumentsChange();
+          this.queryList = Object.assign([], data.queryList);
+          this.queryListEmpty = false;
 
-      return;
+          this.simulationInitialName = data.name;
+          this.creationDate = data.creationDate;
+          this.lastDeployDate = data.lastDeployDate;
+
+          this.onNumberDocumentsChange();
+
+          return;
+        }, (error: any) => {
+          console.log(error);
+        })
+      } else {
+        let simulationSettings = this.router.getCurrentNavigation()?.extras.state!;
+        this._id = simulationSettings['_id'];
+        this.simulationForm = this.fb.group({
+          name: [simulationSettings['name'], [Validators.required, this.existingNameValidator()]],
+          description: [simulationSettings['description'], Validators.required],
+          numberStudents: [simulationSettings['numberStudents'], [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1)]],
+          numberDocuments: [simulationSettings['numberDocuments'], [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1)]],
+          numberRelevantDocuments: [{value: simulationSettings['numberRelevantDocuments'], disabled: true}, [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1), this.lessThanNumberDocumentsValidator()]],
+          randomActions: [simulationSettings['randomActions'], Validators.required],
+          expiration: [simulationSettings['expiration'], Validators.required],
+          behaviorModelId: [simulationSettings['behaviorModelId'], Validators.required],
+          length: [simulationSettings['length'], [this.lengthValidator(), this.maxLengthValidator()]],
+          sensibility: [simulationSettings['sensibility'], [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1), Validators.max(100)]],
+          interval: [simulationSettings['interval'], [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1)]],
+          speed: [simulationSettings['speed']]
+        });
+
+        this.queryList = Object.assign([], simulationSettings['queryList']);
+        if (this.queryList.length == 0) {
+          this.queryListEmpty = true;
+        }
+
+        this.simulationInitialName = simulationSettings['simulationInitialName'];
+
+        return;
+      }
+    } else {
+      this.router.navigate(['/', 'home']);
     }
 
+    // SOLO PARA QUE EL COMPILADOR NO DIGA QUE SIMULATIONFORM NO ES DEFINITIVAMENTE ASIGNADO EN EL CONSTRUCTOR
     this.simulationForm = this.fb.group({
       name: ['', [Validators.required, this.existingNameValidator()]],
       description: ['', Validators.required],
@@ -75,6 +119,7 @@ export class NewSimulationComponent implements OnInit {
     for (let i = 0; i < simulationNamesList.length; i++) {
       this.simulationExistingNames.push(simulationNamesList[i]);
     }
+    this.simulationExistingNames.splice(this.simulationExistingNames.indexOf(this.simulationInitialName), 1);
 
     if (this.simulationForm.get('numberRelevantDocuments')?.value !== '') {
       this.simulationForm.get('numberRelevantDocuments')?.enable();
@@ -101,33 +146,37 @@ export class NewSimulationComponent implements OnInit {
       numberDocuments: this.simulationForm.get('numberDocuments')?.value,
       numberRelevantDocuments: this.simulationForm.get('numberRelevantDocuments')?.value,
       randomActions: this.simulationForm.get('randomActions')?.value,
-      expiration: this.simulationForm.get('randomActions')?.value,
+      expiration: this.simulationForm.get('expiration')?.value,
       queryList: this.queryList,
       behaviorModelId: this.simulationForm.get('behaviorModelId')?.value,
       length: this.lengthToSeconds(this.simulationForm.get('length')?.value),
       sensibility: this.simulationForm.get('sensibility')?.value,
       interval: this.simulationForm.get('interval')?.value,
       speed: this.simulationForm.get('speed')?.value,
-      creationDate: (new Date(Date.now())).toString(),
-      lastDeployDate: (new Date(0)).toString()
+      creationDate: this.creationDate,
+      lastDeployDate: this.lastDeployDate
     }
 
-    this._simulationService.createSimulation(SIMULATION).subscribe(data => {
-      console.log("Simulation added");
+    this._simulationService.updateSimulation(this._id, SIMULATION).subscribe(data => {
+      console.log("Simulation updated");
       this.openSuccessModal();
     }), (error: any) => {
       console.log(error);
-      this.simulationForm.reset();
+      this.router.navigate(['/', 'simulation-settings'], { state:
+        { _id: this._id
+      }});
     }
 
   }
 
   private openSuccessModal = () => {
 
-    const dialogRef = this.dialog.open(SimulationAddedModalComponent, { width: '25%' } );
+    const dialogRef = this.dialog.open(SimulationEditedModalComponent, { width: '25%' } );
     const sub = dialogRef.componentInstance.onSubmit.subscribe((value: any) => {
       dialogRef.close();
-      this.router.navigate(['/', 'home']);
+      this.router.navigate(['/', 'simulation-settings'], { state:
+        { _id: this._id
+       }});
     });
     dialogRef.afterClosed().subscribe(() => {
       sub.unsubscribe();
@@ -289,6 +338,25 @@ export class NewSimulationComponent implements OnInit {
 
   }
 
+  private secondsToLength = (length: number) => {
+
+    let modulo = length % 60;
+    let exactMinutes = (length - modulo) / 60;
+
+    if ((exactMinutes < 10) && (modulo < 10)) {
+      return "0".concat(exactMinutes.toString()).concat(":").concat("0").concat(modulo.toString());
+    } else
+    if ((exactMinutes < 10) && (modulo >= 10)) {
+      return "0".concat(exactMinutes.toString()).concat(":").concat(modulo.toString());
+    } else 
+    if ((exactMinutes >= 10) && (modulo < 10)) {
+      return exactMinutes.toString().concat(":").concat("0").concat(modulo.toString());
+    } else {
+      return exactMinutes.toString().concat(":").concat(modulo.toString());
+    }
+
+  }
+
   private lengthToSeconds = (length: string) => {
 
     var minutes = parseInt(length.slice(0, 2));
@@ -299,8 +367,9 @@ export class NewSimulationComponent implements OnInit {
 
   public openQueryListPage = () => {
 
-    this.router.navigate(['/', 'query-list'],{ state:
-      { name: this.simulationForm.get('name')?.value,
+    this.router.navigate(['/', 'edit-simulation-query-list'],{ state:
+      { _id: this._id,
+        name: this.simulationForm.get('name')?.value,
         description: this.simulationForm.get('description')?.value,
         numberStudents: this.simulationForm.get('numberStudents')?.value,
         numberDocuments: this.simulationForm.get('numberDocuments')?.value,
@@ -312,7 +381,8 @@ export class NewSimulationComponent implements OnInit {
         length: this.simulationForm.get('length')?.value,
         sensibility: this.simulationForm.get('sensibility')?.value,
         interval: this.simulationForm.get('interval')?.value,
-        speed: this.simulationForm.get('speed')?.value
+        speed: this.simulationForm.get('speed')?.value,
+        simulationInitialName: this.simulationInitialName
      }});
 
   }
@@ -325,14 +395,19 @@ export class NewSimulationComponent implements OnInit {
 
   private revalidateControl = (controlName: string) => {
 
-    if ((this.simulationForm.get(controlName)?.value !== '') &&
-      (this.simulationForm.get(controlName)?.value !== true) &&
+    if ((this.simulationForm.get(controlName)?.value !== true) &&
       (this.simulationForm.get(controlName)?.value !== false)) {
       this.simulationForm.controls[controlName].markAsTouched();
       this.simulationForm.controls[controlName].markAsDirty();
       this.simulationForm.controls[controlName].updateValueAndValidity();
     }
 
+  }
+
+  public discardChanges = () => {
+    this.router.navigate(['/', 'simulation-settings'], { state:
+      { _id: this._id
+     }});
   }
 
 }

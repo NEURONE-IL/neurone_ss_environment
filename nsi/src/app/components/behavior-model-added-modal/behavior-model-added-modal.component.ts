@@ -5,6 +5,7 @@ import { Component, EventEmitter, OnInit } from '@angular/core';
   templateUrl: './behavior-model-added-modal.component.html',
   styleUrls: ['./behavior-model-added-modal.component.css']
 })
+
 export class BehaviorModelAddedModalComponent implements OnInit {
 
   public onSubmit = new EventEmitter();

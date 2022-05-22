@@ -45,6 +45,11 @@ import { BehaviorModelDeletedModalComponent } from './components/behavior-model-
 import { SimulationSettingsComponent } from './components/simulation-settings/simulation-settings.component';
 import { BehaviorModelHasErrorsModalComponent } from './components/behavior-model-has-errors-modal/behavior-model-has-errors-modal.component';
 import { SimulationNoValidModelsModalComponent } from './components/simulation-no-valid-models-modal/simulation-no-valid-models-modal.component';
+import { EditSimulationComponent } from './components/edit-simulation/edit-simulation.component';
+import { EditBehaviorModelComponent } from './components/edit-behavior-model/edit-behavior-model.component';
+import { EditSimulationQueryListComponent } from './components/edit-simulation-query-list/edit-simulation-query-list.component';
+import { SimulationEditedModalComponent } from './components/simulation-edited-modal/simulation-edited-modal.component';
+import { BehaviorModelInUseModalComponent } from './components/behavior-model-in-use-modal/behavior-model-in-use-modal.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +74,12 @@ import { SimulationNoValidModelsModalComponent } from './components/simulation-n
     BehaviorModelDeletedModalComponent,
     SimulationSettingsComponent,
     BehaviorModelHasErrorsModalComponent,
-    SimulationNoValidModelsModalComponent
+    SimulationNoValidModelsModalComponent,
+    EditSimulationComponent,
+    EditBehaviorModelComponent,
+    EditSimulationQueryListComponent,
+    SimulationEditedModalComponent,
+    BehaviorModelInUseModalComponent
   ],
   imports: [
     BrowserModule,
@@ -79,6 +89,8 @@ import { SimulationNoValidModelsModalComponent } from './components/simulation-n
       {path: 'new-simulation', component: NewSimulationComponent},
       {path: 'query-list', component: QueryListComponent},
       {path: 'simulation-settings', component: SimulationSettingsComponent},
+      {path: 'edit-simulation', component: EditSimulationComponent},
+      {path: 'edit-simulation-query-list', component: EditSimulationQueryListComponent},
       {path: '**', redirectTo: 'home', pathMatch: 'full'}],
       {scrollPositionRestoration: 'enabled'}
     ),

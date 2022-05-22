@@ -113,3 +113,19 @@ exports.deleteSimulation = async (req, res) => {
 	}
 
 }
+
+exports.getSimulationBehaviorModels = async (req, res) => {
+
+	try {
+		const simulations = await Simulation.find();
+		let simulationBehaviorModels = [];
+		for (let i = 0; i < simulations.length; i++) {
+	        simulationBehaviorModels.push({simulationName: simulations[i].name, simulationBehaviorModelId: simulations[i].behaviorModelId});
+	     }
+		res.json(simulationBehaviorModels);
+	} catch (error) {
+		console.log(error);
+		res.status(500).send("Error: getSimulationBehaviorModels method failed");
+	}
+
+}

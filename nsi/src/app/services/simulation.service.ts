@@ -26,12 +26,20 @@ export class SimulationService {
     return this.http.get(this.url + "getnames/");
   }
 
-  deleteSimulation(id: string): Observable<any> {
-    return this.http.delete(this.url + "delete/" + id);
+  deleteSimulation(_id: string): Observable<any> {
+    return this.http.delete(this.url + "delete/" + _id);
   }
 
   createSimulation(simulation: Simulation): Observable<any> {
     return this.http.post(this.url + "create/", simulation);
+  }
+
+  updateSimulation(_id: string, simulation: Simulation): Observable<any> {
+    return this.http.put(this.url + "update/" + _id, simulation);
+  }
+
+  getSimulationBehaviorModels(): Observable<any> {
+    return this.http.get(this.url + "getmodels/");
   }
   
 }

@@ -3,18 +3,20 @@ import { FormBuilder, FormGroup, Validators, ValidatorFn, ValidationErrors, Abst
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-query-list',
-  templateUrl: './query-list.component.html',
-  styleUrls: ['./query-list.component.css']
+  selector: 'app-edit-simulation-query-list',
+  templateUrl: './edit-simulation-query-list.component.html',
+  styleUrls: ['./edit-simulation-query-list.component.css']
 })
 
-export class QueryListComponent implements OnInit {
+export class EditSimulationQueryListComponent implements OnInit {
 
   public queryForm: FormGroup;
   private initialQueryList: string[] = [];
   public queryList: string[] = [];
   public forceDisableSubmitButton: boolean = false;
   private simulationSettings: simulationSettings;
+  public simulationInitialName: string = '';
+  private _id: string = '';
 
   @ViewChild('queryListRef') queryListRef!: ElementRef;
 
@@ -44,6 +46,8 @@ export class QueryListComponent implements OnInit {
         interval: this.router.getCurrentNavigation()?.extras.state!['interval'],
         speed: this.router.getCurrentNavigation()?.extras.state!['speed'],
       }
+      this._id = this.router.getCurrentNavigation()?.extras.state!['_id'];
+      this.simulationInitialName = this.router.getCurrentNavigation()?.extras.state!['simulationInitialName'];
       return;
     } else {
       this.router.navigate(['/', 'home']);
@@ -143,8 +147,9 @@ export class QueryListComponent implements OnInit {
 
   public saveQueryList() {
 
-    this.router.navigate(['/', 'new-simulation'], { state:
-      { name: this.simulationSettings.name,
+    this.router.navigate(['/', 'edit-simulation'], { state:
+      { _id: this._id,
+        name: this.simulationSettings.name,
         description: this.simulationSettings.description,
         numberStudents: this.simulationSettings.numberStudents,
         domain: this.simulationSettings.domain,
@@ -159,7 +164,35 @@ export class QueryListComponent implements OnInit {
         sensibility: this.simulationSettings.sensibility,
         interval: this.simulationSettings.interval,
         speed: this.simulationSettings.speed,
-        queryListAccessed: true
+        queryListAccessed: true,
+        simulationInitialName: this.simulationInitialName,
+        startEdit: false
+     }});
+
+  }
+
+  public discardQueryList() {
+
+    this.router.navigate(['/', 'edit-simulation'], { state:
+      { _id: this._id,
+        name: this.simulationSettings.name,
+        description: this.simulationSettings.description,
+        numberStudents: this.simulationSettings.numberStudents,
+        domain: this.simulationSettings.domain,
+        task: this.simulationSettings.task,
+        numberDocuments: this.simulationSettings.numberDocuments,
+        numberRelevantDocuments: this.simulationSettings.numberRelevantDocuments,
+        randomActions: this.simulationSettings.randomActions,
+        expiration: this.simulationSettings.expiration,
+        queryList: this.initialQueryList,
+        behaviorModelId: this.simulationSettings.behaviorModelId,
+        length: this.simulationSettings.length,
+        sensibility: this.simulationSettings.sensibility,
+        interval: this.simulationSettings.interval,
+        speed: this.simulationSettings.speed,
+        queryListAccessed: true,
+        simulationInitialName: this.simulationInitialName,
+        startEdit: false
      }});
 
   }
