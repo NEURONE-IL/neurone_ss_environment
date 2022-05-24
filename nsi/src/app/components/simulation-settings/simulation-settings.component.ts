@@ -8,8 +8,12 @@ import * as dayjs from 'dayjs';
 import { Simulation } from '../../models/simulation';
 import { SimulationService } from '../../services/simulation.service';
 
+import { BehaviorModel } from '../../models/behavior-model';
+import { BehaviorModelService } from '../../services/behavior-model.service';
+
 import { SimulationDeleteConfirmModalComponent } from '../simulation-delete-confirm-modal/simulation-delete-confirm-modal.component';
 import { SimulationDeletedModalComponent } from '../simulation-deleted-modal/simulation-deleted-modal.component';
+import { SimulationNotDeployableModalComponent} from '../simulation-not-deployable-modal/simulation-not-deployable-modal.component';
 
 @Component({
   selector: 'app-simulation-settings',
@@ -22,11 +26,17 @@ export class SimulationSettingsComponent implements OnInit {
   public _id: string = '';
   public simulationName: string = '';
   public simulationDescription: string = '';
+  public simulationBehaviorModelId: string = '';
+  public simulationBehaviorModelName: string = '';
+  public simulationBehaviorModelValid: boolean = false;
+  public simulationBehaviorModelValidString: string = '';
   public simulationCreationDate: string = '';
   public simulationLastDeployDate: string = '';
+  public simulationLastModificationDate: string = '';
 
   constructor(private router: Router,
               private _simulationService: SimulationService,
+              private _behaviorModelService: BehaviorModelService,
               private _matDialog: MatDialog) {
 
     if (this.router.getCurrentNavigation()?.extras.state! !== undefined) {
@@ -43,8 +53,20 @@ export class SimulationSettingsComponent implements OnInit {
     this.simulationName = simulation.name;
 
     this.simulationDescription = simulation.description;
+    this.simulationBehaviorModelId = simulation.behaviorModelId;
+    let behaviorModel = await this._behaviorModelService.getBehaviorModel(this.simulationBehaviorModelId).toPromise();
+    this.simulationBehaviorModelName = behaviorModel.name;
+
+    this.simulationBehaviorModelValid = behaviorModel.valid;
+    if (this.simulationBehaviorModelValid == true) {
+      this.simulationBehaviorModelValidString = 'valid';
+    } else {
+      this.simulationBehaviorModelValidString = 'invalid';
+    }
 
     this.simulationCreationDate = dayjs(simulation.creationDate).format('YYYY/MM/DD HH:mm:ss');
+    this.simulationLastModificationDate = dayjs(simulation.lastModificationDate).format('YYYY/MM/DD HH:mm:ss');
+    console.log(this.simulationLastModificationDate);
 
     let simulationLastDeployDateTime = new Date(simulation.lastDeployDate).getTime();
     if (simulationLastDeployDateTime != 0) {
@@ -96,6 +118,24 @@ export class SimulationSettingsComponent implements OnInit {
       sub.unsubscribe();
     });
 
+  }
+
+  public deploySimulation = () => {
+    if (this.simulationBehaviorModelValid == false) {
+      const dialogRef = this._matDialog.open(SimulationNotDeployableModalComponent, { width: '45%' , data: { behaviorModelName: this.simulationBehaviorModelName } } );
+
+      const sub = dialogRef.componentInstance.onSubmit.subscribe(() => {
+        dialogRef.close();
+      });
+
+      dialogRef.afterClosed().subscribe(() => {
+        sub.unsubscribe();
+      });
+    } else {
+      this.router.navigate(['/', 'deploy-simulation'], { state:
+        { _id: this._id
+       }});
+    }
   }
 
 }

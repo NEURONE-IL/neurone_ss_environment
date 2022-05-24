@@ -23,7 +23,7 @@
 
             <mat-label style="margin-right: 10px;">Minimum transition time (seconds):</mat-label>
             <mat-form-field style="margin-left: 13px;">
-              <input formControlName="minTransitionTime" matInput placeholder="Example: 5" (change)="onTransitionTimeChange()"/>
+              <input formControlName="minTransitionTime" matInput placeholder="Example: 5"/>
               <div class="percent" matSuffix style="margin-left: 30px;">
                 <button class="clear"  *ngIf="nodeSettingsForm.get('minTransitionTime')?.value" mat-icon-button (click)="this.clearTextInput('minTransitionTime')">
           		 	<mat-icon>close</mat-icon>

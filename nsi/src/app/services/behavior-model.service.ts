@@ -14,8 +14,12 @@ export class BehaviorModelService {
   constructor(private http: HttpClient) {
   }
 
+  getBehaviorModel(_id: string): Observable<any> {
+    return this.http.get(this.url + "get/" + _id);
+  }
+
   getBehaviorModels(): Observable<any> {
-    return this.http.get(this.url + "/get/");
+    return this.http.get(this.url + "get/");
   }
 
   getBehaviorModelsProperties(): Observable<any> {
@@ -28,6 +32,10 @@ export class BehaviorModelService {
 
   createBehaviorModel(behaviorModel: BehaviorModel): Observable<any> {
     return this.http.post(this.url + "create/", behaviorModel);
+  }
+
+  updateBehaviorModel(_id: string, behaviorModel: BehaviorModel): Observable<any> {
+    return this.http.put(this.url + "update/" + _id, behaviorModel);
   }
 
 }

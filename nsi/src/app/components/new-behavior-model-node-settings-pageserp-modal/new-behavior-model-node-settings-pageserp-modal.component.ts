@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Inject } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, Validators, ValidatorFn, ValidationErrors, AbstractControl } from '@angular/forms';
 
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -18,6 +19,7 @@ export class NewBehaviorModelNodeSettingsPageserpModalComponent {
   public relevantPage: string;
   private existingNodeNames: string[];
   public onSubmit = new EventEmitter();
+  private minTransitionTimeSubscribe: Subscription | null = null;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder) {
 
@@ -41,11 +43,19 @@ export class NewBehaviorModelNodeSettingsPageserpModalComponent {
 
     this.nodeSettingsForm = this.fb.group({
       nodeName: [this.nodeName, [Validators.required, this.existingNameValidator(this.existingNodeNames)]],
-      minTransitionTime: [this.minTransitionTime, [this.numberValidator(), this.integerNumberValidator(), Validators.min(1), this.lessThanMaxTransitionTimeValidator()]],
+      minTransitionTime: [this.minTransitionTime, [this.numberValidator(), this.integerNumberValidator(), Validators.min(1)]],
       maxTransitionTime: [this.maxTransitionTime, [this.numberValidator(), this.integerNumberValidator(), Validators.min(1), this.moreThanMinTransitionTimeValidator()]],
       relevantPage: [this.relevantPage, Validators.required]
     });
 
+    this.minTransitionTimeSubscribe = this.nodeSettingsForm.controls['minTransitionTime']?.valueChanges.subscribe((value: string) =>
+      this.nodeSettingsForm.controls['maxTransitionTime'].updateValueAndValidity()
+    );
+
+  }
+
+  ngOnDestroy() {
+    this.minTransitionTimeSubscribe?.unsubscribe();
   }
 
   public onOKButtonClicked = () => {
@@ -132,56 +142,39 @@ export class NewBehaviorModelNodeSettingsPageserpModalComponent {
     };
 
   }
-  
-  private lessThanMaxTransitionTimeValidator = (): ValidatorFn => {
-
-    return (control: AbstractControl): ValidationErrors | null => {
-
-      const value = parseInt(control.value);
-
-      if (!value) {
-          return null;
-      }
-
-      const maxTransitionTime = control.parent?.get('maxTransitionTime')?.value;
-      let lessThanMaxTransitionTime = true;
-
-      if (/^\d+$/.test(maxTransitionTime)) {
-        if (parseInt(maxTransitionTime, 10) >= 1) {
-          lessThanMaxTransitionTime = (value <= parseInt(maxTransitionTime, 10));
-        }
-      }
-      
-      const forbidden = !lessThanMaxTransitionTime;
-
-      return forbidden ? {lessThanMaxTransitionTime: {value: value}} : null;
-
-    };
-
-  }
 
   private moreThanMinTransitionTimeValidator = (): ValidatorFn => {
 
     return (control: AbstractControl): ValidationErrors | null => {
 
-      const value = parseInt(control.value);
+      if (!/^[0-9]*[1-9][0-9]*$/.test(control.parent?.get('minTransitionTime')?.value)) {
 
-      if (!value) {
-          return null;
+        return null;
+
       }
 
-      const minTransitionTime = control.parent?.get('minTransitionTime')?.value;
-      let moreThanMinTransitionTime = true;
+      else {
 
-      if (/^\d+$/.test(minTransitionTime)) {
-        if (parseInt(minTransitionTime, 10) >= 1) {
-          moreThanMinTransitionTime = (value >= parseInt(minTransitionTime, 10));
+        const value = parseInt(control.value);
+
+        if (!value) {
+            return null;
         }
-      }
-      
-      const forbidden = !moreThanMinTransitionTime;
 
-      return forbidden ? {moreThanMinTransitionTime: {value: value}} : null;
+        const minTransitionTime = control.parent?.get('minTransitionTime')?.value;
+        let moreThanMinTransitionTime = true;
+
+        if (/^\d+$/.test(minTransitionTime)) {
+          if (parseInt(minTransitionTime, 10) >= 1) {
+            moreThanMinTransitionTime = (value >= parseInt(minTransitionTime, 10));
+          }
+        }
+        
+        const forbidden = !moreThanMinTransitionTime;
+
+        return forbidden ? {moreThanMinTransitionTime: {value: value}} : null;
+
+      }
 
     };
 

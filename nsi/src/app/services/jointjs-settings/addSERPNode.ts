@@ -8,7 +8,7 @@ interface jointInputParameters {
   paper: joint.dia.Paper,
   sERPCount: number,
   visiblePaperX: number,
-  visiblePaperY: number
+  visiblePaperY: number,
 }
 
 export function addSERPNode(jointInputParams: jointInputParameters): number {

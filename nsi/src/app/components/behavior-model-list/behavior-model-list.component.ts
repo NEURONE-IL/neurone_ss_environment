@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { BehaviorModel } from '../../models/behavior-model';
 import { BehaviorModelService } from '../../services/behavior-model.service';
@@ -34,6 +35,7 @@ export class BehaviorModelListComponent implements OnInit {
 
   constructor(private _behaviorModelService: BehaviorModelService,
               private _simulationService: SimulationService,
+              private router: Router,
               private _matDialog: MatDialog) {
   }
 
@@ -99,7 +101,7 @@ export class BehaviorModelListComponent implements OnInit {
     while (nameAlreadyExists == true) {   
       nameAlreadyExists = false;
       for (j = 0; j < this.behaviorModelList.length; j++) {
-        if (this.behaviorModelList[j].name === newName.trim().toLowerCase()) {
+        if (this.behaviorModelList[j].name.toLowerCase() === newName.trim().toLowerCase()) {
           nameAlreadyExists = true;
           copyCount = copyCount + 1;
           if (newName.slice(-4) !== "copy") {
@@ -111,11 +113,16 @@ export class BehaviorModelListComponent implements OnInit {
       }
     }
 
+    let creationDate = (new Date(Date.now())).toString();
+
     const BEHAVIORMODEL: BehaviorModel = {
       name: newName,
-      model: '{}',
+      model: this.behaviorModelList[i].model,
+      modelWidth: this.behaviorModelList[i].modelWidth,
+      modelHeight: this.behaviorModelList[i].modelHeight,
       valid: this.behaviorModelList[i].valid,
-      creationDate: (new Date(Date.now())).toString()
+      creationDate: creationDate,
+      lastModificationDate: creationDate
     }
 
     this._behaviorModelService.createBehaviorModel(BEHAVIORMODEL).subscribe(data => {
@@ -196,6 +203,12 @@ export class BehaviorModelListComponent implements OnInit {
       sub.unsubscribe();
     });
 
+  }
+
+  public goToEditBehaviorModel = (_id: string) => {
+    this.router.navigate(['/', 'behavior-model-settings'], { state:
+      { _id: _id
+    }});
   }
 
 }

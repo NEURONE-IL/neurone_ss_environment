@@ -124,6 +124,8 @@ export class SimulationListComponent implements OnInit {
       }
     }
 
+    let creationDate = (new Date(Date.now())).toString();
+
     const SIMULATION: Simulation = {
       name: newName,
       description: this.simulationList[i].description,
@@ -138,8 +140,9 @@ export class SimulationListComponent implements OnInit {
       sensibility: this.simulationList[i].sensibility,
       interval: this.simulationList[i].interval,
       speed: this.simulationList[i].speed,
-      creationDate: (new Date(Date.now())).toString(),
-      lastDeployDate: (new Date(0)).toString()
+      creationDate: creationDate,
+      lastDeployDate: (new Date(0)).toString(),
+      lastModificationDate: creationDate
     }
 
     this._simulationService.createSimulation(SIMULATION).subscribe(data => {

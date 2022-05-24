@@ -9,6 +9,14 @@ const BehaviorModelSchema = mongoose.Schema({
 		type: String,
 		required: true
 	},
+	modelWidth: {
+		type: Number,
+		required: true
+	},
+	modelHeight: {
+		type: Number,
+		required: true
+	},
 	valid: {
 		type: Boolean,
 		required: true
@@ -16,6 +24,10 @@ const BehaviorModelSchema = mongoose.Schema({
 	creationDate: {
 		type: Date,
 		default: Date.now()
+	},
+	lastModificationDate: {
+		type: Date,
+		required: true
 	}
 });
 

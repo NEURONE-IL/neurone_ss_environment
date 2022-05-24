@@ -1,0 +1,90 @@
+html, body {
+    height: 100%;
+}
+
+html {
+    display: table;
+    margin: auto;
+}
+
+body {
+    display: table-cell;
+}
+
+#behaviorModelContainer {
+    border-style: solid;
+    border-color: black;
+    max-width: 1000px;
+    height: 400px;
+    margin: auto;
+    background-color: #4778F4;
+}
+
+#behaviorModelImages {
+    display: none;
+}
+
+.optionsContainer {
+    text-align: center;
+    background-color: #4778F4;
+    color: white;
+    width: 1030px;
+    border-radius: 5px;
+}
+
+button, .lastButton {
+    border-left: 1px white dotted;
+}
+
+.lastButton {
+    border-right: 1px white dotted;
+}
+
+.currentZoom {
+    border-left: 1px white dotted;
+}
+
+mat-icon {
+    position: relative;
+    top: 7px;
+}
+
+.additionalOptions {
+    text-align: right;
+}
+
+.additionalOptionsButton {
+    border-radius: 5px;
+}
+
+.clear {
+    color: black;
+    background-color: transparent;
+    width: 5px;
+    position: relative;
+    left: -10px;
+    top: -6px;
+}
+
+form {
+    text-align: center;
+}
+
+button[disabled] {
+    background-color: lightgreen!important;
+    cursor: default;
+}
+
+mat-list {
+    text-align: left;
+    border-style: solid;
+    border-width: thin;
+    border-color: #787878;
+    width: 1030px;
+    height: 200px;
+    overflow: auto;
+}
+
+.mat-list-item {
+    max-height: 35px;
+}

@@ -67,7 +67,7 @@
 	        <mat-form-field [style.width.%]="70" appearance="fill">
 			 	<mat-label>Number of documents</mat-label>
 
-				<input matInput placeholder="Example: 100" required formControlName="numberDocuments" (change)="onNumberDocumentsChange()">
+				<input matInput placeholder="Example: 100" required formControlName="numberDocuments">
 
 	            <button class="clear" *ngIf="simulationForm.get('numberDocuments')?.value" matSuffix mat-icon-button (click)="this.clearTextInput('numberDocuments')">
               		<mat-icon>close</mat-icon>
@@ -147,7 +147,7 @@
 				<mat-label>Behavior model</mat-label>
 
 				<mat-select formControlName="behaviorModelId">
-			    	<mat-option *ngFor="let behaviorModelProperties of behaviorModelsPropertiesList" value="{{behaviorModelProperties._id}}">{{behaviorModelProperties.name}}</mat-option>
+			    	<mat-option *ngFor="let behaviorModelProperties of behaviorModelsPropertiesFormList" value="{{behaviorModelProperties._id}}">{{behaviorModelProperties.name}} [{{behaviorModelProperties.valid}}]</mat-option>
 				</mat-select>
 			</mat-form-field>
 

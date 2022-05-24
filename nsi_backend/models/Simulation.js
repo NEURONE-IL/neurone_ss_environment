@@ -60,6 +60,10 @@ const SimulationSchema = mongoose.Schema({
 	lastDeployDate: {
 		type: Date,
 		required: true
+	},
+	lastModificationDate: {
+		type: Date,
+		required: true
 	}
 });
 

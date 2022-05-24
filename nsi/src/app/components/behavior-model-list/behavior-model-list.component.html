@@ -31,7 +31,7 @@
 
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-        <td mat-cell *matCellDef="let behaviorModel"> {{behaviorModel.name}} </td>
+        <td mat-cell *matCellDef="let behaviorModel" (click)="goToEditBehaviorModel(behaviorModel._id)" style="cursor: pointer;"> {{behaviorModel.name}} </td>
       </ng-container>
 
       <ng-container matColumnDef="creationDate">
@@ -42,8 +42,8 @@
       <ng-container matColumnDef="valid">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Model is valid? </th>
         <td mat-cell *matCellDef="let behaviorModel">
-          <mat-icon class="check" *ngIf="behaviorModel.valid">check</mat-icon>
-          <mat-icon class="close" *ngIf="!behaviorModel.valid">close</mat-icon>
+          <mat-icon class="check" matTooltip="Model is valid" *ngIf="behaviorModel.valid">check</mat-icon>
+          <mat-icon class="close" matTooltip="Model is not valid" *ngIf="!behaviorModel.valid">close</mat-icon>
         </td>
       </ng-container>
 

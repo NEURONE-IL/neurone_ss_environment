@@ -1,0 +1,53 @@
+<html>
+    <br /><br /><br /><br />
+    <h2 style="text-align: center;">Behavior model "{{behaviorModelName}}"</h2>
+    <body>
+
+      <br>
+
+      <div id="behaviorModelInfo">
+        <mat-grid-list cols="3" rowHeight="30px">
+          <mat-grid-tile [colspan]="1" [rowspan]="2">
+            <mat-label><b>Model is valid?</b></mat-label>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="2" [rowspan]="2" id="ModelIsValid">
+            <div id="validIcons">
+              <mat-icon class="check" matTooltip="Model is valid" *ngIf="behaviorModelValid">check</mat-icon>
+              <mat-icon class="close" matTooltip="Model is not valid" *ngIf="!behaviorModelValid">close</mat-icon>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="1" [rowspan]="2">
+            <mat-label><b>Creation date:</b></mat-label>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="2" [rowspan]="2">
+            <div class="info">{{behaviorModelCreationDate}}</div>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="1" [rowspan]="2">
+            <mat-label><b>Date of last modification:</b></mat-label>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="2" [rowspan]="2">
+            <div class="info">{{behaviorModelLastModificationDate}}</div>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
+
+      <br>
+
+      <div class="btn-group" style="text-align: center; padding-left: 175px;">
+        <button mat-raised-button color="primary" (click)="configureBehaviorModel()" style="margin-right: 20px;">
+            Edit
+        </button>
+        <button mat-raised-button color="primary" (click)="openDeleteConfirmModal()" style="background-color: 'red';">
+            Delete
+        </button>
+      </div>
+
+      <br><br><br><br>
+
+      <div style="text-align: right; margin-right: 65px;">
+        <button class="additionalOptionsButton" mat-raised-button color="primary" (click)="goToBehaviorModelListHome()">
+            Return
+        </button>
+      </div>
+    </body>
+</html>

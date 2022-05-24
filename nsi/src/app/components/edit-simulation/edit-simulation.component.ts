@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, Validators, ValidatorFn, ValidationErrors, AbstractControl } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -24,10 +25,12 @@ export class EditSimulationComponent implements OnInit {
   private simulationExistingNames: string[] = [];
   private queryList: string[] = [];
   public queryListEmpty: boolean = false;
-  public behaviorModelsPropertiesList: behaviorModelProperties[] | null = null;
+  public behaviorModelsPropertiesFormList: behaviorModelPropertiesForm[] | null = null;
   private _id: string = '';
   private creationDate: string = '';
   private lastDeployDate: string = '';
+  private lastModificationDate: string = '';
+  private numberDocumentsSubscribe: Subscription | null = null;
 
   constructor(private fb: FormBuilder, private _simulationService: SimulationService, private _behaviorModelService: BehaviorModelService, public dialog: MatDialog, private router: Router) {
 
@@ -41,7 +44,7 @@ export class EditSimulationComponent implements OnInit {
             description: [data.description, Validators.required],
             numberStudents: [data.numberStudents, [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1)]],
             numberDocuments: [data.numberDocuments, [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1)]],
-            numberRelevantDocuments: [{value: data.numberRelevantDocuments, disabled: false}, [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1), this.lessThanNumberDocumentsValidator()]],
+            numberRelevantDocuments: [data.numberRelevantDocuments, [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1), this.lessThanNumberDocumentsValidator()]],
             randomActions: [data.randomActions.toString(), Validators.required],
             expiration: [data.expiration.toString(), Validators.required],
             behaviorModelId: [data.behaviorModelId, Validators.required],
@@ -58,7 +61,9 @@ export class EditSimulationComponent implements OnInit {
           this.creationDate = data.creationDate;
           this.lastDeployDate = data.lastDeployDate;
 
-          this.onNumberDocumentsChange();
+          this.numberDocumentsSubscribe = this.simulationForm.controls['numberDocuments']?.valueChanges.subscribe((value: string) =>
+            this.simulationForm.controls['numberRelevantDocuments'].updateValueAndValidity()
+          );
 
           return;
         }, (error: any) => {
@@ -72,7 +77,7 @@ export class EditSimulationComponent implements OnInit {
           description: [simulationSettings['description'], Validators.required],
           numberStudents: [simulationSettings['numberStudents'], [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1)]],
           numberDocuments: [simulationSettings['numberDocuments'], [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1)]],
-          numberRelevantDocuments: [{value: simulationSettings['numberRelevantDocuments'], disabled: true}, [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1), this.lessThanNumberDocumentsValidator()]],
+          numberRelevantDocuments: [simulationSettings['numberRelevantDocuments'], [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1), this.lessThanNumberDocumentsValidator()]],
           randomActions: [simulationSettings['randomActions'], Validators.required],
           expiration: [simulationSettings['expiration'], Validators.required],
           behaviorModelId: [simulationSettings['behaviorModelId'], Validators.required],
@@ -89,6 +94,10 @@ export class EditSimulationComponent implements OnInit {
 
         this.simulationInitialName = simulationSettings['simulationInitialName'];
 
+        this.numberDocumentsSubscribe = this.simulationForm.controls['numberDocuments']?.valueChanges.subscribe((value: string) =>
+            this.simulationForm.controls['numberRelevantDocuments'].updateValueAndValidity()
+        );
+
         return;
       }
     } else {
@@ -101,7 +110,7 @@ export class EditSimulationComponent implements OnInit {
       description: ['', Validators.required],
       numberStudents: ['', [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1)]],
       numberDocuments: ['', [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1)]],
-      numberRelevantDocuments: [{value: '', disabled: true}, [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1), this.lessThanNumberDocumentsValidator()]],
+      numberRelevantDocuments: ['', [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1), this.lessThanNumberDocumentsValidator()]],
       randomActions: ['', Validators.required],
       expiration: ['', Validators.required],
       behaviorModelId: ['', Validators.required],
@@ -110,6 +119,10 @@ export class EditSimulationComponent implements OnInit {
       interval: ['', [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1)]],
       speed: [1],
     });
+    
+    this.numberDocumentsSubscribe = this.simulationForm.controls['numberDocuments']?.valueChanges.subscribe((value: string) =>
+      this.simulationForm.controls['numberRelevantDocuments'].updateValueAndValidity()
+    );
 
   }
 
@@ -121,20 +134,25 @@ export class EditSimulationComponent implements OnInit {
     }
     this.simulationExistingNames.splice(this.simulationExistingNames.indexOf(this.simulationInitialName), 1);
 
-    if (this.simulationForm.get('numberRelevantDocuments')?.value !== '') {
-      this.simulationForm.get('numberRelevantDocuments')?.enable();
-    }
-
     Object.keys(this.simulationForm.controls).forEach(field => {
      this.revalidateControl(field);
     })
 
     let behaviorModelsProperties = await this._behaviorModelService.getBehaviorModelsProperties().toPromise();
-    let behaviorModelsPropertiesFiltered = behaviorModelsProperties.filter(function(obj: behaviorModelProperties) {
-      return obj.valid != false;
-    });
-    this.behaviorModelsPropertiesList = Object.assign([], behaviorModelsPropertiesFiltered);
+    let behaviorModelsPropertiesForm: behaviorModelPropertiesForm[] = [];
+    for (let i = 0; i < behaviorModelsProperties.length; i++) {
+      if (behaviorModelsProperties[i].valid == true) {
+        behaviorModelsPropertiesForm.push({_id: behaviorModelsProperties[i]._id, name: behaviorModelsProperties[i].name, valid: "valid"});
+      } else {
+        behaviorModelsPropertiesForm.push({_id: behaviorModelsProperties[i]._id, name: behaviorModelsProperties[i].name, valid: "invalid"});
+      }
+    }
+    this.behaviorModelsPropertiesFormList = Object.assign([], behaviorModelsPropertiesForm);
 
+  }
+
+  ngOnDestroy() {
+    this.numberDocumentsSubscribe?.unsubscribe();
   }
 
   public addSimulation = () => {
@@ -154,7 +172,8 @@ export class EditSimulationComponent implements OnInit {
       interval: this.simulationForm.get('interval')?.value,
       speed: this.simulationForm.get('speed')?.value,
       creationDate: this.creationDate,
-      lastDeployDate: this.lastDeployDate
+      lastDeployDate: this.lastDeployDate,
+      lastModificationDate: (new Date(Date.now())).toString()
     }
 
     this._simulationService.updateSimulation(this._id, SIMULATION).subscribe(data => {
@@ -307,34 +326,30 @@ export class EditSimulationComponent implements OnInit {
 
     return (control: AbstractControl): ValidationErrors | null => {
 
-      const value = parseInt(control.value);
+      if (!/^[0-9]*[1-9][0-9]*$/.test(control.parent?.get('numberDocuments')?.value)) {
 
-      if (!value) {
-          return null;
+        return null;
+
       }
 
-      const numberDocuments = control.parent?.get('numberDocuments')?.value;
+      else {
 
-      const lessThanNumberDocuments = (value <= numberDocuments);
-      const forbidden = !lessThanNumberDocuments;
+        const value = parseInt(control.value);
 
-      return forbidden ? {lessThanNumberDocuments: {value: value}} : null;
+        if (!value) {
+            return null;
+        }
+
+        const numberDocuments = control.parent?.get('numberDocuments')?.value;
+
+        const lessThanNumberDocuments = (value <= numberDocuments);
+        const forbidden = !lessThanNumberDocuments;
+
+        return forbidden ? {lessThanNumberDocuments: {value: value}} : null;
+
+      }
 
     };
-
-  }
-
-  public onNumberDocumentsChange = () => {
-
-    if (!this.simulationForm.get('numberDocuments')?.hasError('required') &&
-        !this.simulationForm.get('numberDocuments')?.hasError('notNumber') &&
-        !this.simulationForm.get('numberDocuments')?.hasError('notInteger') &&
-        !this.simulationForm.get('numberDocuments')?.hasError('min')) {
-      this.simulationForm.get('numberRelevantDocuments')?.enable();
-    } else {
-      this.simulationForm.get('numberRelevantDocuments')?.patchValue('');
-      this.simulationForm.get('numberRelevantDocuments')?.disable();
-    }
 
   }
 
@@ -404,6 +419,14 @@ export class EditSimulationComponent implements OnInit {
 
   }
 
+  public revalidateNumberRelevantDocuments = () => {
+
+    this.simulationForm.controls['numberRelevantDocuments'].markAsTouched();
+    this.simulationForm.controls['numberRelevantDocuments'].markAsDirty();
+    this.simulationForm.controls['numberRelevantDocuments'].updateValueAndValidity();
+
+  }
+
   public discardChanges = () => {
     this.router.navigate(['/', 'simulation-settings'], { state:
       { _id: this._id
@@ -416,4 +439,10 @@ interface behaviorModelProperties {
   _id: string,
   name: string,
   valid: boolean
+}
+
+interface behaviorModelPropertiesForm {
+  _id: string,
+  name: string,
+  valid: string
 }

@@ -65,7 +65,7 @@ exports.getSimulation = async (req, res) => {
 exports.updateSimulation = async (req, res) => {
 
 	try {
-		const { name, description, numberStudents, numberDocuments, numberRelevantDocuments, randomActions, expiration, queryList, behaviorModelId, length, sensibility, interval, speed, lastDeployDate } = req.body;
+		const { name, description, numberStudents, numberDocuments, numberRelevantDocuments, randomActions, expiration, queryList, behaviorModelId, length, sensibility, interval, speed, lastDeployDate, lastModificationDate } = req.body;
 		let simulation = await Simulation.findById(req.params.id);
 
 		if (!simulation) {
@@ -86,6 +86,7 @@ exports.updateSimulation = async (req, res) => {
 		simulation.interval = interval;
 		simulation.speed = speed;
 		simulation.lastDeployDate = lastDeployDate;
+		simulation.lastModificationDate = lastModificationDate;
 
 		simulation = await Simulation.findOneAndUpdate({ _id: req.params.id }, simulation, { new: true });
 		res.json(simulation);

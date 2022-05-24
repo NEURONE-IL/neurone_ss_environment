@@ -14,6 +14,12 @@
             <div id="descriptionInfo">{{simulationDescription}}</div>
           </mat-grid-tile>
           <mat-grid-tile [colspan]="1" [rowspan]="2">
+            <mat-label><b>Behavior model:</b></mat-label>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="2" [rowspan]="2">
+            <div class="info">{{simulationBehaviorModelName}} [{{simulationBehaviorModelValidString}}]</div>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="1" [rowspan]="2">
             <mat-label><b>Creation date:</b></mat-label>
           </mat-grid-tile>
           <mat-grid-tile [colspan]="2" [rowspan]="2">
@@ -25,6 +31,12 @@
           <mat-grid-tile [colspan]="2" [rowspan]="2">
             <div class="info">{{simulationLastDeployDate}}</div>
           </mat-grid-tile>
+          <mat-grid-tile [colspan]="1" [rowspan]="2">
+            <mat-label><b>Date of last modification:</b></mat-label>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="2" [rowspan]="2">
+            <div class="info">{{simulationLastModificationDate}}</div>
+          </mat-grid-tile>
         </mat-grid-list>
       </div>
 
@@ -34,7 +46,7 @@
         <button mat-raised-button color="primary" (click)="configureSimulation()" style="margin-right: 20px;">
             Edit
         </button>
-        <button type="submit" class="submitButton" mat-raised-button color="primary" style="margin-right: 20px;">
+        <button type="submit" class="submitButton" mat-raised-button color="primary" style="margin-right: 20px;" (click)="deploySimulation()">
             Deploy
         </button>
         <button mat-raised-button color="primary" (click)="openDeleteConfirmModal()" style="background-color: 'red';">
@@ -49,5 +61,7 @@
             Return
         </button>
       </div>
+
+      <br><br><br><br>
     </body>
 </html>

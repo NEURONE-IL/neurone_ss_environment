@@ -50,6 +50,10 @@ import { EditBehaviorModelComponent } from './components/edit-behavior-model/edi
 import { EditSimulationQueryListComponent } from './components/edit-simulation-query-list/edit-simulation-query-list.component';
 import { SimulationEditedModalComponent } from './components/simulation-edited-modal/simulation-edited-modal.component';
 import { BehaviorModelInUseModalComponent } from './components/behavior-model-in-use-modal/behavior-model-in-use-modal.component';
+import { BehaviorModelEditedModalComponent } from './components/behavior-model-edited-modal/behavior-model-edited-modal.component';
+import { BehaviorModelSettingsComponent } from './components/behavior-model-settings/behavior-model-settings.component';
+import { SimulationNotDeployableModalComponent } from './components/simulation-not-deployable-modal/simulation-not-deployable-modal.component';
+import { DeploySimulationComponent } from './components/deploy-simulation/deploy-simulation.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +83,11 @@ import { BehaviorModelInUseModalComponent } from './components/behavior-model-in
     EditBehaviorModelComponent,
     EditSimulationQueryListComponent,
     SimulationEditedModalComponent,
-    BehaviorModelInUseModalComponent
+    BehaviorModelInUseModalComponent,
+    BehaviorModelEditedModalComponent,
+    BehaviorModelSettingsComponent,
+    SimulationNotDeployableModalComponent,
+    DeploySimulationComponent
   ],
   imports: [
     BrowserModule,
@@ -91,6 +99,9 @@ import { BehaviorModelInUseModalComponent } from './components/behavior-model-in
       {path: 'simulation-settings', component: SimulationSettingsComponent},
       {path: 'edit-simulation', component: EditSimulationComponent},
       {path: 'edit-simulation-query-list', component: EditSimulationQueryListComponent},
+      {path: 'edit-behavior-model', component: EditBehaviorModelComponent},
+      {path: 'behavior-model-settings', component: BehaviorModelSettingsComponent},
+      {path: 'deploy-simulation', component: DeploySimulationComponent},
       {path: '**', redirectTo: 'home', pathMatch: 'full'}],
       {scrollPositionRestoration: 'enabled'}
     ),

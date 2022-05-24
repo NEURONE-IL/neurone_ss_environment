@@ -64,6 +64,8 @@ export class NewBehaviorModelComponent implements OnInit {
   public modelValid = false;
   public errorMessages: string[] = [];
 
+  @ViewChild('behaviorModelContainer') behaviorModelContainer!: ElementRef;
+
   constructor(private fb: FormBuilder, public dialog: MatDialog, public snackbar: MatSnackBar, private elementRef: ElementRef, private _behaviorModelService: BehaviorModelService, private router: Router) {
     this.graph = new joint.dia.Graph();
     this.paper = new joint.dia.Paper({model: this.graph});
@@ -220,6 +222,13 @@ export class NewBehaviorModelComponent implements OnInit {
     });
 
     this.graph.on('change:position', (evt: any) => {
+      if (evt.attributes.position.x < 0) {
+        evt.attributes.position.x = 0;
+      }
+      if (evt.attributes.position.y < 0) {
+        evt.attributes.position.y = 0;
+      }
+      
       if (this.paperScale < 1) {
         this.paper.fitToContent({
           minWidth: this.startWidth,
@@ -495,11 +504,16 @@ export class NewBehaviorModelComponent implements OnInit {
       this.modelValid = true;
     }
 
+    let creationDate = (new Date(Date.now())).toString();
+    
     const BEHAVIORMODEL: BehaviorModel = {
       name: this.behaviorModelForm.get('name')?.value,
       model: JSON.stringify(this.graph.toJSON()),
+      modelWidth: parseInt(this.paper.options.width!.toString()),
+      modelHeight: parseInt(this.paper.options.height!.toString()),
       valid: this.modelValid,
-      creationDate: (new Date(Date.now())).toString()
+      creationDate: creationDate,
+      lastModificationDate: creationDate
     };
 
     if (this.modelValid == true) {
@@ -554,6 +568,10 @@ export class NewBehaviorModelComponent implements OnInit {
     this.paper = output.paper;
     this.paperScale = output.paperScale;
     this.paperScaleString = output.paperScaleString;
+    this.scrollTop = this.behaviorModelContainer.nativeElement.scrollTop;
+    this.scrollLeft = this.behaviorModelContainer.nativeElement.scrollLeft;
+    this.visiblePaper.x = Math.round(this.scrollLeft / this.paperScale);
+    this.visiblePaper.y = Math.round(this.scrollTop / this.paperScale);
   }
 
   public zoomOutAction = () => {
@@ -561,6 +579,10 @@ export class NewBehaviorModelComponent implements OnInit {
     this.paper = output.paper;
     this.paperScale = output.paperScale;
     this.paperScaleString = output.paperScaleString;
+    this.scrollTop = this.behaviorModelContainer.nativeElement.scrollTop;
+    this.scrollLeft = this.behaviorModelContainer.nativeElement.scrollLeft;
+    this.visiblePaper.x = Math.round(this.scrollLeft / this.paperScale);
+    this.visiblePaper.y = Math.round(this.scrollTop / this.paperScale);
   }
 
   public restoreZoomAction = () => {
@@ -568,14 +590,18 @@ export class NewBehaviorModelComponent implements OnInit {
     this.paper = output.paper;
     this.paperScale = output.paperScale;
     this.paperScaleString = output.paperScaleString;
+    this.scrollTop = this.behaviorModelContainer.nativeElement.scrollTop;
+    this.scrollLeft = this.behaviorModelContainer.nativeElement.scrollLeft;
+    this.visiblePaper.x = Math.round(this.scrollLeft / this.paperScale);
+    this.visiblePaper.y = Math.round(this.scrollTop / this.paperScale);
   }
 
   public onScroll(event: Event): void {
     const element = (event.target as HTMLDivElement);
     this.scrollTop = element.scrollTop;
     this.scrollLeft = element.scrollLeft;
-    this.visiblePaper.x = this.scrollLeft;
-    this.visiblePaper.y = this.scrollTop;
+    this.visiblePaper.x = Math.round(this.scrollLeft / this.paperScale);
+    this.visiblePaper.y = Math.round(this.scrollTop / this.paperScale);
   }
 
   private existingNameValidator = (): ValidatorFn => {
