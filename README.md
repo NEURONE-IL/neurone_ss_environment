@@ -8,6 +8,9 @@ For UI components:
 For date handling:
 - Day.js [npm install --save dayjs]
 
+For the simulation deploy timer:
+- Angular-Cd-Timer [npm install angular-cd-timer]
+
 For diagrams:
 - JointJS [npm install --save jointjs]
 - jQuery [npm install --save jquery@3.6.0]
