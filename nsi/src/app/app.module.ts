@@ -22,6 +22,9 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatPaginatorModule } from '@angular/material/paginator';
+
+import { CdTimerModule } from 'angular-cd-timer';
 
 import { AppComponent } from './app.component';
 import { BehaviorModelListComponent } from './components/behavior-model-list/behavior-model-list.component';
@@ -124,7 +127,9 @@ import { DeploySimulationComponent } from './components/deploy-simulation/deploy
     MatRadioModule,
     MatSliderModule,
     MatTooltipModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatPaginatorModule,
+    CdTimerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

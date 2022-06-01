@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort, MatSortable } from '@angular/material/sort';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
 
 import * as dayjs from 'dayjs';
 
@@ -34,6 +35,7 @@ export class SimulationListComponent implements OnInit {
   private firstSort = true;
 
   @ViewChild(MatSort, {static: true}) private sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(private _simulationService: SimulationService,
               private _matDialog: MatDialog,
@@ -73,6 +75,7 @@ export class SimulationListComponent implements OnInit {
       }
       this.dataSource.sort = this.sort;
       this.dataSource.filterPredicate = (data: Simulation, filter: string) => data.name.includes(filter);
+    this.dataSource.paginator = this.paginator;
     }, (error: any) => {
       console.log(error);
     })
@@ -151,6 +154,7 @@ export class SimulationListComponent implements OnInit {
 
       const sub = dialogRef.componentInstance.onSubmit.subscribe(() => {
         dialogRef.close();
+        this.filterInput = "";
         this.getSimulations();
       });
 

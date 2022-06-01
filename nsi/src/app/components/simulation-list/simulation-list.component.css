@@ -14,7 +14,7 @@ h2 {
 
 .simulationListTable {
     padding: 0px 5em 0px 5em;
-    max-height: 250px;
+    max-height: 400px;
     overflow: auto;
 }
 
@@ -22,13 +22,6 @@ h2 {
     background-color: #B0C4EC;
     font-weight: bold;
     color: black;
-}
-
-
-:host ::ng-deep .mat-header-cell {
-    top: 0;
-    position: sticky;
-    z-index: 1000;
 }
 
 .mat-cell {
@@ -75,6 +68,6 @@ mat-icon {
   padding: 0px 68px 0px 0px;
 }
 
-/*.simulationName:hover {
-    text-decoration: underline;
-}*/
+mat-paginator {
+    background-color: #FFF2E3
+}

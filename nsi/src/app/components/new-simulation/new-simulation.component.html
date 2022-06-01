@@ -143,14 +143,22 @@
 
 			<br><br>
 
-			<mat-form-field [style.width.%]="70" appearance="fill">
+			<mat-form-field [style.width.%]="44" style="margin-right: 30px;" appearance="fill">
 				<mat-label>Behavior model</mat-label>
 
 				<mat-select formControlName="behaviorModelId">
-			    	<mat-option *ngFor="let behaviorModelProperties of behaviorModelsPropertiesFormList" value="{{behaviorModelProperties._id}}">{{behaviorModelProperties.name}} [{{behaviorModelProperties.valid}}]</mat-option>
+			    	<mat-option *ngFor="let behaviorModelProperties of behaviorModelsPropertiesFormListWithFilter" value="{{behaviorModelProperties._id}}">{{behaviorModelProperties.name}} [{{behaviorModelProperties.valid}}]</mat-option>
 				</mat-select>
 			</mat-form-field>
 
+			<mat-form-field style="max-width: 180px;">
+			  <mat-label>Filter models by name</mat-label>
+		      <input matInput (keyup)="applyFilter($event)" placeholder="Example: Model 1" formControlName="behaviorModelFilter" maxlength="200">
+		      <button class="clear" *ngIf="simulationForm.get('behaviorModelFilter')?.value" matSuffix mat-icon-button (click)="this.removeFilter()">
+		        <mat-icon>close</mat-icon>
+		    	</button>
+	    	</mat-form-field>
+	    	
 			<br><br>
 
 	        <mat-form-field [style.width.%]="70" appearance="fill">

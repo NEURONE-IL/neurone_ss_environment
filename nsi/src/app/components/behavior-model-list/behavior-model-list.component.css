@@ -14,7 +14,7 @@ h2 {
 
 .behaviorModelListTable {
     padding: 0px 5em 0px 5em;
-    max-height: 250px;
+    max-height: 400px;
     overflow: auto;
 }
 
@@ -22,12 +22,6 @@ h2 {
     background-color: #B0C4EC;
     font-weight: bold;
     color: black;
-}
-
-:host ::ng-deep .mat-header-cell {
-    top: 0;
-    position: sticky;
-    z-index: 1000;
 }
 
 .mat-cell {
@@ -69,4 +63,8 @@ mat-icon {
 
 .delete {
     color: red;
+}
+
+mat-paginator {
+    background-color: #F0E3FF
 }

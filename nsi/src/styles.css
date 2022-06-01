@@ -36,3 +36,25 @@ button[disabled] {
 .mat-form-field-appearance-outline .mat-form-field-outline {
     color: grey;
 }
+
+.mat-paginator .mat-icon-button {
+    background-color: transparent;
+}
+
+.mat-slider-thumb {
+    background-color: #2A57A1 !important;
+}
+
+.mat-slider-thumb-label {
+    background-color: #2A57A1 !important;
+}
+
+.mat-slider-track-fill {
+  background-color: #2A57A1 !important;
+}
+
+:host .mat-header-cell {
+    top: 0;
+    position: sticky;
+    z-index: 1000;
+}

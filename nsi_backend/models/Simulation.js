@@ -67,4 +67,5 @@ const SimulationSchema = mongoose.Schema({
 	}
 });
 
-module.exports = mongoose.model("Simulation", SimulationSchema);
+const neuroneDB = mongoose.connection.useDb("neurone");
+module.exports = neuroneDB.model("Simulation", SimulationSchema);

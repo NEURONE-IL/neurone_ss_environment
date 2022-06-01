@@ -38,6 +38,10 @@ export class SimulationService {
     return this.http.put(this.url + "update/" + _id, simulation);
   }
 
+  updateSimulationLastDeployDate(_id: string): Observable<any> {
+    return this.http.put(this.url + "updatelastdeploydate/" + _id, {id: _id});
+  }
+
   getSimulationBehaviorModels(): Observable<any> {
     return this.http.get(this.url + "getmodels/");
   }

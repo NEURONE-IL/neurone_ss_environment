@@ -11,6 +11,7 @@ app.use(express.json());
 
 app.use("/api/simulations", require("./routes/simulation"));
 app.use("/api/behaviormodels", require("./routes/behaviorModel"));
+app.use("/api/simulationdata/deploy", require("./routes/simulationDeploy"));
 
 app.listen(4000, () => {
 	console.log("Server is running")

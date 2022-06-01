@@ -97,6 +97,26 @@ exports.updateSimulation = async (req, res) => {
 
 }
 
+exports.updateSimulationLastDeployDate = async (req, res) => {
+
+	try {
+		let simulation = await Simulation.findById(req.params.id);
+
+		if (!simulation) {
+			res.status(404).json({msg: "Error: simulation doesn't exist"});
+		}
+
+		simulation.lastDeployDate = (new Date(Date.now())).toString();
+
+		simulation = await Simulation.findOneAndUpdate({ _id: req.params.id }, simulation, { new: true });
+		res.json(simulation);
+	} catch (error) {
+		console.log(error);
+		res.status(500).send("Error: updateSimulationLastDeployDate method failed");
+	}
+
+}
+
 exports.deleteSimulation = async (req, res) => {
 
 	try {

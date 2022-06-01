@@ -10,6 +10,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort, MatSortable } from '@angular/material/sort';
 import * as dayjs from 'dayjs';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
 
 import { BehaviorModelCopiedModalComponent } from '../behavior-model-copied-modal/behavior-model-copied-modal.component';
 import { BehaviorModelDeleteConfirmModalComponent } from '../behavior-model-delete-confirm-modal/behavior-model-delete-confirm-modal.component';
@@ -32,6 +33,7 @@ export class BehaviorModelListComponent implements OnInit {
   private simulationBehaviorModels: any; // ARREGLAR TIPO DE DATOS
 
   @ViewChild(MatSort, {static: true}) private sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(private _behaviorModelService: BehaviorModelService,
               private _simulationService: SimulationService,
@@ -61,6 +63,7 @@ export class BehaviorModelListComponent implements OnInit {
       }
       this.dataSource.sort = this.sort;
       this.dataSource.filterPredicate = (data: BehaviorModel, filter: string) => data.name.includes(filter);
+    this.dataSource.paginator = this.paginator;
 
     }, (error: any) => {
       console.log(error);
@@ -131,6 +134,7 @@ export class BehaviorModelListComponent implements OnInit {
 
       const sub = dialogRef.componentInstance.onSubmit.subscribe(() => {
         dialogRef.close();
+        this.filterInput = "";
         this.getBehaviorModels();
       });
 

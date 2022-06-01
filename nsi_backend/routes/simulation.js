@@ -9,6 +9,7 @@ router.get("/getnames/", simulationController.getSimulationNames);
 router.get("/getmodels/", simulationController.getSimulationBehaviorModels);
 router.get("/get/:id", simulationController.getSimulation);
 router.put("/update/:id", simulationController.updateSimulation);
+router.put("/updatelastdeploydate/:id", simulationController.updateSimulationLastDeployDate);
 router.delete("/delete/:id", simulationController.deleteSimulation);
 
 module.exports = router;

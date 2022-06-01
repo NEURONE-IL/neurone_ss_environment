@@ -25,6 +25,7 @@ export class NewSimulationComponent implements OnInit {
   private queryList: string[] = [];
   public queryListAccessed: boolean = false;
   public behaviorModelsPropertiesFormList: behaviorModelPropertiesForm[] | null = null;
+  public behaviorModelsPropertiesFormListWithFilter: behaviorModelPropertiesForm[] | null = null;
   private numberDocumentsSubscribe: Subscription | null = null;
 
   constructor(private fb: FormBuilder, private _simulationService: SimulationService, private _behaviorModelService: BehaviorModelService, public dialog: MatDialog, private router: Router) {
@@ -43,7 +44,8 @@ export class NewSimulationComponent implements OnInit {
         length: [simulationSettings['length'], [this.lengthValidator(), this.maxLengthValidator()]],
         sensibility: [simulationSettings['sensibility'], [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1), Validators.max(100)]],
         interval: [simulationSettings['interval'], [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1)]],
-        speed: [simulationSettings['speed']]
+        speed: [simulationSettings['speed']],
+        behaviorModelFilter: ['']
       });
 
       this.queryList = Object.assign([], simulationSettings['queryList']);
@@ -69,6 +71,7 @@ export class NewSimulationComponent implements OnInit {
       sensibility: ['', [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1), Validators.max(100)]],
       interval: ['', [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1)]],
       speed: [1],
+      behaviorModelFilter: ['']
     });
 
     this.numberDocumentsSubscribe = this.simulationForm.controls['numberDocuments']?.valueChanges.subscribe((value: string) =>
@@ -98,6 +101,7 @@ export class NewSimulationComponent implements OnInit {
       }
     }
     this.behaviorModelsPropertiesFormList = Object.assign([], behaviorModelsPropertiesForm);
+    this.behaviorModelsPropertiesFormListWithFilter = Object.assign([], behaviorModelsPropertiesForm);
 
   }
 
@@ -339,6 +343,30 @@ export class NewSimulationComponent implements OnInit {
       this.simulationForm.controls[controlName].markAsDirty();
       this.simulationForm.controls[controlName].updateValueAndValidity();
     }
+
+  }
+
+  public applyFilter = (event: Event) => {
+    const filterValue = this.simulationForm.get('behaviorModelFilter')!.value.trim().toLowerCase();
+    const currentModelId = this.simulationForm.get('behaviorModelId')?.value;
+    for (let i = 0; i < this.behaviorModelsPropertiesFormList!.length; i++) {
+      if (this.behaviorModelsPropertiesFormList![i]._id == currentModelId) {
+        if (!this.behaviorModelsPropertiesFormList![i].name.trim().toLowerCase().includes(filterValue)) {
+          this.simulationForm.controls['behaviorModelId']!.patchValue('');
+        }
+      }
+    }
+
+    this.behaviorModelsPropertiesFormListWithFilter = this.behaviorModelsPropertiesFormList!.filter(
+      behaviorModelProperties => behaviorModelProperties.name.includes(filterValue)
+    );
+
+  }
+
+  public removeFilter = () => {
+
+    this.simulationForm.controls['behaviorModelFilter']!.patchValue('');
+    this.behaviorModelsPropertiesFormListWithFilter = Object.assign([], this.behaviorModelsPropertiesFormList);
 
   }
 

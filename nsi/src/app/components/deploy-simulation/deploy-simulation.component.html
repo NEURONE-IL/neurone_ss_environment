@@ -7,15 +7,23 @@
       <div class="deployConfig">
 
 	      <div id="deployInfo">
-	        <mat-grid-list cols="3" rowHeight="30px">
+	        <mat-grid-list cols="3" rowHeight="15px">
 	          <mat-grid-tile [colspan]="1" [rowspan]="5">
 	            <mat-label><b>Simulation status:</b></mat-label>
 	          </mat-grid-tile>
 	          <mat-grid-tile [colspan]="2" [rowspan]="5">
 	            <div class="info">{{status}}</div>
 	          </mat-grid-tile>
+	          <mat-grid-tile [colspan]="1" [rowspan]="5">
+	            <mat-label><b>Time elapsed:</b></mat-label>
+	          </mat-grid-tile>
+	          <mat-grid-tile [colspan]="2" [rowspan]="5">
+	            <div class="info"><cd-timer #basicTimer format="ms"></cd-timer></div>
+	          </mat-grid-tile>
 	        </mat-grid-list>
 	      </div>
+
+	      <br><br>
 
 	      <div class="btn-group" style="text-align: center">
 	        <button id="deploy" [disabled]="!deployEnabled" mat-raised-button color="primary" style="margin-right: 20px;" (click)="deploy()">
@@ -37,12 +45,12 @@
 
       <div class="actionsTable">
 
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort> 
+        <table mat-table #actionsTable [dataSource]="dataSource" class="mat-elevation-z8" matSort> 
 
 	      <ng-container matColumnDef="filterTitle">>
 	        <th mat-header-cell *matHeaderCellDef [style.width.%]="20"
 	          [attr.colspan]="1">
-	          Filter by participant:
+	          Filter by username:
 	        </th>
 	      </ng-container>
 
@@ -60,17 +68,46 @@
 
 	      <ng-container matColumnDef="username">
 	        <th mat-header-cell *matHeaderCellDef mat-sort-header> Username </th>
-	        <td mat-cell class="username" *matCellDef="let action"> {{action.username}} </td>
+	        <td mat-cell class="username" *matCellDef="let action" [style.color]="action.type === 'B'
+	        ? 'blue'
+	        : action.type === 'K'
+	        ? '#753B0F'
+	        : action.type === 'Q'
+	        ? 'purple'
+	        : action.type === 'V'
+	        ? 'green'
+	        : 'black'
+	        "> {{action.username}} </td>
 	      </ng-container>
 
 	      <ng-container matColumnDef="action">
 	        <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
-	        <td mat-cell *matCellDef="let action"> {{action.action}} </td>
+	        <td mat-cell *matCellDef="let action" [style.color]="
+	        action.type === 'B'
+	        ? 'blue'
+	        : action.type === 'K'
+	        ? '#753B0F'
+	        : action.type === 'Q'
+	        ? 'purple'
+	        : action.type === 'V'
+	        ? 'green'
+	        : 'black'
+	        "> {{action.action}} </td>
 	      </ng-container>
 
-	      <ng-container matColumnDef="timestamp">
+	      <ng-container matColumnDef="localTimestamp">
 	        <th mat-header-cell *matHeaderCellDef mat-sort-header> Timestamp </th>
-	        <td mat-cell *matCellDef="let action"> {{action.timestamp}} </td>
+	        <td mat-cell *matCellDef="let action" [style.color]="
+	        action.type === 'B'
+	        ? 'blue'
+	        : action.type === 'K'
+	        ? '#753B0F'
+	        : action.type === 'Q'
+	        ? 'purple'
+	        : action.type === 'V'
+	        ? 'green'
+	        : 'black'
+	        "> {{action.localTimestamp}} </td>
 	      </ng-container>
 
 	      <tr mat-header-row *matHeaderRowDef="['filterTitle', 'filterTextbox']"></tr>
@@ -78,6 +115,8 @@
 	      <tr mat-row *matRowDef="let row; columns: columns;"></tr>
 
 	    </table>
+
+	    <mat-paginator class="paginator" showFirstLastButtons [pageSizeOptions]="[25, 50, 100]"></mat-paginator>
 
 	  </div> 
 

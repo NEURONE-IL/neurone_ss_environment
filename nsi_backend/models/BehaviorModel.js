@@ -31,4 +31,5 @@ const BehaviorModelSchema = mongoose.Schema({
 	}
 });
 
-module.exports = mongoose.model("BehaviorModel", BehaviorModelSchema);
+const neuroneDB = mongoose.connection.useDb("neurone");
+module.exports = neuroneDB.model("BehaviorModel", BehaviorModelSchema);

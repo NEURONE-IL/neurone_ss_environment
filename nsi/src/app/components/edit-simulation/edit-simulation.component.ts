@@ -26,6 +26,7 @@ export class EditSimulationComponent implements OnInit {
   private queryList: string[] = [];
   public queryListEmpty: boolean = false;
   public behaviorModelsPropertiesFormList: behaviorModelPropertiesForm[] | null = null;
+  public behaviorModelsPropertiesFormListWithFilter: behaviorModelPropertiesForm[] | null = null;
   private _id: string = '';
   private creationDate: string = '';
   private lastDeployDate: string = '';
@@ -51,7 +52,8 @@ export class EditSimulationComponent implements OnInit {
             length: [this.secondsToLength(data.length), [this.lengthValidator(), this.maxLengthValidator()]],
             sensibility: [data.sensibility, [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1), Validators.max(100)]],
             interval: [data.interval, [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1)]],
-            speed: [data.speed]
+            speed: [data.speed],
+            behaviorModelFilter: ['']
           });
 
           this.queryList = Object.assign([], data.queryList);
@@ -84,7 +86,8 @@ export class EditSimulationComponent implements OnInit {
           length: [simulationSettings['length'], [this.lengthValidator(), this.maxLengthValidator()]],
           sensibility: [simulationSettings['sensibility'], [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1), Validators.max(100)]],
           interval: [simulationSettings['interval'], [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1)]],
-          speed: [simulationSettings['speed']]
+          speed: [simulationSettings['speed']],
+          behaviorModelFilter: ['']
         });
 
         this.queryList = Object.assign([], simulationSettings['queryList']);
@@ -118,6 +121,7 @@ export class EditSimulationComponent implements OnInit {
       sensibility: ['', [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1), Validators.max(100)]],
       interval: ['', [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1)]],
       speed: [1],
+      behaviorModelFilter: ['']
     });
     
     this.numberDocumentsSubscribe = this.simulationForm.controls['numberDocuments']?.valueChanges.subscribe((value: string) =>
@@ -148,6 +152,7 @@ export class EditSimulationComponent implements OnInit {
       }
     }
     this.behaviorModelsPropertiesFormList = Object.assign([], behaviorModelsPropertiesForm);
+    this.behaviorModelsPropertiesFormListWithFilter = Object.assign([], behaviorModelsPropertiesForm);
 
   }
 
@@ -431,6 +436,30 @@ export class EditSimulationComponent implements OnInit {
     this.router.navigate(['/', 'simulation-settings'], { state:
       { _id: this._id
      }});
+  }
+
+  public applyFilter = (event: Event) => {
+    const filterValue = this.simulationForm.get('behaviorModelFilter')!.value.trim().toLowerCase();
+    const currentModelId = this.simulationForm.get('behaviorModelId')?.value;
+    for (let i = 0; i < this.behaviorModelsPropertiesFormList!.length; i++) {
+      if (this.behaviorModelsPropertiesFormList![i]._id == currentModelId) {
+        if (!this.behaviorModelsPropertiesFormList![i].name.trim().toLowerCase().includes(filterValue)) {
+          this.simulationForm.controls['behaviorModelId']!.patchValue('');
+        }
+      }
+    }
+
+    this.behaviorModelsPropertiesFormListWithFilter = this.behaviorModelsPropertiesFormList!.filter(
+      behaviorModelProperties => behaviorModelProperties.name.includes(filterValue)
+    );
+
+  }
+
+  public removeFilter = () => {
+
+    this.simulationForm.controls['behaviorModelFilter']!.patchValue('');
+    this.behaviorModelsPropertiesFormListWithFilter = Object.assign([], this.behaviorModelsPropertiesFormList);
+
   }
 
 }

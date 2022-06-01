@@ -47,18 +47,6 @@ form mat-error:first-child {
     display: block;
 }
 
-::ng-deep .mat-slider-thumb {
-    background-color: #2A57A1 !important;
-}
-
-::ng-deep .mat-slider-thumb-label {
-    background-color: #2A57A1 !important;
-}
-
-::ng-deep .mat-slider-track-fill {
-  background-color: #2A57A1 !important;
-}
-
 button:disabled {
     background-color: lightgreen;
     cursor: default;
