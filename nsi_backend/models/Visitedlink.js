@@ -17,7 +17,7 @@ const VisitedlinkSchema = mongoose.Schema({
 		type: String,
 		required: true
 	},
-	localtimestamp: {
+	localTimestamp: {
 		type: Number,
 		required: true
 	},

@@ -33,7 +33,7 @@ export class NewBehaviorModelNodeSettingsEndbookunbookModalComponent {
 
   public onOKButtonClicked = () => {
     var output = {
-      nodeName: this.nodeSettingsForm.get('nodeName')?.value
+      nodeName: this.nodeSettingsForm.get('nodeName')?.value.trim()
     }
     this.onSubmit.emit(output);
   }

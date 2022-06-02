@@ -71,7 +71,7 @@ export class NewBehaviorModelNodeSettingsPageserpModalComponent {
     }
 
     var output = {
-      nodeName: this.nodeSettingsForm.get('nodeName')?.value,
+      nodeName: this.nodeSettingsForm.get('nodeName')?.value.trim(),
       minTransitionTime: this.nodeSettingsForm.get('minTransitionTime')?.value,
       maxTransitionTime: this.nodeSettingsForm.get('maxTransitionTime')?.value,
       relevantPage: this.nodeSettingsForm.get('relevantPage')?.value === 'true'

@@ -13,6 +13,7 @@
 
               <mat-error *ngIf="nodeSettingsForm.get('nodeName')?.hasError('required')">You must enter the name of the state.</mat-error>
               <mat-error *ngIf="nodeSettingsForm.get('nodeName')?.hasError('nameExists')">The state name already exists.</mat-error>
+              <mat-error *ngIf="nodeSettingsForm.get('nodeName')?.hasError('invalidName')">The state name is invalid, because it contains the word "new".</mat-error>
             </mat-form-field>
 
             <div style="font-size: 12px; font-family: roboto; text-align: left; margin-left: 206px; margin-top: -15px;" *ngIf="nodeSettingsForm.get('nodeName')?.value.length == 40">You have reached the maximum number of characters.</div>

@@ -155,6 +155,31 @@ export function validateModel(originalGraph: joint.dia.Graph): string[] {
     linkTargetNodeLabel = '';
   }
 
+  if (errorMessages.length != 0) {
+    return errorMessages;
+  }
+
+  // ================
+
+  // CHECKING NODES WHOSE LIKELIHOOD VALUES DONT ADD UP TO 100
+
+  let nodeProbabilitySum: number;
+  let nodeOutLinkCount: number;
+
+  for (let i = 0; i < nodes.length; i++) {
+    nodeProbabilitySum = 0;
+    nodeOutLinkCount = 0;
+    for (let j = 0; j < links.length; j++) {
+      if (links[j].sourceId == nodes[i].id) {
+        nodeOutLinkCount = nodeOutLinkCount + 1;
+        nodeProbabilitySum = nodeProbabilitySum + parseInt(links[j].probability);
+      }
+    }
+    if (nodeProbabilitySum != 100 && nodeOutLinkCount > 0) {
+      errorMessages.push(errorMessageCount.toString() + ". The likelihoods for node '" + nodes[i].label + "' do not add up to 100%.");
+    }
+  }
+
   return errorMessages;
 
 }

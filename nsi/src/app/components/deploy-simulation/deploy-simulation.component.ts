@@ -33,6 +33,8 @@ export class DeploySimulationComponent implements OnInit {
   public deployEnabled: boolean = true;
   public stopEnabled: boolean = false;
   public restartEnabled: boolean = false;
+  public endTime: number = 0;
+  public showMaxLengthReached: boolean = false;
 
   private actionsList: Action[] = [];
 
@@ -44,12 +46,13 @@ export class DeploySimulationComponent implements OnInit {
   public columns = ['username', 'action', 'localTimestamp'];
   public dataSource: any;
   public filterInput: string = "";
-  private firstSort = true;
 
   private bookmarksCursor: number = 0;
   private keystrokesCursor: number = 0;
   private queriesCursor: number = 0;
   private visitedlinksCursor: number = 0;
+
+  private updateFrequency: number = 5000;
 
   @ViewChild(MatSort, {static: true}) private sort!: MatSort;
   @ViewChild(MatTable, {static: true}) private ActionsTableRef!: MatTable<any>;
@@ -71,9 +74,10 @@ export class DeploySimulationComponent implements OnInit {
 
     let simulation = await this._simulationService.getSimulation(this._id).toPromise();
     this.simulationName = simulation.name;
+    this.endTime = simulation.length * 60;
 
     this.dataSource = new MatTableDataSource<Action>(this.actionsList);
-    this.dataSource.filterPredicate = (data: Action, filter: string) => data.username.includes(filter);
+    this.dataSource.filterPredicate = (data: Action, filter: string) => data.username === filter;
 
     this.timerRef.stop();
 
@@ -91,6 +95,7 @@ export class DeploySimulationComponent implements OnInit {
 
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.paginator.firstPage();
 
   }
 
@@ -98,11 +103,13 @@ export class DeploySimulationComponent implements OnInit {
 
     this.filterInput = "";
     this.dataSource.filter = "";
+    this.paginator.firstPage();
 
   }
 
   public async deploy() {
 
+    this.showMaxLengthReached = false;
     this.timerRef.reset();
     this.timerRef.start();
 
@@ -111,56 +118,12 @@ export class DeploySimulationComponent implements OnInit {
     this.keystrokesList.length = 0;
     this.queriesList.length = 0;
     this.visitedlinksList.length = 0;
+    this.ActionsTableRef.renderRows();
+    this.dataSource._updateChangeSubscription();
 
     this.deployEnabled = false;
     this.status = "Deploying...";
     let status = await this._simulationDeployService.startSimulation().toPromise();
-
-    let bookmarks = await this._simulationDeployService.getBookmarks().toPromise();
-    let keystrokes = await this._simulationDeployService.getKeystrokes().toPromise();
-    let queries = await this._simulationDeployService.getQueries().toPromise();
-    let visitedlinks = await this._simulationDeployService.getVisitedlinks().toPromise();
-
-    this.bookmarksCursor = bookmarks.length;
-    this.keystrokesCursor = keystrokes.length;
-    this.queriesCursor = queries.length;
-    this.visitedlinksCursor = visitedlinks.length;
-
-    let tempActionsList: Action[] = [];
-
-    for (let i = 0; i < bookmarks.length; i++) {
-      let timestamp = dayjs(bookmarks[i].localTimestamp).format('YYYY/MM/DD HH:mm:ss');
-      tempActionsList.push({'username': bookmarks[i].username, 'action': 'User bookmarked document "'.concat(bookmarks[i].url).concat('"'), 'localTimestamp': timestamp, 'type': 'B'});
-    }
-
-    for (let i = 0; i < keystrokes.length; i++) {
-      let timestamp = dayjs(keystrokes[i].localTimestamp).format('YYYY/MM/DD HH:mm:ss');
-      tempActionsList.push({'username': keystrokes[i].username, 'action': 'User pressed key with keycode '.concat(keystrokes[i].keyCode.toString()), 'localTimestamp': timestamp, 'type': 'K'});
-    }
-
-    for (let i = 0; i < queries.length; i++) {
-      let timestamp = dayjs(queries[i].localTimestamp).format('YYYY/MM/DD HH:mm:ss');
-      tempActionsList.push({'username': queries[i].username, 'action': 'User queried "'.concat(queries[i].query).concat('"'), 'localTimestamp': timestamp, 'type': 'Q'});
-    }
-
-    for (let i = 0; i < visitedlinks.length; i++) {
-      let timestamp = dayjs(visitedlinks[i].localTimestamp).format('YYYY/MM/DD HH:mm:ss');
-
-      if (visitedlinks[i].state === "PageEnter") {
-        tempActionsList.push({'username': visitedlinks[i].username, 'action': 'User entered page "'.concat(visitedlinks[i].url).concat('"'), 'localTimestamp': timestamp, 'type': 'V'});
-      } else {
-        tempActionsList.push({'username': visitedlinks[i].username, 'action': 'User exited page "'.concat(visitedlinks[i].url).concat('"'), 'localTimestamp': timestamp, 'type': 'V'});
-      }
-    }
-
-    tempActionsList.sort((a, b) => Date.parse(a.localTimestamp) - Date.parse(b.localTimestamp));
-
-    for (let i = 0; i < tempActionsList.length; i++) {
-      this.actionsList.push(tempActionsList[i]);
-    }
-
-    this.ActionsTableRef.renderRows();
-    this.dataSource._updateChangeSubscription();
 
     console.log(status);
     this.status = "Deployed"
@@ -176,7 +139,7 @@ export class DeploySimulationComponent implements OnInit {
 
   private async updateActions() {
     while (this.status === "Deployed") {
-      await new Promise(f => setTimeout(f, 5000));
+      await new Promise(f => setTimeout(f, this.updateFrequency));
       if (this.status !== "Deployed") {
         break;
       }
@@ -186,35 +149,50 @@ export class DeploySimulationComponent implements OnInit {
       let latestQueries = await this._simulationDeployService.getLatestQueries(this.queriesCursor).toPromise();
       let latestVisitedlinks = await this._simulationDeployService.getLatestVisitedlinks(this.visitedlinksCursor).toPromise();
 
-      this.bookmarksCursor = latestBookmarks.length;
-      this.keystrokesCursor = latestKeystrokes.length;
-      this.queriesCursor = latestQueries.length;
-      this.visitedlinksCursor = latestVisitedlinks.length;
+      if (latestBookmarks.length > 0) {
+        this.bookmarksCursor = latestBookmarks[latestBookmarks.length - 1].localTimestamp;
+      }
 
+      if (latestKeystrokes.length > 0) {
+        this.keystrokesCursor = latestKeystrokes[latestKeystrokes.length - 1].localTimestamp;
+      }
+
+      if (latestQueries.length > 0) {
+        this.queriesCursor = latestQueries[latestQueries.length - 1].localTimestamp;
+      }
+
+      if (latestVisitedlinks.length > 0) {
+        this.visitedlinksCursor = latestVisitedlinks[latestVisitedlinks.length - 1].localTimestamp;
+      }
+       
       let tempActionsList: Action[] = [];
 
       for (let i = 0; i < latestBookmarks.length; i++) {
         let timestamp = dayjs(latestBookmarks[i].localTimestamp).format('YYYY/MM/DD HH:mm:ss');
-        tempActionsList.push({'username': latestBookmarks[i].username, 'action': 'User bookmarked document "'.concat(latestBookmarks[i].url).concat('"'), 'localTimestamp': timestamp, 'type': 'B'});
+        if (latestBookmarks[i].action === "Bookmark") {
+          tempActionsList.push({'username': latestBookmarks[i].username.substr(11), 'action': 'Student bookmarked document "'.concat(latestBookmarks[i].url).concat('"'), 'localTimestamp': timestamp, 'type': 'B'});
+        } else {
+          tempActionsList.push({'username': latestBookmarks[i].username.substr(11), 'action': 'Student unbookmarked document "'.concat(latestBookmarks[i].url).concat('"'), 'localTimestamp': timestamp, 'type': 'B'});
+        }
       }
 
       for (let i = 0; i < latestKeystrokes.length; i++) {
         let timestamp = dayjs(latestKeystrokes[i].localTimestamp).format('YYYY/MM/DD HH:mm:ss');
-        tempActionsList.push({'username': latestKeystrokes[i].username, 'action': 'User pressed key with keycode '.concat(latestKeystrokes[i].keyCode.toString()), 'localTimestamp': timestamp, 'type': 'K'});
+        tempActionsList.push({'username': latestKeystrokes[i].username.substr(11), 'action': 'Student pressed key with keycode '.concat(latestKeystrokes[i].keyCode.toString()), 'localTimestamp': timestamp, 'type': 'K'});
       }
 
       for (let i = 0; i < latestQueries.length; i++) {
         let timestamp = dayjs(latestQueries[i].localTimestamp).format('YYYY/MM/DD HH:mm:ss');
-        tempActionsList.push({'username': latestQueries[i].username, 'action': 'User queried "'.concat(latestQueries[i].query).concat('"'), 'localTimestamp': timestamp, 'type': 'Q'});
+        tempActionsList.push({'username': latestQueries[i].username.substr(11), 'action': 'Student queried "'.concat(latestQueries[i].query).concat('"'), 'localTimestamp': timestamp, 'type': 'Q'});
       }
 
       for (let i = 0; i < latestVisitedlinks.length; i++) {
         let timestamp = dayjs(latestVisitedlinks[i].localTimestamp).format('YYYY/MM/DD HH:mm:ss');
 
         if (latestVisitedlinks[i].state === "PageEnter") {
-          tempActionsList.push({'username': latestVisitedlinks[i].username, 'action': 'User entered page "'.concat(latestVisitedlinks[i].url).concat('"'), 'localTimestamp': timestamp, 'type': 'V'});
+          tempActionsList.push({'username': latestVisitedlinks[i].username.substr(11), 'action': 'Student entered page "'.concat(latestVisitedlinks[i].url).concat('"'), 'localTimestamp': timestamp, 'type': 'V'});
         } else {
-          tempActionsList.push({'username': latestVisitedlinks[i].username, 'action': 'User exited page "'.concat(latestVisitedlinks[i].url).concat('"'), 'localTimestamp': timestamp, 'type': 'V'});
+          tempActionsList.push({'username': latestVisitedlinks[i].username.substr(11), 'action': 'Student exited page "'.concat(latestVisitedlinks[i].url).concat('"'), 'localTimestamp': timestamp, 'type': 'V'});
         }
       }
 
@@ -230,6 +208,7 @@ export class DeploySimulationComponent implements OnInit {
   }
 
   public async stop() {
+    this.showMaxLengthReached = false;
     this.stopEnabled = false;
     this.restartEnabled = false;
     this.status = "Stopping...";
@@ -245,6 +224,15 @@ export class DeploySimulationComponent implements OnInit {
   }
 
   public async restart() {
+    this.actionsList.length = 0;
+    this.bookmarksList.length = 0;
+    this.keystrokesList.length = 0;
+    this.queriesList.length = 0;
+    this.visitedlinksList.length = 0;
+    this.ActionsTableRef.renderRows();
+    this.dataSource._updateChangeSubscription();
+
+    this.showMaxLengthReached = false;
     this.restartEnabled = false;
     this.stopEnabled = false;
     this.status = "Restarting...";
@@ -253,10 +241,13 @@ export class DeploySimulationComponent implements OnInit {
     this.timerRef.stop();
     await new Promise(f => setTimeout(f, 1000));
     this.deploy();
+  }
 
-    // DETENER SIMULACION; ESPERAR AVISO DE QUE SE DETUVO SIMULACION
-    // LIMPIAR TABLA DE ACCIONES
-    // ENVIAR JSON A SIMULADOR Y DESPLEGAR SIMULACION; ESPERAR AVISO DE QUE SE DESPLEGO SIMULACION
+  public triggerStop() {
+    if (this.endTime > 0) {
+      this.stop();
+      this.showMaxLengthReached = true;
+    }
   }
 
 }

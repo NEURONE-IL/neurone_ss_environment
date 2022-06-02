@@ -41,7 +41,9 @@ exports.getBookmarks = async (req, res) => {
 exports.getLatestBookmarks = async (req, res) => {
 
 	try {
-		const bookmarks = await Bookmark.find().skip(req.params.cursor);
+		const bookmarks = await Bookmark.find(
+			{ localTimestamp: { $gt: req.params.cursor } }
+		).sort( { localTimestamp: 1 } );
 		res.json(bookmarks);
 	} catch (error) {
 		console.log(error);
@@ -66,7 +68,9 @@ exports.getKeystrokes = async (req, res) => {
 exports.getLatestKeystrokes = async (req, res) => {
 
 	try {
-		const keystrokes = await Keystroke.find().skip(req.params.cursor);
+		const keystrokes = await Keystroke.find(
+			{ localTimestamp: { $gt: req.params.cursor } }
+		).sort( { localTimestamp: 1 } );
 		res.json(keystrokes);
 	} catch (error) {
 		console.log(error);
@@ -90,7 +94,9 @@ exports.getQueries = async (req, res) => {
 exports.getLatestQueries = async (req, res) => {
 
 	try {
-		const queries = await Query.find().skip(req.params.cursor);
+		const queries = await Query.find(
+			{ localTimestamp: { $gt: req.params.cursor } }
+		).sort( { localTimestamp: 1 } );
 		res.json(queries);
 	} catch (error) {
 		console.log(error);
@@ -114,7 +120,9 @@ exports.getVisitedlinks = async (req, res) => {
 exports.getLatestVisitedlinks = async (req, res) => {
 
 	try {
-		const visitedlinks = await Visitedlink.find().skip(req.params.cursor);
+		const visitedlinks = await Visitedlink.find(
+			{ localTimestamp: { $gt: req.params.cursor } }
+		).sort( { localTimestamp: 1 } );
 		res.json(visitedlinks);
 	} catch (error) {
 		console.log(error);

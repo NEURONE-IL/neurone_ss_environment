@@ -129,7 +129,7 @@ F<html>
 			<br><br>
 
 	        <mat-form-field [style.width.%]="70" appearance="fill">
-				<mat-label>Length (mm:ss)</mat-label>
+				<mat-label>Maximum length (minutes)</mat-label>
 
 			 	<input matInput placeholder="Example: 15" formControlName="length">
 
@@ -137,8 +137,10 @@ F<html>
               		<mat-icon>close</mat-icon>
             	</button>
 
-				<mat-error *ngIf="simulationForm.get('length')?.hasError('invalidLength')">You must enter a properly formatted length (mm:ss).</mat-error>
-				<mat-error *ngIf="simulationForm.get('length')?.hasError('maxLength')">The maximum length is 59:59.</mat-error>
+            	<mat-error *ngIf="simulationForm.get('length')?.hasError('notNumber')">You must enter a number.</mat-error>
+				<mat-error *ngIf="simulationForm.get('length')?.hasError('notInteger')">You must enter an integer number.</mat-error>
+				<mat-error *ngIf="simulationForm.get('length')?.hasError('min')">You must enter a number greater than zero.</mat-error>
+				<mat-error *ngIf="simulationForm.get('length')?.hasError('max')">The maximum posible length is 60 minutes.</mat-error>
 			</mat-form-field>
 
 			<br><br>

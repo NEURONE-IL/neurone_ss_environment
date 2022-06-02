@@ -49,7 +49,7 @@ export class EditSimulationComponent implements OnInit {
             randomActions: [data.randomActions.toString(), Validators.required],
             expiration: [data.expiration.toString(), Validators.required],
             behaviorModelId: [data.behaviorModelId, Validators.required],
-            length: [this.secondsToLength(data.length), [this.lengthValidator(), this.maxLengthValidator()]],
+            length: [data.length, [this.numberValidator(), this.integerNumberValidator(), Validators.min(1), Validators.max(60)]],
             sensibility: [data.sensibility, [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1), Validators.max(100)]],
             interval: [data.interval, [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1)]],
             speed: [data.speed],
@@ -83,7 +83,7 @@ export class EditSimulationComponent implements OnInit {
           randomActions: [simulationSettings['randomActions'], Validators.required],
           expiration: [simulationSettings['expiration'], Validators.required],
           behaviorModelId: [simulationSettings['behaviorModelId'], Validators.required],
-          length: [simulationSettings['length'], [this.lengthValidator(), this.maxLengthValidator()]],
+          length: [simulationSettings['length'], [this.numberValidator(), this.integerNumberValidator(), Validators.min(1), Validators.max(60)]],
           sensibility: [simulationSettings['sensibility'], [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1), Validators.max(100)]],
           interval: [simulationSettings['interval'], [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1)]],
           speed: [simulationSettings['speed']],
@@ -117,7 +117,7 @@ export class EditSimulationComponent implements OnInit {
       randomActions: ['', Validators.required],
       expiration: ['', Validators.required],
       behaviorModelId: ['', Validators.required],
-      length: ['', [this.lengthValidator(), this.maxLengthValidator()]],
+      length: ['', [this.numberValidator(), this.integerNumberValidator(), Validators.min(1), Validators.max(60)]],
       sensibility: ['', [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1), Validators.max(100)]],
       interval: ['', [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1)]],
       speed: [1],
@@ -172,7 +172,7 @@ export class EditSimulationComponent implements OnInit {
       expiration: this.simulationForm.get('expiration')?.value,
       queryList: this.queryList,
       behaviorModelId: this.simulationForm.get('behaviorModelId')?.value,
-      length: this.lengthToSeconds(this.simulationForm.get('length')?.value),
+      length: this.simulationForm.get('length')?.value,
       sensibility: this.simulationForm.get('sensibility')?.value,
       interval: this.simulationForm.get('interval')?.value,
       speed: this.simulationForm.get('speed')?.value,
@@ -289,44 +289,6 @@ export class EditSimulationComponent implements OnInit {
 
   }
 
-  private lengthValidator = (): ValidatorFn => {
-
-    return (control: AbstractControl): ValidationErrors | null => {
-
-      const value = control.value;
-
-      if (!value) {
-          return null;
-      }
-
-      const validLength = /^(([0]?[0-9][0-9]|[0-9]):([0-9][0-9]))$/.test(value);
-      const forbidden = !validLength;
-
-      return forbidden ? {invalidLength: {value: value}} : null;
-
-    };
-
-  }
-
-  private maxLengthValidator = (): ValidatorFn => {
-
-    return (control: AbstractControl): ValidationErrors | null => {
-
-      const value = control.value;
-
-      if (!value) {
-          return null;
-      }
-
-      const validLength = /^(([0]?[0-5][0-9]|[0-9]):([0-5][0-9]))$/.test(value);
-      const forbidden = !validLength;
-
-      return forbidden ? {maxLength: {value: value}} : null;
-
-    };
-
-  }
-
   private lessThanNumberDocumentsValidator = (): ValidatorFn => {
 
     return (control: AbstractControl): ValidationErrors | null => {
@@ -355,33 +317,6 @@ export class EditSimulationComponent implements OnInit {
       }
 
     };
-
-  }
-
-  private secondsToLength = (length: number) => {
-
-    let modulo = length % 60;
-    let exactMinutes = (length - modulo) / 60;
-
-    if ((exactMinutes < 10) && (modulo < 10)) {
-      return "0".concat(exactMinutes.toString()).concat(":").concat("0").concat(modulo.toString());
-    } else
-    if ((exactMinutes < 10) && (modulo >= 10)) {
-      return "0".concat(exactMinutes.toString()).concat(":").concat(modulo.toString());
-    } else 
-    if ((exactMinutes >= 10) && (modulo < 10)) {
-      return exactMinutes.toString().concat(":").concat("0").concat(modulo.toString());
-    } else {
-      return exactMinutes.toString().concat(":").concat(modulo.toString());
-    }
-
-  }
-
-  private lengthToSeconds = (length: string) => {
-
-    var minutes = parseInt(length.slice(0, 2));
-    var seconds = parseInt(length.slice(-2));
-    return minutes * 60 + seconds;
 
   }
 

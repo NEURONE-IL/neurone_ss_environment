@@ -316,6 +316,101 @@ export class NewBehaviorModelComponent implements OnInit {
           }
         }
 
+        else if (sourceTypeNode == "page") {
+          for (let i = 0; i < diagram.cells.length; i++) {
+            if ((diagram.cells[i].type == "link") && (diagram.cells[i].id !== link.id)) {
+              let targetType = '';
+              for (let j = 0; j < diagram.cells.length; j++) {
+                if (diagram.cells[j].id == diagram.cells[i].target.id) {
+                  targetType = diagram.cells[j].typeNode;
+                }
+              }
+              if (targetTypeNode === "bookmark") {
+                if ((diagram.cells[i].source.id === sourceId) && (targetType === "bookmark")) {
+                  this.graph.getCell(link.id).remove();
+                  this.snackbar.open('A page node must be linked to only one bookmark node', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
+                  return;
+                }
+              }
+              else if (targetTypeNode === "unBookmark") {
+                if ((diagram.cells[i].source.id === sourceId) && (targetType === "unBookmark")) {
+                  this.graph.getCell(link.id).remove();
+                  this.snackbar.open('A page node must be linked to only one unbookmark node', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
+                  return;
+                }
+              }
+              else if (targetTypeNode === "page") {
+                if ((diagram.cells[i].source.id === sourceId) && (targetType === "page")) {
+                  this.graph.getCell(link.id).remove();
+                  this.snackbar.open('A page node must be linked to only one page node', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
+                  return;
+                }
+              }
+              else if (targetTypeNode === "query") {
+                if ((diagram.cells[i].source.id === sourceId) && (targetType === "query")) {
+                  this.graph.getCell(link.id).remove();
+                  this.snackbar.open('A page node must be linked to only one query node', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
+                  return;
+                }
+              }
+            }
+          }
+        }
+
+        else if (sourceTypeNode == "bookmark") {
+          for (let i = 0; i < diagram.cells.length; i++) {
+            if ((diagram.cells[i].type == "link") && (diagram.cells[i].id !== link.id)) {
+              let targetType = '';
+              for (let j = 0; j < diagram.cells.length; j++) {
+                if (diagram.cells[j].id == diagram.cells[i].target.id) {
+                  targetType = diagram.cells[j].typeNode;
+                }
+              }
+              if (targetTypeNode === "page") {
+                if ((diagram.cells[i].source.id === sourceId) && (targetType === "page")) {
+                  this.graph.getCell(link.id).remove();
+                  this.snackbar.open('A bookmark node must be linked to only one page node', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
+                  return;
+                }
+              }
+              else if (targetTypeNode === "query") {
+                if ((diagram.cells[i].source.id === sourceId) && (targetType === "query")) {
+                  this.graph.getCell(link.id).remove();
+                  this.snackbar.open('A bookmark node must be linked to only one query node', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
+                  return;
+                }
+              }
+            }
+          }
+        }
+
+        else if (sourceTypeNode == "unBookmark") {
+          for (let i = 0; i < diagram.cells.length; i++) {
+            if ((diagram.cells[i].type == "link") && (diagram.cells[i].id !== link.id)) {
+              let targetType = '';
+              for (let j = 0; j < diagram.cells.length; j++) {
+                if (diagram.cells[j].id == diagram.cells[i].target.id) {
+                  targetType = diagram.cells[j].typeNode;
+                }
+              }
+              if (targetTypeNode === "page") {
+                if ((diagram.cells[i].source.id === sourceId) && (targetType === "page")) {
+                  this.graph.getCell(link.id).remove();
+                  this.snackbar.open('An unbookmark node must be linked to only one page node', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
+                  return;
+                }
+              }
+              else if (targetTypeNode === "query") {
+                if ((diagram.cells[i].source.id === sourceId) && (targetType === "query")) {
+                  this.graph.getCell(link.id).remove();
+                  this.snackbar.open('A unbookmark node must be linked to only one query node', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
+                  return;
+                }
+              }
+            }
+          }
+        }
+
         // VER SI SE PUEDE IMPLEMENTAR MAGNETISMO
 
         // FALTA REVISAR LOS CASOS EN QUE SOURCELABEL YA ESTABA LINKEADO A OTRO NODO...
@@ -335,34 +430,35 @@ export class NewBehaviorModelComponent implements OnInit {
           if (targetTypeNode != "query") {
             this.graph.getCell(link.id).remove();
             this.snackbar.open('Invalid link', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
-          } else {
-            //PONER EN 100% Y HACER INMUTABLE
-            //this.graph.getCell(link.id).attr('text/text', '100%');
-            //this.graph.getCell(link.id).attr('text/fill', 'black');
+            return;
           }
 
         } else if (sourceTypeNode == "query") {       
           if ((targetTypeNode != "query") && (targetTypeNode != "page") && (targetTypeNode != "end")) {
             this.graph.getCell(link.id).remove();
             this.snackbar.open('Invalid link', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
+            return;
           }
 
         } else if (sourceTypeNode == "page") {        
           if ((targetTypeNode != "query") && (targetTypeNode != "page") && (targetTypeNode != "bookmark") && (targetTypeNode != "unBookmark") && (targetTypeNode != "end")) {
             this.graph.getCell(link.id).remove();
             this.snackbar.open('Invalid link', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
+            return;
           }
 
         } else if (sourceTypeNode == "bookmark") {      
           if ((targetTypeNode != "query") && (targetTypeNode != "page") && (targetTypeNode != "end")) {
             this.graph.getCell(link.id).remove();
             this.snackbar.open('Invalid link', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
+            return;
           }
 
         } else if (sourceTypeNode == "unBookmark") {    
           if ((targetTypeNode != "query") && (targetTypeNode != "page") && (targetTypeNode != "end")) {
             this.graph.getCell(link.id).remove();
             this.snackbar.open('Invalid link', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
+            return;
           }
 
         } else if (sourceTypeNode == "end") {         
@@ -370,28 +466,118 @@ export class NewBehaviorModelComponent implements OnInit {
           this.snackbar.open('Invalid link', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
         }
 
+        this.updateProbabilityColors(sourceId);
+
+      } else {
+        if (link.attributes.labels[0].attrs.text.text !== "(no value)") {
+          this.graph.getCell(link.id).attr('text/fill', "red");
+        }
+
+        let diagram = this.graph.toJSON();
+
+        for (let i = 0; i < diagram.cells.length; i++) {
+          if (diagram.cells[i].type !== "link") {
+            let sourceId = diagram.cells[i].id;
+            this.updateProbabilityColors(sourceId);
+          }
+        }
       }
-    })
+    });
+
+    this.graph.on('remove', (cell: any) => {
+      if (cell.isLink()) {
+        let sourceId = cell.get('source').id;
+        this.updateProbabilityColors(sourceId);
+      }
+    });
 
   }
 
   private openProbabilityModal = (linkView: any) => {
-    // EVITAR EDICION DE LINK ENTRE NODO START Y OTRO NODO
-    let linkSourceId = linkView.model.attributes.source.id;
-    let sourceTypeNode = this.graph.getCell(linkSourceId).attributes['typeNode'];
-    if (sourceTypeNode === "start") {
-      return;
+    if (linkView.model.attributes.source.id !== undefined && linkView.model.attributes.target.id !== undefined) {
+      let linkSourceId = linkView.model.attributes.source.id;
+      let sourceTypeNode = this.graph.getCell(linkSourceId).attributes['typeNode'];
+      if (sourceTypeNode === "start") {
+        return;
+      }
+
+      var currentProbability = linkView.model.attributes.labels[0].attrs.text.text;
+      const dialogRef = this.dialog.open(NewBehaviorModelProbabilityModalComponent, { width: '40%', data: { currentProbability: currentProbability } } );
+      const sub = dialogRef.componentInstance.onSubmit.subscribe((value) => {
+        linkView.model.label(0, { attrs: { text: { text: value.concat("%") } } });
+        this.updateProbabilityColors(linkSourceId);
+        dialogRef.close();
+      });
+      dialogRef.afterClosed().subscribe(() => {
+        sub.unsubscribe();
+      });
+    } else {
+      var currentProbability = linkView.model.attributes.labels[0].attrs.text.text;
+      const dialogRef = this.dialog.open(NewBehaviorModelProbabilityModalComponent, { width: '40%', data: { currentProbability: currentProbability } } );
+      const sub = dialogRef.componentInstance.onSubmit.subscribe((value) => {
+        linkView.model.label(0, { attrs: { text: { text: value.concat("%") } } });
+        dialogRef.close();
+      });
+      dialogRef.afterClosed().subscribe(() => {
+        sub.unsubscribe();
+      });
+    }
+  }
+
+  private updateProbabilityColors(linkSourceId: string) {
+    let probabilitiesValid = this.probabilitiesAreValid(linkSourceId);
+    if (probabilitiesValid == true) {
+      this.changeProbabilityColors(linkSourceId, 'black');
+    } else {
+      this.changeProbabilityColors(linkSourceId, 'red');
+    }
+  }
+
+  private changeProbabilityColors(linkSourceId: string, color: string) {
+    let diagram = this.graph.toJSON();
+
+    for (let i = 0; i < diagram.cells.length; i++) {
+      if (diagram.cells[i].type === "link") {
+        if (diagram.cells[i].source.id == linkSourceId) {
+          this.graph.getCell(diagram.cells[i]).attr('text/fill', color);
+        }
+      }
+    }
+  }
+
+  private probabilitiesAreValid(linkSourceId: string): boolean {
+    let diagram = this.graph.toJSON();
+
+    let i: number;
+    let nodeIndex: number;
+    for (i = 0; i < diagram.cells.length; i++) {
+      if (diagram.cells[i].id == linkSourceId) {
+        nodeIndex = i;
+      }
     }
 
-    var currentProbability = linkView.model.attributes.labels[0].attrs.text.text;
-    const dialogRef = this.dialog.open(NewBehaviorModelProbabilityModalComponent, { width: '40%', data: { currentProbability: currentProbability } } );
-    const sub = dialogRef.componentInstance.onSubmit.subscribe((value) => {
-      linkView.model.label(0, { attrs: { text: { text: value.concat("%") } } });
-      dialogRef.close();
-    });
-    dialogRef.afterClosed().subscribe(() => {
-      sub.unsubscribe();
-    });
+    let nodeProbabilitySum = 0;
+    let nodeOutLinkCount = 0;
+
+    for (i = 0; i < diagram.cells.length; i++) {
+      if (diagram.cells[i].type === "link") {
+        if (diagram.cells[i].source.id == linkSourceId) {
+          let probValue = diagram.cells[i].labels[0].attrs.text.text;
+          if (probValue === "(no value)") {
+            return false;
+          } else {
+            nodeOutLinkCount = nodeOutLinkCount + 1;
+            nodeProbabilitySum = nodeProbabilitySum + parseInt(probValue);
+          }
+        }
+      }
+    }
+
+    if (nodeProbabilitySum != 100 && nodeOutLinkCount > 0) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   private openNodeSettingsModal = (elementView: any) => {
