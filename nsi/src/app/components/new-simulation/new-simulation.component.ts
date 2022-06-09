@@ -39,7 +39,6 @@ export class NewSimulationComponent implements OnInit {
         numberDocuments: [simulationSettings['numberDocuments'], [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1)]],
         numberRelevantDocuments: [simulationSettings['numberRelevantDocuments'], [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1), this.lessThanNumberDocumentsValidator()]],
         randomActions: [simulationSettings['randomActions'], Validators.required],
-        expiration: [simulationSettings['expiration'], Validators.required],
         behaviorModelId: [simulationSettings['behaviorModelId'], Validators.required],
         length: [simulationSettings['length'], [this.numberValidator(), this.integerNumberValidator(), Validators.min(1), Validators.max(60)]],
         sensibility: [simulationSettings['sensibility'], [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1), Validators.max(100)]],
@@ -65,7 +64,6 @@ export class NewSimulationComponent implements OnInit {
       numberDocuments: ['', [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1)]],
       numberRelevantDocuments: ['', [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1), this.lessThanNumberDocumentsValidator()]],
       randomActions: ['', Validators.required],
-      expiration: ['', Validators.required],
       behaviorModelId: ['', Validators.required],
       length: ['', [this.numberValidator(), this.integerNumberValidator(), Validators.min(1), Validators.max(60)]],
       sensibility: ['', [Validators.required, this.numberValidator(), this.integerNumberValidator(), Validators.min(1), Validators.max(100)]],
@@ -120,7 +118,7 @@ export class NewSimulationComponent implements OnInit {
       numberDocuments: this.simulationForm.get('numberDocuments')?.value,
       numberRelevantDocuments: this.simulationForm.get('numberRelevantDocuments')?.value,
       randomActions: this.simulationForm.get('randomActions')?.value,
-      expiration: this.simulationForm.get('randomActions')?.value,
+      expiration: true,
       queryList: this.queryList,
       behaviorModelId: this.simulationForm.get('behaviorModelId')?.value,
       length: this.simulationForm.get('length')?.value,
@@ -271,7 +269,6 @@ export class NewSimulationComponent implements OnInit {
         numberDocuments: this.simulationForm.get('numberDocuments')?.value,
         numberRelevantDocuments: this.simulationForm.get('numberRelevantDocuments')?.value,
         randomActions: this.simulationForm.get('randomActions')?.value,
-        expiration: this.simulationForm.get('expiration')?.value,
         queryList: this.queryList,
         behaviorModelId: this.simulationForm.get('behaviorModelId')?.value,
         length: this.simulationForm.get('length')?.value,
@@ -312,7 +309,7 @@ export class NewSimulationComponent implements OnInit {
     }
 
     this.behaviorModelsPropertiesFormListWithFilter = this.behaviorModelsPropertiesFormList!.filter(
-      behaviorModelProperties => behaviorModelProperties.name.includes(filterValue)
+      behaviorModelProperties => behaviorModelProperties.name.trim().toLowerCase().includes(filterValue)
     );
 
   }

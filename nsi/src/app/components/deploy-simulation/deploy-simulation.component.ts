@@ -123,7 +123,7 @@ export class DeploySimulationComponent implements OnInit {
 
     this.deployEnabled = false;
     this.status = "Deploying...";
-    let status = await this._simulationDeployService.startSimulation().toPromise();
+    let status = await this._simulationDeployService.startSimulation(this._id).toPromise();
 
     console.log(status);
     this.status = "Deployed"

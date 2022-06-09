@@ -24,6 +24,9 @@ export function addStartNode(jointInputParams: jointInputParameters): void {
       height: 65
     },
     attrs: {
+      root: {
+        magnet: false
+      },
       background: {
         fill: 'turquoise'
       },
@@ -52,16 +55,14 @@ export function addStartNode(jointInputParams: jointInputParameters): void {
           },
           attrs: {
             portBody: {
-              width: 10,
-              height: 10,
-              y: -5,
-              x: -5,
-              fill: 'black',
+              r: 8,
+              fill: 'green',
+              stroke: 'black',
               magnet: true
             }
           },
           markup: [{
-            tagName: 'rect',
+            tagName: 'circle',
             selector: 'portBody'
           }]
         },

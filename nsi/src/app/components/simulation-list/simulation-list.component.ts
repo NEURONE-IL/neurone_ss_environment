@@ -74,7 +74,7 @@ export class SimulationListComponent implements OnInit {
         this.firstSort = false;
       }
       this.dataSource.sort = this.sort;
-      this.dataSource.filterPredicate = (data: Simulation, filter: string) => data.name.includes(filter);
+      this.dataSource.filterPredicate = (data: Simulation, filter: string) => data.name.toLowerCase().includes(filter);
     this.dataSource.paginator = this.paginator;
     }, (error: any) => {
       console.log(error);

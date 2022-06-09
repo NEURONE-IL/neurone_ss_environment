@@ -3,7 +3,7 @@ const router = express.Router();
 const simulationDeployController = require("../controllers/simulationDeployController");
 
 // api/simulationdata/deploy
-router.get("/start/", simulationDeployController.startSimulationDeploy);
+router.get("/start/:id", simulationDeployController.startSimulationDeploy);
 router.get("/stop/", simulationDeployController.stopSimulationDeploy);
 router.get("/getbookmarks/", simulationDeployController.getBookmarks);
 router.get("/getlatestbookmarks/:cursor", simulationDeployController.getLatestBookmarks);

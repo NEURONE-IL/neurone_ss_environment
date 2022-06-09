@@ -62,7 +62,7 @@ export class BehaviorModelListComponent implements OnInit {
         this.firstSort = false;
       }
       this.dataSource.sort = this.sort;
-      this.dataSource.filterPredicate = (data: BehaviorModel, filter: string) => data.name.includes(filter);
+      this.dataSource.filterPredicate = (data: BehaviorModel, filter: string) => data.name.toLowerCase().includes(filter);
     this.dataSource.paginator = this.paginator;
 
     }, (error: any) => {

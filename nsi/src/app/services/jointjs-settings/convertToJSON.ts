@@ -7,7 +7,6 @@ import * as joint from 'jointjs';
 export function convertToJSON(graph: joint.dia.Graph): void {
 
   let origDiagram = graph.toJSON();
-  console.log(origDiagram);
 
   interface LooseObject {
       [key: string]: any
@@ -16,12 +15,34 @@ export function convertToJSON(graph: joint.dia.Graph): void {
   var formattedDiagram: LooseObject = {};
 
   // Creation of node objects
+
+  let queryCount = 0;
+  let pageCount = 0;
+  let bookmarkCount = 0;
+  let unBookmarkCount = 0;
+  let label: string = "L";
+
   for (let i = 0; i < origDiagram.cells.length; i++) {
 
-    if (origDiagram.cells[i].type == "standard.BorderedImage") {
-      var label = origDiagram.cells[i].attrs.label.text;
+    if (origDiagram.cells[i].type == "link") {
+      console.log(origDiagram.cells[i])
+    }
 
-      if (label.charAt(0) != "E") {
+    if (origDiagram.cells[i].type == "standard.BorderedImage") {
+      if (origDiagram.cells[i].typeNode == "query") {
+        label = "Q" + pageCount.toString();
+      }
+      else if (origDiagram.cells[i].typeNode == "page") {
+        label = "P" + pageCount.toString();
+      }
+      else if (origDiagram.cells[i].typeNode == "bookmark") {
+        label = "B" + pageCount.toString();
+      }
+      else if (origDiagram.cells[i].typeNode == "unBookmark") {
+        label = "U" + pageCount.toString();
+      }
+
+      if (origDiagram.cells[i].attrs.label.text.charAt(0) != "E") {
         formattedDiagram[label] = {["T"]: 0}; // SE AGREGA ALTIRO LA TRANSICION A T - ATENCION FORMATO "0.0"
       }
     }

@@ -13,9 +13,8 @@ export class SimulationDeployService {
   constructor(private http: HttpClient) {
   }
 
-  // DESPUES PONER PARAMETRO DE ID DE SIMULACION
-  startSimulation(): Observable<any> {
-    return this.http.get(this.url + "start/");
+  startSimulation(_id: string): Observable<any> {
+    return this.http.get(this.url + "start/" + _id);
   }
 
   stopSimulation(): Observable<any> {

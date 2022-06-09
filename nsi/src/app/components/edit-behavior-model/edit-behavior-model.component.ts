@@ -146,10 +146,11 @@ export class EditBehaviorModelComponent implements OnInit {
         perpendicularLinks: true,
         linkPinning: true,
         snapLabels: true,
-        //snapLinks: { radius: 20 },
+        snapLinks: { radius: 20 },
         defaultLink: new joint.dia.Link({
           router: { name: 'manhattan' },
           connection: { name: 'rounded' },
+          connector: { name: "jumpover" },
           attrs: {
             '.connection': {
               'stroke-width': 2,
@@ -165,10 +166,9 @@ export class EditBehaviorModelComponent implements OnInit {
           ]
         }),
         interactive: { useLinkTools: true, labelMove: true },
-        //validateConnection: function(cellViewS, magnetS, cellViewT, magnetT, end, linkView) {
-        //  return cellViewS != cellViewT;
-        //}
     });
+
+    //convertToJSON(this.graph);
 
     // RESTAURAR ELEMENT TOOLS A LOS NODOS YA EXISTENTES
 
@@ -184,6 +184,19 @@ export class EditBehaviorModelComponent implements OnInit {
             tools: [
                 boundaryTool,
                 removeButton
+            ]
+        });
+        elementView.addTools(toolsView);
+        elementView.hideTools();
+      }
+
+      else if (cells[i].attributes['typeNode'] === "start") {
+        var elementView = cells[i].findView(this.paper);
+        var boundaryTool = new joint.elementTools.Boundary();
+
+        var toolsView = new joint.dia.ToolsView({
+            tools: [
+                boundaryTool,
             ]
         });
         elementView.addTools(toolsView);
@@ -216,6 +229,10 @@ export class EditBehaviorModelComponent implements OnInit {
         this.paper.hideTools();
     });
 
+    this.graph.on('link:labelmove', () => {
+        console.log("ASD");
+    });
+
     this.graph.on('change:position', (evt: any) => {
       if (evt.attributes.position.x < 0) {
         evt.attributes.position.x = 0;
@@ -239,8 +256,14 @@ export class EditBehaviorModelComponent implements OnInit {
       };
     });
 
-    this.graph.on('change:source change:target', (link: any) => {
+    this.paper.on('link:connect', (linkView: any) => {
+      let link = linkView.model;
       if (link.get('source').id && link.get('target').id) {
+
+        if (link.get('target').port === undefined) {
+          this.graph.getCell(link.id).remove();
+          return;
+        }
 
         let diagram = this.graph.toJSON();
         let sourceId = link.get('source').id;
@@ -282,9 +305,41 @@ export class EditBehaviorModelComponent implements OnInit {
           }
         }
 
+        //
+
+        for (let i = 0; i < diagram.cells.length; i++) {
+          if ((diagram.cells[i].type == "link") && (diagram.cells[i].id !== link.id)) {
+            let targetType = '';
+            for (let j = 0; j < diagram.cells.length; j++) {
+              if (diagram.cells[j].id == diagram.cells[i].target.id) {
+                targetType = diagram.cells[j].typeNode;
+              }
+            }
+            if (targetTypeNode === "end") {
+              if ((diagram.cells[i].source.id === sourceId) && (targetType === "end")) {
+                this.graph.getCell(link.id).remove();
+                this.snackbar.open('A node must be linked to only one end node', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
+                return;
+              }
+            }
+          }
+        }
+
         // (REVISAR SI ESTO ES NECESARIO) CODIGO PARA EVITAR QUE NODOS TIPO QUERY LINKEEN A MAS DE UN NODO TIPO PAGE/SERP, Y A MAS DE UN NODO TIPO QUERY (HACER LO MISMO PARA LOS DEMAS TIPOS DE NODOS)
 
-        if (sourceTypeNode == "query") {
+        if (sourceTypeNode == "start") {
+          for (let i = 0; i < diagram.cells.length; i++) {
+            if ((diagram.cells[i].type == "link") && (diagram.cells[i].id !== link.id)) {
+              if (diagram.cells[i].source.id === sourceId) {
+                this.graph.getCell(link.id).remove();
+                this.snackbar.open('A start node must be linked to only one node, and it must be a query node', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
+                return;
+              }
+            }
+          }
+        }
+
+        else if (sourceTypeNode == "query") {
           for (let i = 0; i < diagram.cells.length; i++) {
             if ((diagram.cells[i].type == "link") && (diagram.cells[i].id !== link.id)) {
               let targetType = '';
@@ -323,28 +378,28 @@ export class EditBehaviorModelComponent implements OnInit {
               if (targetTypeNode === "bookmark") {
                 if ((diagram.cells[i].source.id === sourceId) && (targetType === "bookmark")) {
                   this.graph.getCell(link.id).remove();
-                  this.snackbar.open('A page node must be linked to only one bookmark node', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
+                  this.snackbar.open('A page/SERP node must be linked to only one bookmark node', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
                   return;
                 }
               }
               else if (targetTypeNode === "unBookmark") {
                 if ((diagram.cells[i].source.id === sourceId) && (targetType === "unBookmark")) {
                   this.graph.getCell(link.id).remove();
-                  this.snackbar.open('A page node must be linked to only one unbookmark node', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
+                  this.snackbar.open('A page/SERP node must be linked to only one unbookmark node', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
                   return;
                 }
               }
               else if (targetTypeNode === "page") {
                 if ((diagram.cells[i].source.id === sourceId) && (targetType === "page")) {
                   this.graph.getCell(link.id).remove();
-                  this.snackbar.open('A page node must be linked to only one page node', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
+                  this.snackbar.open('A page/SERP node must be linked to only one page/SERP node', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
                   return;
                 }
               }
               else if (targetTypeNode === "query") {
                 if ((diagram.cells[i].source.id === sourceId) && (targetType === "query")) {
                   this.graph.getCell(link.id).remove();
-                  this.snackbar.open('A page node must be linked to only one query node', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
+                  this.snackbar.open('A page/SERP node must be linked to only one query node', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
                   return;
                 }
               }
@@ -364,7 +419,7 @@ export class EditBehaviorModelComponent implements OnInit {
               if (targetTypeNode === "page") {
                 if ((diagram.cells[i].source.id === sourceId) && (targetType === "page")) {
                   this.graph.getCell(link.id).remove();
-                  this.snackbar.open('A bookmark node must be linked to only one page node', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
+                  this.snackbar.open('A bookmark node must be linked to only one page/SERP node', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
                   return;
                 }
               }
@@ -391,7 +446,7 @@ export class EditBehaviorModelComponent implements OnInit {
               if (targetTypeNode === "page") {
                 if ((diagram.cells[i].source.id === sourceId) && (targetType === "page")) {
                   this.graph.getCell(link.id).remove();
-                  this.snackbar.open('An unbookmark node must be linked to only one page node', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
+                  this.snackbar.open('An unbookmark node must be linked to only one page/SERP node', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
                   return;
                 }
               }
@@ -406,14 +461,89 @@ export class EditBehaviorModelComponent implements OnInit {
           }
         }
 
-        // VER SI SE PUEDE IMPLEMENTAR MAGNETISMO
+        ////////////////
+
+        if ((sourceTypeNode === "page") && (targetTypeNode === "page")) {
+          for (let i = 0; i < diagram.cells.length; i++) {
+            if ((diagram.cells[i].type === "link") && (diagram.cells[i].id !== link.id)) {
+              if (diagram.cells[i].target.id === targetId) {
+
+                for (let j = 0; j < diagram.cells.length; j++) {
+                  if ((diagram.cells[j].type !== "link") && (diagram.cells[j].id === diagram.cells[i].source.id)) {
+                    if (diagram.cells[j].typeNode === "page") {
+                      this.graph.getCell(link.id).remove();
+                      this.snackbar.open('Two page/SERP nodes cannot lead to the same page/SERP node.', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
+                      return;
+                    }
+                  }
+                }
+
+              }
+            }
+          }
+        }
+
+        if ((sourceTypeNode === "query") && (targetTypeNode === "page")) {
+          for (let i = 0; i < diagram.cells.length; i++) {
+            if ((diagram.cells[i].type === "link") && (diagram.cells[i].id !== link.id)) {
+              if (diagram.cells[i].target.id === targetId) {
+
+                for (let j = 0; j < diagram.cells.length; j++) {
+                  if ((diagram.cells[j].type !== "link") && (diagram.cells[j].id === diagram.cells[i].source.id)) {
+                    if (diagram.cells[j].typeNode === "query") {
+                      this.graph.getCell(link.id).remove();
+                      this.snackbar.open('Two query nodes cannot lead to the same page/SERP node.', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
+                      return;
+                    }
+                  }
+                }
+
+              }
+            }
+          }
+        }
+
+        if ((sourceTypeNode === "page") && (targetTypeNode === "bookmark")) {
+          for (let i = 0; i < diagram.cells.length; i++) {
+            if ((diagram.cells[i].type === "link") && (diagram.cells[i].id !== link.id)) {
+              if (diagram.cells[i].target.id === targetId) {
+
+                for (let j = 0; j < diagram.cells.length; j++) {
+                  if ((diagram.cells[j].type !== "link") && (diagram.cells[j].id === diagram.cells[i].source.id)) {
+                    if (diagram.cells[j].typeNode === "page") {
+                      this.graph.getCell(link.id).remove();
+                      this.snackbar.open('Two page/SERP nodes cannot lead to the same bookmark node.', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
+                      return;
+                    }
+                  }
+                }
+
+              }
+            }
+          }
+        }
+
+        if ((sourceTypeNode === "page") && (targetTypeNode === "unBookmark")) {
+          for (let i = 0; i < diagram.cells.length; i++) {
+            if ((diagram.cells[i].type === "link") && (diagram.cells[i].id !== link.id)) {
+              if (diagram.cells[i].target.id === targetId) {
+
+                for (let j = 0; j < diagram.cells.length; j++) {
+                  if ((diagram.cells[j].type !== "link") && (diagram.cells[j].id === diagram.cells[i].source.id)) {
+                    if (diagram.cells[j].typeNode === "page") {
+                      this.graph.getCell(link.id).remove();
+                      this.snackbar.open('Two page/SERP nodes cannot lead to the same unbookmark node.', '(close)', {duration: 3000, panelClass: 'snackbar-model-error'});
+                      return;
+                    }
+                  }
+                }
+
+              }
+            }
+          }
+        }
 
         // FALTA REVISAR LOS CASOS EN QUE SOURCELABEL YA ESTABA LINKEADO A OTRO NODO...
-
-        // Y PONER LAS PROBABILIDADES EN ROJO (O HACER QUE YA NO ESTEN EN ROJO)
-
-        // REVISANDO CUANDO LOS ENLACES EXISTENTES SE CREAN O BORRAN
-        // ¿TAL VEZ PASAR TODO ESTO A VALIDATECONNECTION Y ES MAS FACIL MANIPULAR LINKS?
 
         if (sourceId == targetId) {
           this.graph.getCell(link.id).remove();
@@ -493,7 +623,7 @@ export class EditBehaviorModelComponent implements OnInit {
   }
 
   private openProbabilityModal = (linkView: any) => {
-    if (linkView.model.attributes.source.id !== undefined && linkView.model.attributes.target.id !== undefined) {
+    if (linkView.model.attributes.source.id !== undefined) {
       let linkSourceId = linkView.model.attributes.source.id;
       let sourceTypeNode = this.graph.getCell(linkSourceId).attributes['typeNode'];
       if (sourceTypeNode === "start") {
@@ -538,6 +668,7 @@ export class EditBehaviorModelComponent implements OnInit {
     for (let i = 0; i < diagram.cells.length; i++) {
       if (diagram.cells[i].type === "link") {
         if (diagram.cells[i].source.id == linkSourceId) {
+          this.graph.getCell(diagram.cells[i]).attributes['labels'][0].attrs.text.fill = color;
           this.graph.getCell(diagram.cells[i]).attr('text/fill', color);
         }
       }

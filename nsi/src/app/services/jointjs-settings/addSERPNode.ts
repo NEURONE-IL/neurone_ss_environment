@@ -14,19 +14,59 @@ interface jointInputParameters {
 export function addSERPNode(jointInputParams: jointInputParameters): number {
   
   jointInputParams.paper.hideTools();
+  let diagram = jointInputParams.graph.toJSON();
 
-  jointInputParams.sERPCount = jointInputParams.sERPCount + 1;
+  let positionX = jointInputParams.visiblePaperX + 100;
+  let positionY = jointInputParams.visiblePaperY + 30;
+
+  let positionValid = false;
+  while (!positionValid) {
+    positionValid = true;
+    for (let i = 0; i < diagram.cells.length; i++) {
+      if (diagram.cells[i].type !== "link") {
+        let nodePositionX = diagram.cells[i].position.x;
+        let nodePositionY = diagram.cells[i].position.y;
+        if ((nodePositionX == positionX) && (nodePositionY == positionY)) {
+          positionValid = false;
+          positionX = positionX + 20;
+          positionY = positionY + 20;
+        }
+      }
+    }
+  }
+
+  let sERPCount = jointInputParams.sERPCount;
+  sERPCount = sERPCount + 1;
+
+  let text = '(new SERP '.concat(sERPCount.toString()).concat(')');
+
+  let textValid = false;
+  while (!textValid) {
+    textValid = true;
+    for (let i = 0; i < diagram.cells.length; i++) {
+      if (diagram.cells[i].type !== "link") {
+        if (diagram.cells[i].attrs.label.text === text) {
+          textValid = false;
+          sERPCount = sERPCount + 1;
+          text = '(new SERP '.concat(sERPCount.toString()).concat(')');
+        }
+      }
+    }
+  }
 
   var sERPNode = new joint.shapes.standard.BorderedImage({
     position: {
-      x: (jointInputParams.visiblePaperX + 100),
-      y: (jointInputParams.visiblePaperY + 30)
+      x: positionX,
+      y: positionY
     },
     size: {
       width: 150,
       height: 65
     },
     attrs: {
+      root: {
+        magnet: false
+      },
       background: {
         fill: '#C9A09D'
       },
@@ -36,7 +76,7 @@ export function addSERPNode(jointInputParams: jointInputParameters): number {
         ry: 5,
       },
       label: {
-        text: '(new SERP '.concat(jointInputParams.sERPCount.toString()).concat(')')
+        text: text
       },
       image: {
         "xlink:href": "/assets/behavior-model-serp.png",
@@ -55,16 +95,14 @@ export function addSERPNode(jointInputParams: jointInputParameters): number {
           },
           attrs: {
             portBody: {
-              width: 10,
-              height: 10,
-              y: -5,
-              x: -5,
-              fill: 'black',
+              r: 8,
+              fill: 'green',
+              stroke: 'black',
               magnet: true
             }
           },
           markup: [{
-            tagName: 'rect',
+            tagName: 'circle',
             selector: 'portBody'
           }]
         },
@@ -75,16 +113,14 @@ export function addSERPNode(jointInputParams: jointInputParameters): number {
           },
           attrs: {
             portBody: {
-              width: 10,
-              height: 10,
-              y: -5,
-              x: -5,
-              fill: 'black',
+              r: 8,
+              fill: 'green',
+              stroke: 'black',
               magnet: true
             }
           },
           markup: [{
-            tagName: 'rect',
+            tagName: 'circle',
             selector: 'portBody'
           }]
         },
@@ -135,6 +171,6 @@ export function addSERPNode(jointInputParams: jointInputParameters): number {
   elementView.addTools(toolsView);
   elementView.hideTools();
 
-  return jointInputParams.sERPCount;
+  return sERPCount;
 
 }

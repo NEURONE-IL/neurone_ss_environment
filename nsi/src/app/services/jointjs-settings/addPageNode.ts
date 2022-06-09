@@ -14,19 +14,59 @@ interface jointInputParameters {
 export function addPageNode(jointInputParams: jointInputParameters): number {
   
   jointInputParams.paper.hideTools();
+  let diagram = jointInputParams.graph.toJSON();
 
-  jointInputParams.pageCount = jointInputParams.pageCount + 1;
+  let positionX = jointInputParams.visiblePaperX + 100;
+  let positionY = jointInputParams.visiblePaperY + 30;
+
+  let positionValid = false;
+  while (!positionValid) {
+    positionValid = true;
+    for (let i = 0; i < diagram.cells.length; i++) {
+      if (diagram.cells[i].type !== "link") {
+        let nodePositionX = diagram.cells[i].position.x;
+        let nodePositionY = diagram.cells[i].position.y;
+        if ((nodePositionX == positionX) && (nodePositionY == positionY)) {
+          positionValid = false;
+          positionX = positionX + 20;
+          positionY = positionY + 20;
+        }
+      }
+    }
+  }
+
+  let pageCount = jointInputParams.pageCount;
+  pageCount = pageCount + 1;
+
+  let text = '(new page '.concat(pageCount.toString()).concat(')');
+
+  let textValid = false;
+  while (!textValid) {
+    textValid = true;
+    for (let i = 0; i < diagram.cells.length; i++) {
+      if (diagram.cells[i].type !== "link") {
+        if (diagram.cells[i].attrs.label.text === text) {
+          textValid = false;
+          pageCount = pageCount + 1;
+          text = '(new page '.concat(pageCount.toString()).concat(')');
+        }
+      }
+    }
+  }
 
   var pageNode = new joint.shapes.standard.BorderedImage({
     position: {
-      x: (jointInputParams.visiblePaperX + 100),
-      y: (jointInputParams.visiblePaperY + 30)
+      x: positionX,
+      y: positionY
     },
     size: {
       width: 150,
       height: 65
     },
     attrs: {
+      root: {
+        magnet: false
+      },
       background: {
         fill: 'lightgrey'
       },
@@ -36,7 +76,7 @@ export function addPageNode(jointInputParams: jointInputParameters): number {
         ry: 5,
       },
       label: {
-        text: '(new page '.concat(jointInputParams.pageCount.toString()).concat(')')
+        text: text
       },
       image: {
         "xlink:href": "/assets/behavior-model-page.png",
@@ -55,16 +95,14 @@ export function addPageNode(jointInputParams: jointInputParameters): number {
           },
           attrs: {
             portBody: {
-              width: 10,
-              height: 10,
-              y: -5,
-              x: -5,
-              fill: 'black',
+              r: 8,
+              fill: 'green',
+              stroke: 'black',
               magnet: true
             }
           },
           markup: [{
-            tagName: 'rect',
+            tagName: 'circle',
             selector: 'portBody'
           }]
         },
@@ -75,16 +113,14 @@ export function addPageNode(jointInputParams: jointInputParameters): number {
           },
           attrs: {
             portBody: {
-              width: 10,
-              height: 10,
-              y: -5,
-              x: -5,
-              fill: 'black',
+              r: 8,
+              fill: 'green',
+              stroke: 'black',
               magnet: true
             }
           },
           markup: [{
-            tagName: 'rect',
+            tagName: 'circle',
             selector: 'portBody'
           }]
         },
@@ -135,6 +171,6 @@ export function addPageNode(jointInputParams: jointInputParameters): number {
   elementView.addTools(toolsView);
   elementView.hideTools();
 
-  return jointInputParams.pageCount;
+  return pageCount;
 
 }
