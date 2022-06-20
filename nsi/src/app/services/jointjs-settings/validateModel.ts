@@ -784,7 +784,7 @@ export function validateModel(originalGraph: joint.dia.Graph): string[] {
       if ((currentPageQuery !== "") && (previousPageQuery !== "")) {
         if (currentPageQuery !== previousPageQuery) {
           errorMessageCount = errorMessageCount + 1;
-          errorMessages.push(errorMessageCount.toString() + ". The page node '" + currentPageLabel +  "' is not connected to the same query node as the page node that precedes it.");          
+          errorMessages.push(errorMessageCount.toString() + ". The page node '" + currentPageLabel +  "' does not lead to the same query node as the page node that precedes it.");
         }
       }
     }

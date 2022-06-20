@@ -200,6 +200,7 @@ export class NewBehaviorModelComponent implements OnInit {
     }).drawGrid();
 
     addStartNode({graph: this.graph, paper: this.paper, visiblePaperX: this.visiblePaper.x, visiblePaperY: this.visiblePaper.y});
+    convertToJSON(this.graph);
 
     this.paper.on('element:pointerdblclick', (elementView: any) => {
       this.openNodeSettingsModal(elementView);
@@ -788,10 +789,6 @@ export class NewBehaviorModelComponent implements OnInit {
 
   public addEndAction = () => {
     this.endCount = addEndNode({graph: this.graph, paper: this.paper, endCount: this.endCount, visiblePaperX: this.visiblePaper.x, visiblePaperY: this.visiblePaper.y});
-  }
-
-  public toJSONAction = () => {
-    convertToJSON(this.graph);
   }
 
   public addBehaviorModel = () => {

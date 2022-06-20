@@ -33,7 +33,7 @@ export class NewBehaviorModelNodeSettingsEndbookunbookModalComponent {
 
   public onOKButtonClicked = () => {
     var output = {
-      nodeName: this.nodeSettingsForm.get('nodeName')?.value.trim()
+      nodeName: this.nodeSettingsForm.get('nodeName')?.value.trim().replace(/_/g, '')
     }
     this.onSubmit.emit(output);
   }
@@ -42,7 +42,7 @@ export class NewBehaviorModelNodeSettingsEndbookunbookModalComponent {
 
     return (control: AbstractControl): ValidationErrors | null => {
 
-      let value = control.value.trim();
+      let value = control.value.trim().replace(/_/g, '');
 
       if (!value) {
           return null;

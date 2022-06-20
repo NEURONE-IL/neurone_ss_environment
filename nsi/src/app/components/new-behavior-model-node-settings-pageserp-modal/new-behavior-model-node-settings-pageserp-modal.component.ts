@@ -71,7 +71,7 @@ export class NewBehaviorModelNodeSettingsPageserpModalComponent {
     }
 
     var output = {
-      nodeName: this.nodeSettingsForm.get('nodeName')?.value.trim(),
+      nodeName: this.nodeSettingsForm.get('nodeName')?.value.trim().replace(/_/g, ''),
       minTransitionTime: this.nodeSettingsForm.get('minTransitionTime')?.value,
       maxTransitionTime: this.nodeSettingsForm.get('maxTransitionTime')?.value,
       relevantPage: this.nodeSettingsForm.get('relevantPage')?.value === 'true'
@@ -83,7 +83,7 @@ export class NewBehaviorModelNodeSettingsPageserpModalComponent {
 
     return (control: AbstractControl): ValidationErrors | null => {
 
-      let value = control.value.trim();
+      let value = control.value.trim().replace(/_/g, '');
 
       if (!value) {
           return null;

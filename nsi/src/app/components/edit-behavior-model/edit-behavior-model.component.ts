@@ -168,7 +168,7 @@ export class EditBehaviorModelComponent implements OnInit {
         interactive: { useLinkTools: true, labelMove: true },
     });
 
-    //convertToJSON(this.graph);
+    convertToJSON(this.graph);
 
     // RESTAURAR ELEMENT TOOLS A LOS NODOS YA EXISTENTES
 
@@ -806,10 +806,6 @@ export class EditBehaviorModelComponent implements OnInit {
 
   public addEndAction = () => {
     this.endCount = addEndNode({graph: this.graph, paper: this.paper, endCount: this.endCount, visiblePaperX: this.visiblePaper.x, visiblePaperY: this.visiblePaper.y});
-  }
-
-  public toJSONAction = () => {
-    convertToJSON(this.graph);
   }
 
   public addBehaviorModel = () => {
