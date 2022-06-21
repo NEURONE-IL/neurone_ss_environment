@@ -4,7 +4,7 @@ import * as $ from 'backbone';
 import * as joint from 'jointjs';
 
 // This function is executed once the diagram has been validated (in another method)
-export function convertToJSON(graph: joint.dia.Graph): void {
+export function convertToJSON(graph: joint.dia.Graph): any {
 
   let origDiagram = graph.toJSON();
 
@@ -254,10 +254,6 @@ export function convertToJSON(graph: joint.dia.Graph): void {
 
   // ================
 
-  console.log(formattedDiagram);
-
-  // ================
-
   // REBUILD FORMATTED DIAGRAM WITH RENAMED NODES
 
   let renameDictionary: JSONNode = {};
@@ -380,7 +376,7 @@ export function convertToJSON(graph: joint.dia.Graph): void {
 
   // ================
 
-  console.log(renamedFormattedDiagram);
+  return renamedFormattedDiagram;
 
 }
 

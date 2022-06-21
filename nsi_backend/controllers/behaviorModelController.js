@@ -65,7 +65,7 @@ exports.getBehaviorModel = async (req, res) => {
 exports.updateBehaviorModel = async (req, res) => {
 
 	try {
-		const { name, model, modelWidth, modelHeight, valid, lastModificationDate } = req.body;
+		const { name, fullModel, simulatorModel, modelWidth, modelHeight, valid, lastModificationDate } = req.body;
 		let behaviorModel = await BehaviorModel.findById(req.params.id);
 
 		if (!behaviorModel) {
@@ -73,7 +73,8 @@ exports.updateBehaviorModel = async (req, res) => {
 		}
 
 		behaviorModel.name = name;
-		behaviorModel.model = model;
+		behaviorModel.fullModel = fullModel;
+		behaviorModel.simulatorModel = simulatorModel;
 		behaviorModel.modelWidth = modelWidth;
 		behaviorModel.modelHeight = modelHeight;
 		behaviorModel.valid = valid;

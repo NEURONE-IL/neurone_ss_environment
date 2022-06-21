@@ -258,46 +258,46 @@ export function validateModel(originalGraph: joint.dia.Graph): string[] {
 
   // CHECKING THAT EVERY QUERY NODE LEADS TO AN END NODE
 
-  checkedQueryNodes.length = 0;
-  for (let i = 0; i < linkPairs.length; i++) {
-    if (linkPairs[i].sourceNode.typeNode === "query") {
-      if (!checkedQueryNodes.includes(linkPairs[i].sourceNode.label)) {
-        checkedQueryNodes.push(linkPairs[i].sourceNode.label);
-        let queryLeadsToEnd = false;
-        for (let j = 0; j < linkPairs.length; j++) {
-          if (linkPairs[j].sourceNode.label === linkPairs[i].sourceNode.label) {
-            if (linkPairs[j].targetNode.typeNode === "end") {
-              queryLeadsToEnd = true;
-              break;
-            }
-          }
-        }
-        if (queryLeadsToEnd == false) {
-          errorMessageCount = errorMessageCount + 1;
-          errorMessages.push(errorMessageCount.toString() + ". The query node '" + linkPairs[i].sourceNode.label + "' is not linked to an end node.");
-        }
-      }
-    }
+  // checkedQueryNodes.length = 0;
+  // for (let i = 0; i < linkPairs.length; i++) {
+  //   if (linkPairs[i].sourceNode.typeNode === "query") {
+  //     if (!checkedQueryNodes.includes(linkPairs[i].sourceNode.label)) {
+  //       checkedQueryNodes.push(linkPairs[i].sourceNode.label);
+  //       let queryLeadsToEnd = false;
+  //       for (let j = 0; j < linkPairs.length; j++) {
+  //         if (linkPairs[j].sourceNode.label === linkPairs[i].sourceNode.label) {
+  //           if (linkPairs[j].targetNode.typeNode === "end") {
+  //             queryLeadsToEnd = true;
+  //             break;
+  //           }
+  //         }
+  //       }
+  //       if (queryLeadsToEnd == false) {
+  //         errorMessageCount = errorMessageCount + 1;
+  //         errorMessages.push(errorMessageCount.toString() + ". The query node '" + linkPairs[i].sourceNode.label + "' is not linked to an end node.");
+  //       }
+  //     }
+  //   }
 
-    if (linkPairs[i].targetNode.typeNode === "query") {
-      if (!checkedQueryNodes.includes(linkPairs[i].targetNode.label)) {
-        checkedQueryNodes.push(linkPairs[i].targetNode.label);
-        let queryLeadsToEnd = false;
-        for (let j = 0; j < linkPairs.length; j++) {
-          if (linkPairs[j].sourceNode.label === linkPairs[i].targetNode.label) {
-            if (linkPairs[j].targetNode.typeNode === "end") {
-              queryLeadsToEnd = true;
-              break;
-            }
-          }
-        }
-        if (queryLeadsToEnd == false) {
-          errorMessageCount = errorMessageCount + 1;
-          errorMessages.push(errorMessageCount.toString() + ". The query node '" + linkPairs[i].targetNode.label + "' is not linked to an end node.");
-        }
-      }
-    }
-  }
+  //   if (linkPairs[i].targetNode.typeNode === "query") {
+  //     if (!checkedQueryNodes.includes(linkPairs[i].targetNode.label)) {
+  //       checkedQueryNodes.push(linkPairs[i].targetNode.label);
+  //       let queryLeadsToEnd = false;
+  //       for (let j = 0; j < linkPairs.length; j++) {
+  //         if (linkPairs[j].sourceNode.label === linkPairs[i].targetNode.label) {
+  //           if (linkPairs[j].targetNode.typeNode === "end") {
+  //             queryLeadsToEnd = true;
+  //             break;
+  //           }
+  //         }
+  //       }
+  //       if (queryLeadsToEnd == false) {
+  //         errorMessageCount = errorMessageCount + 1;
+  //         errorMessages.push(errorMessageCount.toString() + ". The query node '" + linkPairs[i].targetNode.label + "' is not linked to an end node.");
+  //       }
+  //     }
+  //   }
+  // }
 
   // CHECKING THAT, IF A QUERY NODE THAT LEADS TO ANOTHER QUERY NODE, THE LATTER NODE DOES NOT LEAD TO THE FORMER (QUERY LOOP)
 
@@ -747,48 +747,48 @@ export function validateModel(originalGraph: joint.dia.Graph): string[] {
   
   // CHECKING THAT EVERY PAGE GOES TO THE SAME QUERY AS THE PAGE BEFORE IT AND THE PAGE AFTER IT
 
-  checkedPages.length = 0;
-  for (let i = 0; i < linkPairs.length; i++) {
-    if ((linkPairs[i].sourceNode.typeNode === "page") && (!checkedPages.includes(linkPairs[i].sourceNode.label))) {
-      checkedPages.push(linkPairs[i].sourceNode.label);
+  // checkedPages.length = 0;
+  // for (let i = 0; i < linkPairs.length; i++) {
+  //   if ((linkPairs[i].sourceNode.typeNode === "page") && (!checkedPages.includes(linkPairs[i].sourceNode.label))) {
+  //     checkedPages.push(linkPairs[i].sourceNode.label);
 
-      let currentPageLabel = linkPairs[i].sourceNode.label;
-      let previousPageLabel = '';
+  //     let currentPageLabel = linkPairs[i].sourceNode.label;
+  //     let previousPageLabel = '';
       
-      for (let j = 0; j < linkPairs.length; j++) {
-        if ((linkPairs[j].targetNode.label === currentPageLabel) && (linkPairs[j].sourceNode.typeNode === "page")) {
-          previousPageLabel = linkPairs[j].sourceNode.label;
-          break;
-        }
-      }
+  //     for (let j = 0; j < linkPairs.length; j++) {
+  //       if ((linkPairs[j].targetNode.label === currentPageLabel) && (linkPairs[j].sourceNode.typeNode === "page")) {
+  //         previousPageLabel = linkPairs[j].sourceNode.label;
+  //         break;
+  //       }
+  //     }
 
-      let currentPageQuery = '';
-      let previousPageQuery = '';
+  //     let currentPageQuery = '';
+  //     let previousPageQuery = '';
 
-      for (let j = 0; j < linkPairs.length; j++) {
-        if ((linkPairs[j].sourceNode.label === currentPageLabel) && (linkPairs[j].targetNode.typeNode === "query")) {
-          currentPageQuery = linkPairs[j].targetNode.label;
-          break;
-        }
-      }
+  //     for (let j = 0; j < linkPairs.length; j++) {
+  //       if ((linkPairs[j].sourceNode.label === currentPageLabel) && (linkPairs[j].targetNode.typeNode === "query")) {
+  //         currentPageQuery = linkPairs[j].targetNode.label;
+  //         break;
+  //       }
+  //     }
 
-      if (previousPageLabel != '') {
-        for (let j = 0; j < linkPairs.length; j++) {
-          if ((linkPairs[j].sourceNode.label === previousPageLabel) && (linkPairs[j].targetNode.typeNode === "query")) {
-            previousPageQuery = linkPairs[j].targetNode.label;
-            break;
-          }
-        }
-      }
+  //     if (previousPageLabel != '') {
+  //       for (let j = 0; j < linkPairs.length; j++) {
+  //         if ((linkPairs[j].sourceNode.label === previousPageLabel) && (linkPairs[j].targetNode.typeNode === "query")) {
+  //           previousPageQuery = linkPairs[j].targetNode.label;
+  //           break;
+  //         }
+  //       }
+  //     }
 
-      if ((currentPageQuery !== "") && (previousPageQuery !== "")) {
-        if (currentPageQuery !== previousPageQuery) {
-          errorMessageCount = errorMessageCount + 1;
-          errorMessages.push(errorMessageCount.toString() + ". The page node '" + currentPageLabel +  "' does not lead to the same query node as the page node that precedes it.");
-        }
-      }
-    }
-  }
+  //     if ((currentPageQuery !== "") && (previousPageQuery !== "")) {
+  //       if (currentPageQuery !== previousPageQuery) {
+  //         errorMessageCount = errorMessageCount + 1;
+  //         errorMessages.push(errorMessageCount.toString() + ". The page node '" + currentPageLabel +  "' does not lead to the same query node as the page node that precedes it.");
+  //       }
+  //     }
+  //   }
+  // }
 
   ////
 

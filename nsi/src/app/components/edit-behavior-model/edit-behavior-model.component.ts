@@ -67,7 +67,7 @@ export class EditBehaviorModelComponent implements OnInit {
   private _id: string = '';
   public behaviorModelInitialName: string = '';
   private creationDate: string = '';
-  private originalModel: string = '';
+  private fullModel: string = '';
 
   @ViewChild('behaviorModelContainer') behaviorModelContainer!: ElementRef;
 
@@ -104,7 +104,7 @@ export class EditBehaviorModelComponent implements OnInit {
 
         this.behaviorModelInitialName = data.name;
         this.creationDate = data.creationDate;
-        this.originalModel = data.model;
+        this.fullModel = data.fullModel;
         this.modelValid = data.valid;
         this.startWidth = data.modelWidth;
         this.startHeight = data.modelHeight;
@@ -133,7 +133,7 @@ export class EditBehaviorModelComponent implements OnInit {
 
     this.graph = new joint.dia.Graph({}, { cellNamespace: namespace });
 
-    this.graph.fromJSON(JSON.parse(this.originalModel));
+    this.graph.fromJSON(JSON.parse(this.fullModel));
 
     this.paper = new joint.dia.Paper({
         el: jQuery('#behaviorModelEditor'),
@@ -167,8 +167,6 @@ export class EditBehaviorModelComponent implements OnInit {
         }),
         interactive: { useLinkTools: true, labelMove: true },
     });
-
-    convertToJSON(this.graph);
 
     // RESTAURAR ELEMENT TOOLS A LOS NODOS YA EXISTENTES
 
@@ -818,7 +816,8 @@ export class EditBehaviorModelComponent implements OnInit {
 
     const BEHAVIORMODEL: BehaviorModel = {
       name: this.behaviorModelForm.get('name')?.value,
-      model: JSON.stringify(this.graph.toJSON()),
+      fullModel: JSON.stringify(this.graph.toJSON()),
+      simulatorModel: JSON.stringify(convertToJSON(this.graph)),
       modelWidth: parseInt(this.paper.options.width!.toString()),
       modelHeight: parseInt(this.paper.options.height!.toString()),
       valid: this.modelValid,

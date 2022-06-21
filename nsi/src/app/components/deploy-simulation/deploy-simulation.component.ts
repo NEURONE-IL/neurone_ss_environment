@@ -107,6 +107,10 @@ export class DeploySimulationComponent implements OnInit {
 
   }
 
+  async ngOnDestroy() {
+    this.stop();
+  }
+
   public async deploy() {
 
     this.showMaxLengthReached = false;

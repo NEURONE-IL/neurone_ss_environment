@@ -120,7 +120,8 @@ export class BehaviorModelListComponent implements OnInit {
 
     const BEHAVIORMODEL: BehaviorModel = {
       name: newName,
-      model: this.behaviorModelList[i].model,
+      fullModel: this.behaviorModelList[i].fullModel,
+      simulatorModel: this.behaviorModelList[i].simulatorModel,
       modelWidth: this.behaviorModelList[i].modelWidth,
       modelHeight: this.behaviorModelList[i].modelHeight,
       valid: this.behaviorModelList[i].valid,

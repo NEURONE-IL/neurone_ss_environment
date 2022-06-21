@@ -200,7 +200,6 @@ export class NewBehaviorModelComponent implements OnInit {
     }).drawGrid();
 
     addStartNode({graph: this.graph, paper: this.paper, visiblePaperX: this.visiblePaper.x, visiblePaperY: this.visiblePaper.y});
-    convertToJSON(this.graph);
 
     this.paper.on('element:pointerdblclick', (elementView: any) => {
       this.openNodeSettingsModal(elementView);
@@ -803,7 +802,8 @@ export class NewBehaviorModelComponent implements OnInit {
     
     const BEHAVIORMODEL: BehaviorModel = {
       name: this.behaviorModelForm.get('name')?.value,
-      model: JSON.stringify(this.graph.toJSON()),
+      fullModel: JSON.stringify(this.graph.toJSON()),
+      simulatorModel: JSON.stringify(convertToJSON(this.graph)),
       modelWidth: parseInt(this.paper.options.width!.toString()),
       modelHeight: parseInt(this.paper.options.height!.toString()),
       valid: this.modelValid,

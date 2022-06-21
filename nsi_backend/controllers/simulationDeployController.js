@@ -10,12 +10,56 @@ require('dotenv').config( {path: 'variables.env' });
 
 exports.startSimulationDeploy = async (req, res) => {
 
-	cmd.run(
-		'sh ../../../Otros/neurone-am-simulator-v2/beginSimulation.sh',
-		function(err, data, stderr) {
-			res.json(data);
+	try {
+
+		let simulationJSON = {};
+
+		let simulation = await Simulation.findById(req.params.id);
+
+		if (!simulation) {
+			res.status(404).json({msg: "Error: simulation doesn't exist"});
+			return;
 		}
-	);
+
+		let behaviorModel = await BehaviorModel.findById(simulation.behaviorModelId);
+
+		simulationJSON["probabilityGraph"] = JSON.parse(behaviorModel.simulatorModel);
+		simulationJSON["random"] = simulation.randomActions;
+		simulationJSON["expiration"] = simulation.expiration;
+		simulationJSON["sensibility"] = simulation.sensibility;
+		simulationJSON["interval"] = simulation.interval;
+		simulationJSON["participantQuantity"] = simulation.numberStudents;
+		simulationJSON["documentsQuantity"] = simulation.numberDocuments;
+		simulationJSON["relevantsQuantity"] = simulation.numberRelevantDocuments;
+
+		let queryList = [];
+		for (let i = 0; i < simulation.queryList.length; i++) {
+			queryList.push(simulation.queryList[i].replace('"', '\\"'));
+		}
+		simulationJSON["queryList"] = queryList;
+
+		let database = {
+			"databaseName": process.env.DB_MONGO_SIM_APP_DATA.slice(10).split('/')[1],
+			"databaseUser": process.env.DB_MONGO_SIM_APP_DATA.slice(10).split(':')[0],
+			"databasePassword": process.env.DB_MONGO_SIM_APP_DATA.split(':')[2].split('@')[0],
+			"databaseHost": process.env.DB_MONGO_SIM_APP_DATA.split('@')[1].split('/')[0]
+		};
+		simulationJSON["database"] = database;
+
+		let command = "curl -X POST " + process.env.SIMULATOR_URL + "/api/init/s1 -H \"Content-Type: application/json\" -d \'" + JSON.stringify(simulationJSON) + "\'";
+
+		cmd.run(
+			//	'sh ../../../Otros/neurone-am-simulator-v2/beginSimulation.sh',
+		 	command,
+		 	function(err, data, stderr) {
+		 		res.json(data);
+		 	}
+		);
+
+	} catch (error) {
+		console.log(error);
+		res.status(500).send("Error: startSimulationDeploy method failed");
+	}
 
 	// try {
 	// 	let simulation = await Simulation.findById(req.params.id);

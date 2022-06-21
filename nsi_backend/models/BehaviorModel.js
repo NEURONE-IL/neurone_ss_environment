@@ -5,7 +5,11 @@ const BehaviorModelSchema = mongoose.Schema({
 		type: String,
 		required: true
 	},
-	model: {
+	fullModel: {
+		type: String,
+		required: true
+	},
+	simulatorModel: {
 		type: String,
 		required: true
 	},
