@@ -403,15 +403,19 @@ export function validateModel(originalGraph: joint.dia.Graph): string[] {
           break;
         }
       }
-      for (let j = 0; j < linkPairs.length; j++) {
-        if ((linkPairs[j].sourceNode.label === originPageLabel) && (linkPairs[j].targetNode.label === bookmarkLabel)) {
-          bookmarkConnectionValid = true;
-          break;
+      if ((originPageLabel !== '') && (destinationPageLabel !== '')) {
+        for (let j = 0; j < linkPairs.length; j++) {
+          if ((linkPairs[j].sourceNode.label === originPageLabel) && (linkPairs[j].targetNode.label === bookmarkLabel)) {
+            bookmarkConnectionValid = true;
+            break;
+          }
         }
-      }
-      if (bookmarkConnectionValid == false) {
-        errorMessageCount = errorMessageCount + 1;
-        errorMessages.push(errorMessageCount.toString() + ". The bookmark node '" + bookmarkLabel +  "' is not connected to the next page node in the sequence of page nodes of the query.");
+        if (bookmarkConnectionValid == false) {
+          errorMessageCount = errorMessageCount + 1;
+          errorMessages.push(errorMessageCount.toString() + ". The bookmark node '" + bookmarkLabel +  "' is not connected to the next page node in the sequence of page nodes of the query.");
+        }
+      } else {
+        bookmarkConnectionValid = true;
       }
     }
   }
@@ -438,15 +442,19 @@ export function validateModel(originalGraph: joint.dia.Graph): string[] {
           break;
         }
       }
-      for (let j = 0; j < linkPairs.length; j++) {
-        if ((linkPairs[j].sourceNode.label === originPageLabel) && (linkPairs[j].targetNode.label === unBookmarkLabel)) {
-          unBookmarkConnectionValid = true;
-          break;
+      if ((originPageLabel !== '') && (destinationPageLabel !== '')) {
+        for (let j = 0; j < linkPairs.length; j++) {
+          if ((linkPairs[j].sourceNode.label === originPageLabel) && (linkPairs[j].targetNode.label === unBookmarkLabel)) {
+            unBookmarkConnectionValid = true;
+            break;
+          }
         }
-      }
-      if (unBookmarkConnectionValid == false) {
-        errorMessageCount = errorMessageCount + 1;
-        errorMessages.push(errorMessageCount.toString() + ". The unbookmark node '" + unBookmarkLabel +  "' is not connected to the next page node in the sequence of page nodes of the query.");
+        if (unBookmarkConnectionValid == false) {
+          errorMessageCount = errorMessageCount + 1;
+          errorMessages.push(errorMessageCount.toString() + ". The unbookmark node '" + unBookmarkLabel +  "' is not connected to the next page node in the sequence of page nodes of the query.");
+        }
+      } else {
+        unBookmarkConnectionValid = true;
       }
     }
   }

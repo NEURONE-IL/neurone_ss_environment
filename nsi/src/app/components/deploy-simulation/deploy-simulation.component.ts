@@ -52,6 +52,11 @@ export class DeploySimulationComponent implements OnInit {
   private queriesCursor: number = 0;
   private visitedlinksCursor: number = 0;
 
+  private bookmarksNumberElemsToSkip: number = 0;
+  private keystrokesNumberElemsToSkip: number = 0;
+  private queriesNumberElemsToSkip: number = 0;
+  private visitedlinksNumberElemsToSkip: number = 0;
+
   private updateFrequency: number = 5000;
 
   @ViewChild(MatSort, {static: true}) private sort!: MatSort;
@@ -125,6 +130,16 @@ export class DeploySimulationComponent implements OnInit {
     this.ActionsTableRef.renderRows();
     this.dataSource._updateChangeSubscription();
 
+    this.bookmarksCursor = 0;
+    this.keystrokesCursor = 0;
+    this.queriesCursor = 0;
+    this.visitedlinksCursor = 0;
+
+    this.bookmarksNumberElemsToSkip = 0;
+    this.keystrokesNumberElemsToSkip = 0;
+    this.queriesNumberElemsToSkip = 0;
+    this.visitedlinksNumberElemsToSkip = 0;
+
     this.deployEnabled = false;
     this.status = "Deploying...";
     let status = await this._simulationDeployService.startSimulation(this._id).toPromise();
@@ -153,6 +168,11 @@ export class DeploySimulationComponent implements OnInit {
       let latestQueries = await this._simulationDeployService.getLatestQueries(this.queriesCursor).toPromise();
       let latestVisitedlinks = await this._simulationDeployService.getLatestVisitedlinks(this.visitedlinksCursor).toPromise();
 
+      latestBookmarks.splice(0, this.bookmarksNumberElemsToSkip);
+      latestKeystrokes.splice(0, this.keystrokesNumberElemsToSkip);
+      latestQueries.splice(0, this.queriesNumberElemsToSkip);
+      latestVisitedlinks.splice(0, this.visitedlinksNumberElemsToSkip);
+      
       if (latestBookmarks.length > 0) {
         this.bookmarksCursor = latestBookmarks[latestBookmarks.length - 1].localTimestamp;
       }
@@ -168,7 +188,55 @@ export class DeploySimulationComponent implements OnInit {
       if (latestVisitedlinks.length > 0) {
         this.visitedlinksCursor = latestVisitedlinks[latestVisitedlinks.length - 1].localTimestamp;
       }
-       
+
+      if (latestBookmarks.length > 0) {
+        let i = latestBookmarks.length - 1;
+        while (i >= 0) {
+          if (latestBookmarks[i].localTimestamp == this.bookmarksCursor) {
+            this.bookmarksNumberElemsToSkip = this.bookmarksNumberElemsToSkip + 1;
+            i = i - 1
+          } else {
+            break;
+          }
+        }
+      }
+
+      if (latestKeystrokes.length > 0) {
+        let i = latestKeystrokes.length - 1;
+        while (i >= 0) {
+          if (latestKeystrokes[i].localTimestamp == this.keystrokesCursor) {
+            this.keystrokesNumberElemsToSkip = this.keystrokesNumberElemsToSkip + 1;
+            i = i - 1
+          } else {
+            break;
+          }
+        }
+      }
+
+      if (latestQueries.length > 0) {
+        let i = latestQueries.length - 1;
+        while (i >= 0) {
+          if (latestQueries[i].localTimestamp == this.queriesCursor) {
+            this.queriesNumberElemsToSkip = this.queriesNumberElemsToSkip + 1;
+            i = i - 1
+          } else {
+            break;
+          }
+        }
+      }
+
+      if (latestVisitedlinks.length > 0) {
+        let i = latestVisitedlinks.length - 1;
+        while (i >= 0) {
+          if (latestVisitedlinks[i].localTimestamp == this.visitedlinksCursor) {
+            this.visitedlinksNumberElemsToSkip = this.visitedlinksNumberElemsToSkip + 1;
+            i = i - 1
+          } else {
+            break;
+          }
+        }
+      }
+
       let tempActionsList: Action[] = [];
 
       for (let i = 0; i < latestBookmarks.length; i++) {

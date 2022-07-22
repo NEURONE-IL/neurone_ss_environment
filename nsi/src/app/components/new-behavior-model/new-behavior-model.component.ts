@@ -811,6 +811,9 @@ export class NewBehaviorModelComponent implements OnInit {
       lastModificationDate: creationDate
     };
 
+    console.log(JSON.stringify(this.graph.toJSON()));
+    console.log(JSON.stringify(convertToJSON(this.graph)));
+
     if (this.modelValid == true) {
       this._behaviorModelService.createBehaviorModel(BEHAVIORMODEL).subscribe(data => {
         this.openSuccessModal();

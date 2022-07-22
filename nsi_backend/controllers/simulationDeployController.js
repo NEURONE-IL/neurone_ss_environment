@@ -111,10 +111,6 @@ exports.startSimulationDeploy = async (req, res) => {
 
 }
 
-function toSimulatorJSON(behaviorModel) {
-	return behaviorModel;
-}
-
 exports.stopSimulationDeploy = async (req, res) => {
 
 	try {
@@ -147,7 +143,7 @@ exports.getLatestBookmarks = async (req, res) => {
 
 	try {
 		const bookmarks = await Bookmark.find(
-			{ localTimestamp: { $gt: req.params.cursor } }
+			{ localTimestamp: { $gte: req.params.cursor } }
 		).sort( { localTimestamp: 1 } );
 		res.json(bookmarks);
 	} catch (error) {
@@ -174,7 +170,7 @@ exports.getLatestKeystrokes = async (req, res) => {
 
 	try {
 		const keystrokes = await Keystroke.find(
-			{ localTimestamp: { $gt: req.params.cursor } }
+			{ localTimestamp: { $gte: req.params.cursor } }
 		).sort( { localTimestamp: 1 } );
 		res.json(keystrokes);
 	} catch (error) {
@@ -200,7 +196,7 @@ exports.getLatestQueries = async (req, res) => {
 
 	try {
 		const queries = await Query.find(
-			{ localTimestamp: { $gt: req.params.cursor } }
+			{ localTimestamp: { $gte: req.params.cursor } }
 		).sort( { localTimestamp: 1 } );
 		res.json(queries);
 	} catch (error) {
@@ -226,7 +222,7 @@ exports.getLatestVisitedlinks = async (req, res) => {
 
 	try {
 		const visitedlinks = await Visitedlink.find(
-			{ localTimestamp: { $gt: req.params.cursor } }
+			{ localTimestamp: { $gte: req.params.cursor } }
 		).sort( { localTimestamp: 1 } );
 		res.json(visitedlinks);
 	} catch (error) {

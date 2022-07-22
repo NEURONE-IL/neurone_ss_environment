@@ -36,21 +36,6 @@ h2 {
     left: -10px;
 }
 
-.play_arrow {
-    color: green;
-    transform: scale(1.3);
-}
-
-.stop {
-    color: blue;
-    transform: scale(1.3);
-}
-
-.autorenew {
-    color: orange;
-    transform: scale(1.2);
-}
-
 .copy {
     color: black;
 }
@@ -70,4 +55,9 @@ mat-icon {
 
 mat-paginator {
     background-color: #FFF2E3
+}
+
+.deployOptionsButton {
+    background-color: green;
+    width: auto;
 }

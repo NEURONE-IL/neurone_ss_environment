@@ -53,9 +53,9 @@
         <th mat-header-cell *matHeaderCellDef> Deploy options </th>
 
         <td mat-cell *matCellDef="let simulation">
-          <mat-icon class="play_arrow" matTooltip="Deploy the simulation">play_arrow</mat-icon>
-          <mat-icon class="stop" matTooltip="Stop the deployed simulation">stop</mat-icon>
-          <mat-icon class="autorenew" matTooltip="Restart the deployment of the simulation">autorenew</mat-icon>
+          <div style="text-align: left;">
+            <button class="deployOptionsButton" mat-raised-button color="primary" style="border-radius: 5px;" (click)="deploySimulation(simulation._id)"><small>Go to deploy options</small></button>
+          </div>
         </td>
       </ng-container>
 

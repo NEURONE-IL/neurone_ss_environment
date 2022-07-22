@@ -67,5 +67,5 @@ const SimulationSchema = mongoose.Schema({
 	}
 });
 
-const neuroneDB = mongoose.connection.useDb("neurone");
+const neuroneDB = mongoose.connection.useDb("neurone"); // PARAMETRIZAR LA DB EN BASE A VARIABLES.ENV
 module.exports = neuroneDB.model("Simulation", SimulationSchema);

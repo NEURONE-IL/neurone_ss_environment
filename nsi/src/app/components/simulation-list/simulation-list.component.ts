@@ -19,6 +19,7 @@ import { SimulationCopiedModalComponent } from '../simulation-copied-modal/simul
 import { SimulationDeleteConfirmModalComponent } from '../simulation-delete-confirm-modal/simulation-delete-confirm-modal.component';
 import { SimulationDeletedModalComponent } from '../simulation-deleted-modal/simulation-deleted-modal.component';
 import { SimulationNoValidModelsModalComponent } from '../simulation-no-valid-models-modal/simulation-no-valid-models-modal.component';
+import { SimulationNotDeployableModalComponent} from '../simulation-not-deployable-modal/simulation-not-deployable-modal.component';
 
 @Component({
   selector: 'app-simulation-list',
@@ -226,6 +227,39 @@ export class SimulationListComponent implements OnInit {
       });
     } else {
       this.router.navigate(['/', 'new-simulation']);
+    }
+  }
+
+  public async deploySimulation(_id: string) {
+    let behaviorModelId: string = '';
+    let simulationBehaviorModelValid = false;
+    let simulationBehaviorModelName: string = '';
+    for (let i = 0; i < this.simulationList.length; i++) {
+      if (this.simulationList[i]._id === _id) {
+        behaviorModelId = this.simulationList[i].behaviorModelId;
+      }
+    }
+    let behaviorModelsProperties = await this._behaviorModelService.getBehaviorModelsProperties().toPromise();
+    for (let i = 0; i < behaviorModelsProperties.length; i++) {
+      if (behaviorModelsProperties[i]._id === behaviorModelId) {
+        simulationBehaviorModelValid = behaviorModelsProperties[i].valid;
+        simulationBehaviorModelName = behaviorModelsProperties[i].name;
+      }
+    }
+    if (simulationBehaviorModelValid == false) {
+      const dialogRef = this._matDialog.open(SimulationNotDeployableModalComponent, { width: '45%' , data: { behaviorModelName: simulationBehaviorModelName } } );
+
+      const sub = dialogRef.componentInstance.onSubmit.subscribe(() => {
+        dialogRef.close();
+      });
+
+      dialogRef.afterClosed().subscribe(() => {
+        sub.unsubscribe();
+      });
+    } else {
+      this.router.navigate(['/', 'deploy-simulation'], { state:
+        { _id: _id
+       }});
     }
   }
 
