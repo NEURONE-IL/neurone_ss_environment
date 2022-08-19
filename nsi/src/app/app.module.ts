@@ -22,89 +22,105 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { getMatPaginatorIntl } from '../locale/matpaginator-intl';
 
 import { CdTimerModule } from 'angular-cd-timer';
 
 import { AppComponent } from './app.component';
-import { BehaviorModelListComponent } from './components/behavior-model-list/behavior-model-list.component';
-import { HomePageComponent } from './components/home-page/home-page.component';
-import { NewBehaviorModelComponent } from './components/new-behavior-model/new-behavior-model.component';
-import { NewBehaviorModelProbabilityModalComponent } from './components/new-behavior-model-probability-modal/new-behavior-model-probability-modal.component';
-import { NewSimulationComponent } from './components/new-simulation/new-simulation.component';
+
+import { HomeComponent } from './components/home/home.component';
+import { ModalErrorComponent } from './components/modal-error/modal-error.component';
+
+import { BehaviorModelEditComponent } from './components/behaviormodel-edit/behaviormodel-edit.component';
+import { BehaviorModelListComponent } from './components/behaviormodel-list/behaviormodel-list.component';
+import { BehaviorModelModalAddedComponent } from './components/behaviormodel-modal-added/behaviormodel-modal-added.component';
+import { BehaviorModelModalConfirmDeleteComponent } from './components/behaviormodel-modal-confirmdelete/behaviormodel-modal-confirmdelete.component';
+import { BehaviorModelModalCopiedComponent } from './components/behaviormodel-modal-copied/behaviormodel-modal-copied.component';
+import { BehaviorModelModalDeletedComponent } from './components/behaviormodel-modal-deleted/behaviormodel-modal-deleted.component';
+import { BehaviorModelModalEditedComponent } from './components/behaviormodel-modal-edited/behaviormodel-modal-edited.component';
+import { BehaviorModelModalHasErrorsComponent } from './components/behaviormodel-modal-haserrors/behaviormodel-modal-haserrors.component';
+import { BehaviorModelModalInUseComponent } from './components/behaviormodel-modal-inuse/behaviormodel-modal-inuse.component';
+import { BehaviorModelModalNodeSettingsBUEComponent } from './components/behaviormodel-modal-nodesettingsbue/behaviormodel-modal-nodesettingsbue.component';
+import { BehaviorModelModalNodeSettingsPSComponent } from './components/behaviormodel-modal-nodesettingsps/behaviormodel-modal-nodesettingsps.component';
+import { BehaviorModelModalNodeSettingsQComponent } from './components/behaviormodel-modal-nodesettingsq/behaviormodel-modal-nodesettingsq.component';
+import { BehaviorModelModalNotFoundComponent } from './components/behaviormodel-modal-notfound/behaviormodel-modal-notfound.component';
+import { BehaviorModelModalProbSettingsComponent } from './components/behaviormodel-modal-probsettings/behaviormodel-modal-probsettings.component';
+import { BehaviorModelNewComponent } from './components/behaviormodel-new/behaviormodel-new.component';
+import { BehaviorModelSettingsComponent } from './components/behaviormodel-settings/behaviormodel-settings.component';
+
+import { SimulationDeployComponent } from './components/simulation-deploy/simulation-deploy.component';
+import { SimulationEditComponent } from './components/simulation-edit/simulation-edit.component';
+import { SimulationEditQueryListComponent } from './components/simulation-editquerylist/simulation-editquerylist.component';
 import { SimulationListComponent } from './components/simulation-list/simulation-list.component';
-import { SimulationAddedModalComponent } from './components/simulation-added-modal/simulation-added-modal.component';
-import { SimulationDeletedModalComponent } from './components/simulation-deleted-modal/simulation-deleted-modal.component';
-import { SimulationCopiedModalComponent } from './components/simulation-copied-modal/simulation-copied-modal.component';
-import { SimulationDeleteConfirmModalComponent } from './components/simulation-delete-confirm-modal/simulation-delete-confirm-modal.component';
-import { NewBehaviorModelNodeSettingsQueryModalComponent } from './components/new-behavior-model-node-settings-query-modal/new-behavior-model-node-settings-query-modal.component';
-import { NewBehaviorModelNodeSettingsPageserpModalComponent } from './components/new-behavior-model-node-settings-pageserp-modal/new-behavior-model-node-settings-pageserp-modal.component';
-import { NewBehaviorModelNodeSettingsEndbookunbookModalComponent } from './components/new-behavior-model-node-settings-endbookunbook-modal/new-behavior-model-node-settings-endbookunbook-modal.component';
-import { QueryListComponent } from './components/query-list/query-list.component';
-import { BehaviorModelAddedModalComponent } from './components/behavior-model-added-modal/behavior-model-added-modal.component';
-import { BehaviorModelCopiedModalComponent } from './components/behavior-model-copied-modal/behavior-model-copied-modal.component';
-import { BehaviorModelDeleteConfirmModalComponent } from './components/behavior-model-delete-confirm-modal/behavior-model-delete-confirm-modal.component';
-import { BehaviorModelDeletedModalComponent } from './components/behavior-model-deleted-modal/behavior-model-deleted-modal.component';
+import { SimulationModalAddedComponent } from './components/simulation-modal-added/simulation-modal-added.component';
+import { SimulationModalConfirmDeleteComponent } from './components/simulation-modal-confirmdelete/simulation-modal-confirmdelete.component';
+import { SimulationModalConfirmDeployLeaveComponent } from './components/simulation-modal-confirmdeployleave/simulation-modal-confirmdeployleave.component';
+import { SimulationModalCopiedComponent } from './components/simulation-modal-copied/simulation-modal-copied.component';
+import { SimulationModalDeletedComponent } from './components/simulation-modal-deleted/simulation-modal-deleted.component';
+import { SimulationModalEditedComponent } from './components/simulation-modal-edited/simulation-modal-edited.component';
+import { SimulationModalModelNotFoundComponent } from './components/simulation-modal-modelnotfound/simulation-modal-modelnotfound.component';
+import { SimulationModalNotDeployableComponent } from './components/simulation-modal-notdeployable/simulation-modal-notdeployable.component';
+import { SimulationModalNoModelsComponent } from './components/simulation-modal-nomodels/simulation-modal-nomodels.component';
+import { SimulationModalSimNotFoundComponent } from './components/simulation-modal-simnotfound/simulation-modal-simnotfound.component';
+import { SimulationNewComponent } from './components/simulation-new/simulation-new.component';
+import { SimulationNewQueryListComponent } from './components/simulation-newquerylist/simulation-newquerylist.component';
 import { SimulationSettingsComponent } from './components/simulation-settings/simulation-settings.component';
-import { BehaviorModelHasErrorsModalComponent } from './components/behavior-model-has-errors-modal/behavior-model-has-errors-modal.component';
-import { SimulationNoValidModelsModalComponent } from './components/simulation-no-valid-models-modal/simulation-no-valid-models-modal.component';
-import { EditSimulationComponent } from './components/edit-simulation/edit-simulation.component';
-import { EditBehaviorModelComponent } from './components/edit-behavior-model/edit-behavior-model.component';
-import { EditSimulationQueryListComponent } from './components/edit-simulation-query-list/edit-simulation-query-list.component';
-import { SimulationEditedModalComponent } from './components/simulation-edited-modal/simulation-edited-modal.component';
-import { BehaviorModelInUseModalComponent } from './components/behavior-model-in-use-modal/behavior-model-in-use-modal.component';
-import { BehaviorModelEditedModalComponent } from './components/behavior-model-edited-modal/behavior-model-edited-modal.component';
-import { BehaviorModelSettingsComponent } from './components/behavior-model-settings/behavior-model-settings.component';
-import { SimulationNotDeployableModalComponent } from './components/simulation-not-deployable-modal/simulation-not-deployable-modal.component';
-import { DeploySimulationComponent } from './components/deploy-simulation/deploy-simulation.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    HomeComponent,
+    ModalErrorComponent,
+    BehaviorModelEditComponent,
     BehaviorModelListComponent,
-    HomePageComponent,
-    NewBehaviorModelComponent,
-    NewBehaviorModelProbabilityModalComponent,
-    NewSimulationComponent,
-    SimulationListComponent,
-    SimulationAddedModalComponent,
-    SimulationDeletedModalComponent,
-    SimulationCopiedModalComponent,
-    SimulationDeleteConfirmModalComponent,
-    NewBehaviorModelNodeSettingsQueryModalComponent,
-    NewBehaviorModelNodeSettingsPageserpModalComponent,
-    NewBehaviorModelNodeSettingsEndbookunbookModalComponent,
-    QueryListComponent,
-    BehaviorModelAddedModalComponent,
-    BehaviorModelCopiedModalComponent,
-    BehaviorModelDeleteConfirmModalComponent,
-    BehaviorModelDeletedModalComponent,
-    SimulationSettingsComponent,
-    BehaviorModelHasErrorsModalComponent,
-    SimulationNoValidModelsModalComponent,
-    EditSimulationComponent,
-    EditBehaviorModelComponent,
-    EditSimulationQueryListComponent,
-    SimulationEditedModalComponent,
-    BehaviorModelInUseModalComponent,
-    BehaviorModelEditedModalComponent,
+    BehaviorModelModalAddedComponent,
+    BehaviorModelModalConfirmDeleteComponent,
+    BehaviorModelModalCopiedComponent,
+    BehaviorModelModalDeletedComponent,
+    BehaviorModelModalEditedComponent,
+    BehaviorModelModalHasErrorsComponent,
+    BehaviorModelModalInUseComponent,
+    BehaviorModelModalNodeSettingsBUEComponent,
+    BehaviorModelModalNodeSettingsPSComponent,
+    BehaviorModelModalNodeSettingsQComponent,
+    BehaviorModelModalNotFoundComponent,
+    BehaviorModelModalProbSettingsComponent,
+    BehaviorModelNewComponent,
     BehaviorModelSettingsComponent,
-    SimulationNotDeployableModalComponent,
-    DeploySimulationComponent
+    SimulationDeployComponent,
+    SimulationEditComponent,
+    SimulationEditQueryListComponent,
+    SimulationListComponent,
+    SimulationModalAddedComponent,
+    SimulationModalConfirmDeleteComponent,
+    SimulationModalConfirmDeployLeaveComponent,
+    SimulationModalCopiedComponent,
+    SimulationModalDeletedComponent,
+    SimulationModalEditedComponent,
+    SimulationModalModelNotFoundComponent,
+    SimulationModalNotDeployableComponent,
+    SimulationModalNoModelsComponent,
+    SimulationModalSimNotFoundComponent,
+    SimulationNewComponent,
+    SimulationNewQueryListComponent,
+    SimulationSettingsComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot([
-      {path: 'home', component: HomePageComponent},
-      {path: 'new-behavior-model', component: NewBehaviorModelComponent},
-      {path: 'new-simulation', component: NewSimulationComponent},
-      {path: 'query-list', component: QueryListComponent},
+      {path: 'home', component: HomeComponent},
+      {path: 'behaviormodel-new', component: BehaviorModelNewComponent},
+      {path: 'behaviormodel-edit', component: BehaviorModelEditComponent},
+      {path: 'behaviormodel-settings', component: BehaviorModelSettingsComponent},
+      {path: 'simulation-new', component: SimulationNewComponent},
+      {path: 'simulation-newquerylist', component: SimulationNewQueryListComponent},
       {path: 'simulation-settings', component: SimulationSettingsComponent},
-      {path: 'edit-simulation', component: EditSimulationComponent},
-      {path: 'edit-simulation-query-list', component: EditSimulationQueryListComponent},
-      {path: 'edit-behavior-model', component: EditBehaviorModelComponent},
-      {path: 'behavior-model-settings', component: BehaviorModelSettingsComponent},
-      {path: 'deploy-simulation', component: DeploySimulationComponent},
+      {path: 'simulation-edit', component: SimulationEditComponent},
+      {path: 'simulation-editquerylist', component: SimulationEditQueryListComponent},
+      {path: 'simulation-deploy', component: SimulationDeployComponent},
       {path: '**', redirectTo: 'home', pathMatch: 'full'}],
       {scrollPositionRestoration: 'enabled'}
     ),
@@ -131,7 +147,9 @@ import { DeploySimulationComponent } from './components/deploy-simulation/deploy
     MatPaginatorModule,
     CdTimerModule
   ],
-  providers: [],
+  providers: [
+    { provide: MatPaginatorIntl, useValue: getMatPaginatorIntl() }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

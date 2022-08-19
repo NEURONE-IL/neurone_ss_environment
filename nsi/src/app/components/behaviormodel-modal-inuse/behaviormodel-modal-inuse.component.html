@@ -1,0 +1,19 @@
+<html>
+    <body>
+    	<h3 i18n="Title of the Behavior Model In Use modal">Delete behavior model</h3>
+        <div>
+          <span i18n="Message of the Behavior Model In Use modal - part 1">The behavior model cannot be deleted, because it's assigned to one or more simulations. Change the models of the respective simulations before deleting the model.</span>
+          <br><br>
+          <span *ngIf="showPartial" i18n="Message of the Behavior Model In Use modal - part 2">Partial list of simulations currently using the "{{this.behaviorModelName}}" model:</span>
+          <span *ngIf="!showPartial" i18n="Message of the Behavior Model In Use modal - part 3">List of simulations currently using the "{{this.behaviorModelName}}" model:</span>
+            <mat-list>
+                <mat-list-item *ngFor="let simulationName of simulationNamesUsingModels">
+                    {{simulationName}}
+                </mat-list-item>
+            </mat-list>
+        </div>
+        <div class="buttonContainer">
+            <button mat-raised-button color="primary" style="border-radius: 5px; width: 80px; margin-left: 450px;" (click)="onOKButtonClicked()" i18n="Button of the Behavior Model In Use modal">OK</button>
+        </div>
+    </body>
+</html>

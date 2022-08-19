@@ -1,17 +1,17 @@
 const express = require("express");
 const router = express.Router();
-const simulationDeployController = require("../controllers/simulationDeployController");
 
-// api/simulationdata/deploy
-router.get("/start/:id", simulationDeployController.startSimulationDeploy);
-router.get("/stop/", simulationDeployController.stopSimulationDeploy);
-router.get("/getbookmarks/", simulationDeployController.getBookmarks);
-router.get("/getlatestbookmarks/:cursor", simulationDeployController.getLatestBookmarks);
-router.get("/getkeystrokes/", simulationDeployController.getKeystrokes);
-router.get("/getlatestkeystrokes/:cursor", simulationDeployController.getLatestKeystrokes);
-router.get("/getqueries/", simulationDeployController.getQueries);
-router.get("/getlatestqueries/:cursor", simulationDeployController.getLatestQueries);
-router.get("/getvisitedlinks/", simulationDeployController.getVisitedlinks);
-router.get("/getlatestvisitedlinks/:cursor", simulationDeployController.getLatestVisitedlinks);
+// Initializes the routes of a simulation deploy
+// (api/simulationdeploy)
+async function initializeSimulationDeployRoutes () {
 
-module.exports = router;
+	const simulationDeployController = await require("../controllers/simulationDeployController");
+
+	router.get("/start/:id", simulationDeployController.deploySimulation);
+	router.get("/stop/:deployName", simulationDeployController.manuallyStopSimulation);
+
+	return router;
+
+};
+
+module.exports = initializeSimulationDeployRoutes();

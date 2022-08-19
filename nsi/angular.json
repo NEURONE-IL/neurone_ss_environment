@@ -18,6 +18,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist/nsi",
+            "localize": false,
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -31,7 +32,8 @@
               "src/styles.css",
               "./node_modules/jointjs/dist/joint.css"
             ],
-            "scripts": []
+            "scripts": [
+            ]
           },
           "configurations": {
             "production": {
@@ -62,6 +64,9 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "es": {
+              "localize": ["es"],
             }
           },
           "defaultConfiguration": "production"
@@ -74,14 +79,26 @@
             },
             "development": {
               "browserTarget": "nsi:build:development"
+            },
+            "es": {
+              "browserTarget": "nsi:build:development,es"
             }
           },
+          "localize": true,
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
             "browserTarget": "nsi:build"
+          },
+          "configurations": {
+            "es": {
+              "outputPath": "src/locale",
+              "outFile": "messages.es.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "es"
+            }
           }
         },
         "test": {
@@ -101,6 +118,14 @@
               "./node_modules/jointjs/dist/joint.css"
             ],
             "scripts": []
+          }
+        },
+      },
+      "i18n": {
+        "sourceLocale": "en-US",
+        "locales": {
+          "es": {
+            "translation": "src/locale/messages.es.xlf",
           }
         }
       }

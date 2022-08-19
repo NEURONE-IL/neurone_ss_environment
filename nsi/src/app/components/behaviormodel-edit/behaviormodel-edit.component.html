@@ -1,0 +1,99 @@
+<html>
+    <body>
+
+        <br /><br /><br /><br />
+
+        <div class="title" style="text-align: center;">
+            <h2 i18n="Title of the Edit Behavior Model component">Edit behavior model "{{behaviorModelInitialName}}"</h2>
+            <h3 i18n="Subtitle in the Edit Behavior Model component">Model design</h3>
+        </div> 
+
+        <br /><br />
+
+
+        <form [formGroup]="behaviorModelForm">
+            <mat-form-field [style.width.%]="50" appearance="fill">
+                <mat-label i18n="Text input of the Edit Behavior Model component">Model name:</mat-label>
+
+                <input matInput placeholder="Example: Model 1" i18n-placeholder="Placeholder text of the text input of the Edit Behavior Model component" required formControlName="name" maxlength="100">
+
+                <button class="clear" *ngIf="behaviorModelForm.get('name')?.value" matSuffix mat-icon-button (click)="this.clearTextInput('name')">
+                    <mat-icon>close</mat-icon>
+                </button>
+
+                <mat-error *ngIf="behaviorModelForm.get('name')?.hasError('required')" i18n="Error message in the text input of the Edit Behavior Model component">You must enter a name.</mat-error>
+                <mat-error *ngIf="behaviorModelForm.get('name')?.hasError('nameExists')" i18n="Error message in the text input of the Edit Behavior Model component">The model name already exists.</mat-error>
+                <mat-error *ngIf="behaviorModelForm.get('name')?.hasError('invalidCharacters')" i18n="Error message in the text input of the Edit Behavior Model component">The model name can only contain letters, numbers and spaces.</mat-error>
+            </mat-form-field>
+
+            <div style="font-size: 11px; font-family: roboto; text-align: left; margin-left: 270px; margin-top: -20px;" *ngIf="behaviorModelForm.get('name')?.value.length == 100" i18n="Character limit message in the text input of the Edit Behavior Model component">You have reached the maximum number of characters.</div>
+
+            <div style="color: white; font-size: 11px; font-family: roboto; text-align: left; margin-left: 270px; margin-top: -20px;" *ngIf="behaviorModelForm.get('name')?.value.length < 100">.</div>
+        </form>
+
+        <br>
+
+        <span i18n="Instructions of the Edit Behavior Model component">You can double-click on a node or link to edit its properties.</span>
+        <br><br>
+        <div class="optionsContainer">
+            <button mat-raised-button color="primary" (click)="addQueryAction()">
+                <img src="/assets/behaviormodel-query.png" style="height: 30px"><br><span i18n="Button for adding a node in the Edit Behavior Model component">Query</span>
+            </button>
+            <button mat-raised-button color="primary" (click)="addSERPAction()">
+                <img src="/assets/behaviormodel-serp.png" style="height: 35px"><br><span i18n="Button for adding a node in the Edit Behavior Model component">SERP</span>
+            </button>
+            <button mat-raised-button color="primary" (click)="addPageAction()">
+                <img src="/assets/behaviormodel-page.png" style="height: 30px"><br><span i18n="Button for adding a node in the Edit Behavior Model component">Page</span>
+            </button>
+            <button mat-raised-button color="primary" (click)="addBookmarkAction()">
+                <img src="/assets/behaviormodel-bookmark.png" style="height: 30px"><br><span i18n="Button for adding a node in the Edit Behavior Model component">Bookmark</span>
+            </button>
+            <button mat-raised-button color="primary" (click)="addUnbookmarkAction()">
+                <img src="/assets/behaviormodel-unbookmark.png" style="height: 30px"><br><span i18n="Button for adding a node in the Edit Behavior Model component">Unbookmark</span>
+            </button>
+            <button id="lastButton" mat-raised-button color="primary" (click)="addEndAction()">
+                <img src="/assets/behaviormodel-end.png" style="height: 30px"><br><span i18n="Button for adding a node in the Edit Behavior Model component">End</span>
+            </button>
+
+            <div id="behaviorModelContainer" #behaviorModelContainer [style.width.px]="editorWidth" [style.height.px]="editorHeight" style="overflow: scroll;" (scroll)="onScroll($event)" >
+                <div id="behaviorModelEditor"></div>
+                <div *ngIf="loading" [style.padding-top.px]="(editorHeight-50)/2"><h2 i18n="Loading behavior model text in the Edit Behavior Model component">Loading...</h2></div>
+            </div>
+
+            <button mat-raised-button color="primary" (click)="zoomInAction()">
+                <mat-icon class="content_copy">zoom_in</mat-icon> <span i18n="Zoom control button in the Edit Behavior Model component">Zoom in</span>
+            </button>
+            <button mat-raised-button color="primary" (click)="zoomOutAction()">
+                <mat-icon class="content_copy">zoom_out</mat-icon> <span i18n="Zoom control button in the Edit Behavior Model component">Zoom out</span>
+            </button>
+            <button class="lastButton" mat-raised-button color="primary" (click)="restoreZoomAction()">
+                <mat-icon class="content_copy">zoom_out_map</mat-icon> <span i18n="Zoom control button in the Edit Behavior Model component">Default view</span>
+            </button>
+            <span style="padding: 0px 20px;" i18n="Zoom control text in the Edit Behavior Model component">Current zoom: {{this.paperScaleString}}%</span>
+        </div>
+
+        <br><br>
+
+        <div class="additionalOptions">
+            <button type="submit" form="behaviorModelForm" class="submitButton" [disabled]="behaviorModelForm.invalid" class="additionalOptionsButton" (click)="editBehaviorModel()" mat-raised-button color="primary" style="margin-right: 20px; background-color: 'green';" i18n="Button of the Edit Behavior Model component">Save changes</button>
+            <button type="button" class="additionalOptionsButton" mat-raised-button color="primary" (click)="discardModel()" style="background-color: '#595959';" i18n="Button of the Edit Behavior Model component">Discard changes</button>
+        </div>
+
+        <br><br><br>
+
+        <div class="validationList" *ngIf="modelValid == false && errorMessages.length > 0">
+            <h3 style="text-align: center;" i18n="Subtitle in the Edit Behavior Model component">List of errors</h3>
+                <mat-list>
+                    <mat-list-item *ngFor="let errorMessage of errorMessages">
+                        <table style="width: 100%;">
+                            <tr>
+                                <td><span style="text-align: left;">{{errorMessage}}</span></td>
+                            </tr>
+                        </table>
+                    </mat-list-item>
+                </mat-list>
+        </div>
+
+        <br><br><br><br><br>
+    </body>
+</html>

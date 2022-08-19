@@ -1,0 +1,53 @@
+<html>
+    <br /><br /><br /><br />
+    <h2 style="text-align: center;" i18n="Title of the Behavior Model Settings component">Behavior model "{{behaviorModelName}}"</h2>
+    <body>
+
+      <br>
+
+      <div id="behaviorModelInfo">
+        <mat-grid-list cols="3" rowHeight="30px">
+          <mat-grid-tile [colspan]="1" [rowspan]="2">
+            <mat-label><b><span i18n="Text of the Behavior Model Settings component">Model is valid?</span></b></mat-label>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="2" [rowspan]="2" id="ModelIsValid">
+            <div id="validIcons">
+              <mat-icon class="check" matTooltip="Model is valid" i18n-matTooltip="Tooltip of the Behavior Model Settings component" *ngIf="behaviorModelValid">check</mat-icon>
+              <mat-icon class="close" matTooltip="Model is not valid" i18n-matTooltip="Tooltip of the Behavior Model Settings component" *ngIf="!behaviorModelValid">close</mat-icon>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="1" [rowspan]="2">
+            <mat-label><b><span i18n="Text of the Behavior Model Settings component">Creation date:</span></b></mat-label>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="2" [rowspan]="2">
+            <div class="info">{{behaviorModelCreationDate}}</div>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="1" [rowspan]="2">
+            <mat-label><b><span i18n="Text of the Behavior Model Settings component">Date of last modification:</span></b></mat-label>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="2" [rowspan]="2">
+            <div class="info">{{behaviorModelLastModificationDate}}</div>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
+
+      <br>
+
+      <div class="btn-group" style="text-align: center; padding-left: 175px;">
+        <button mat-raised-button color="primary" (click)="configureBehaviorModel()" style="margin-right: 20px;" i18n="Button of the Behavior Model Settings component">
+            Edit
+        </button>
+        <button mat-raised-button color="primary" (click)="openDeleteConfirmModal()" style="background-color: 'red';" i18n="Button of the Behavior Model Settings component">
+            Delete
+        </button>
+      </div>
+
+      <br><br><br><br>
+
+      <div style="text-align: right; margin-right: 65px;">
+        <button class="additionalOptionsButton" mat-raised-button color="primary" (click)="goToBehaviorModelListHome()" i18n="Button of the Behavior Model Settings component">
+            Return
+        </button>
+      </div>
+    </body>
+</html>

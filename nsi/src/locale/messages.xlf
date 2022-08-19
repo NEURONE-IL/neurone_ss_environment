@@ -1,0 +1,2623 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="6158198233487418063" datatype="html">
+        <source>NEURONE Student Simulator</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+        <note priority="1" from="description">Text on the bar on top of the page</note>
+      </trans-unit>
+      <trans-unit id="1239182409761019390" datatype="html">
+        <source>Edit behavior model &quot;<x id="INTERPOLATION" equiv-text="{{behaviorModelInitialName}}"/>&quot;</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-edit/behaviormodel-edit.component.html</context>
+          <context context-type="linenumber">7,8</context>
+        </context-group>
+        <note priority="1" from="description">Title of the Edit Behavior Model component</note>
+      </trans-unit>
+      <trans-unit id="626777603806861395" datatype="html">
+        <source>Model design</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-edit/behaviormodel-edit.component.html</context>
+          <context context-type="linenumber">8,14</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-new/behaviormodel-new.component.html</context>
+          <context context-type="linenumber">8,14</context>
+        </context-group>
+        <note priority="1" from="description">Subtitle in the Edit Behavior Model component</note>
+      </trans-unit>
+      <trans-unit id="9049724822107404536" datatype="html">
+        <source>Model name:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-edit/behaviormodel-edit.component.html</context>
+          <context context-type="linenumber">16,18</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-new/behaviormodel-new.component.html</context>
+          <context context-type="linenumber">16,18</context>
+        </context-group>
+        <note priority="1" from="description">Text input of the Edit Behavior Model component</note>
+      </trans-unit>
+      <trans-unit id="7379693374485953176" datatype="html">
+        <source>Example: Model 1</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-edit/behaviormodel-edit.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-list/behaviormodel-list.component.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-new/behaviormodel-new.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">149</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">149</context>
+        </context-group>
+        <note priority="1" from="description">Placeholder text of the text input of the Edit Behavior Model component</note>
+      </trans-unit>
+      <trans-unit id="8057436327367025659" datatype="html">
+        <source>You must enter a name.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-edit/behaviormodel-edit.component.html</context>
+          <context context-type="linenumber">24,25</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-new/behaviormodel-new.component.html</context>
+          <context context-type="linenumber">24,25</context>
+        </context-group>
+        <note priority="1" from="description">Error message in the text input of the Edit Behavior Model component</note>
+      </trans-unit>
+      <trans-unit id="2180321473960972124" datatype="html">
+        <source>The model name already exists.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-edit/behaviormodel-edit.component.html</context>
+          <context context-type="linenumber">25,26</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-new/behaviormodel-new.component.html</context>
+          <context context-type="linenumber">25,26</context>
+        </context-group>
+        <note priority="1" from="description">Error message in the text input of the Edit Behavior Model component</note>
+      </trans-unit>
+      <trans-unit id="998892925155856062" datatype="html">
+        <source>The model name can only contain letters, numbers and spaces.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-edit/behaviormodel-edit.component.html</context>
+          <context context-type="linenumber">26,29</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-new/behaviormodel-new.component.html</context>
+          <context context-type="linenumber">26,29</context>
+        </context-group>
+        <note priority="1" from="description">Error message in the text input of the Edit Behavior Model component</note>
+      </trans-unit>
+      <trans-unit id="192216248090378061" datatype="html">
+        <source>You have reached the maximum number of characters.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-edit/behaviormodel-edit.component.html</context>
+          <context context-type="linenumber">29,31</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsbue/behaviormodel-modal-nodesettingsbue.component.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsps/behaviormodel-modal-nodesettingsps.component.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsq/behaviormodel-modal-nodesettingsq.component.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-new/behaviormodel-new.component.html</context>
+          <context context-type="linenumber">29,31</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">27,29</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">45,47</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-editquerylist/simulation-editquerylist.component.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">27,29</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">45,47</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-newquerylist/simulation-newquerylist.component.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <note priority="1" from="description">Character limit message in the text input of the Edit Behavior Model component</note>
+      </trans-unit>
+      <trans-unit id="2802809984443604562" datatype="html">
+        <source>You can double-click on a node or link to edit its properties.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-edit/behaviormodel-edit.component.html</context>
+          <context context-type="linenumber">36,38</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-new/behaviormodel-new.component.html</context>
+          <context context-type="linenumber">36,38</context>
+        </context-group>
+        <note priority="1" from="description">Instructions of the Edit Behavior Model component</note>
+      </trans-unit>
+      <trans-unit id="4109205891084963566" datatype="html">
+        <source>Query</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-edit/behaviormodel-edit.component.html</context>
+          <context context-type="linenumber">40,42</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-new/behaviormodel-new.component.html</context>
+          <context context-type="linenumber">40,42</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-editquerylist/simulation-editquerylist.component.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-newquerylist/simulation-newquerylist.component.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+        <note priority="1" from="description">Button for adding a node in the Edit Behavior Model component</note>
+      </trans-unit>
+      <trans-unit id="4055965503979267471" datatype="html">
+        <source>SERP</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-edit/behaviormodel-edit.component.html</context>
+          <context context-type="linenumber">43,45</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-new/behaviormodel-new.component.html</context>
+          <context context-type="linenumber">43,45</context>
+        </context-group>
+        <note priority="1" from="description">Button for adding a node in the Edit Behavior Model component</note>
+      </trans-unit>
+      <trans-unit id="1407560924967345762" datatype="html">
+        <source>Page</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-edit/behaviormodel-edit.component.html</context>
+          <context context-type="linenumber">46,48</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-new/behaviormodel-new.component.html</context>
+          <context context-type="linenumber">46,48</context>
+        </context-group>
+        <note priority="1" from="description">Button for adding a node in the Edit Behavior Model component</note>
+      </trans-unit>
+      <trans-unit id="8631502410510107835" datatype="html">
+        <source>Bookmark</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-edit/behaviormodel-edit.component.html</context>
+          <context context-type="linenumber">49,51</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-new/behaviormodel-new.component.html</context>
+          <context context-type="linenumber">49,51</context>
+        </context-group>
+        <note priority="1" from="description">Button for adding a node in the Edit Behavior Model component</note>
+      </trans-unit>
+      <trans-unit id="826990851039873144" datatype="html">
+        <source>Unbookmark</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-edit/behaviormodel-edit.component.html</context>
+          <context context-type="linenumber">52,54</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-new/behaviormodel-new.component.html</context>
+          <context context-type="linenumber">52,54</context>
+        </context-group>
+        <note priority="1" from="description">Button for adding a node in the Edit Behavior Model component</note>
+      </trans-unit>
+      <trans-unit id="1241348629231510663" datatype="html">
+        <source>End</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-edit/behaviormodel-edit.component.html</context>
+          <context context-type="linenumber">55,58</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-new/behaviormodel-new.component.html</context>
+          <context context-type="linenumber">55,58</context>
+        </context-group>
+        <note priority="1" from="description">Button for adding a node in the Edit Behavior Model component</note>
+      </trans-unit>
+      <trans-unit id="3894950702316166331" datatype="html">
+        <source>Loading...</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-edit/behaviormodel-edit.component.html</context>
+          <context context-type="linenumber">60,63</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-new/behaviormodel-new.component.html</context>
+          <context context-type="linenumber">60,63</context>
+        </context-group>
+        <note priority="1" from="description">Loading behavior model text in the Edit Behavior Model component</note>
+      </trans-unit>
+      <trans-unit id="6500061599200357251" datatype="html">
+        <source>Zoom in</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-edit/behaviormodel-edit.component.html</context>
+          <context context-type="linenumber">64,66</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-new/behaviormodel-new.component.html</context>
+          <context context-type="linenumber">64,66</context>
+        </context-group>
+        <note priority="1" from="description">Zoom control button in the Edit Behavior Model component</note>
+      </trans-unit>
+      <trans-unit id="944767796496567082" datatype="html">
+        <source>Zoom out</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-edit/behaviormodel-edit.component.html</context>
+          <context context-type="linenumber">67,69</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-new/behaviormodel-new.component.html</context>
+          <context context-type="linenumber">67,69</context>
+        </context-group>
+        <note priority="1" from="description">Zoom control button in the Edit Behavior Model component</note>
+      </trans-unit>
+      <trans-unit id="8895672285155488220" datatype="html">
+        <source>Default view</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-edit/behaviormodel-edit.component.html</context>
+          <context context-type="linenumber">70,72</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-new/behaviormodel-new.component.html</context>
+          <context context-type="linenumber">70,72</context>
+        </context-group>
+        <note priority="1" from="description">Zoom control button in the Edit Behavior Model component</note>
+      </trans-unit>
+      <trans-unit id="6836972493113321655" datatype="html">
+        <source>Current zoom: <x id="INTERPOLATION" equiv-text="{{this.paperScaleString}}"/>%</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-edit/behaviormodel-edit.component.html</context>
+          <context context-type="linenumber">72,73</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-new/behaviormodel-new.component.html</context>
+          <context context-type="linenumber">72,73</context>
+        </context-group>
+        <note priority="1" from="description">Zoom control text in the Edit Behavior Model component</note>
+      </trans-unit>
+      <trans-unit id="7000649363168371045" datatype="html">
+        <source>Save changes</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-edit/behaviormodel-edit.component.html</context>
+          <context context-type="linenumber">78,79</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">204,205</context>
+        </context-group>
+        <note priority="1" from="description">Button of the Edit Behavior Model component</note>
+      </trans-unit>
+      <trans-unit id="8634190498731735152" datatype="html">
+        <source>Discard changes</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-edit/behaviormodel-edit.component.html</context>
+          <context context-type="linenumber">79,84</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">205,210</context>
+        </context-group>
+        <note priority="1" from="description">Button of the Edit Behavior Model component</note>
+      </trans-unit>
+      <trans-unit id="1444192252357317329" datatype="html">
+        <source>List of errors</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-edit/behaviormodel-edit.component.html</context>
+          <context context-type="linenumber">85,87</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-new/behaviormodel-new.component.html</context>
+          <context context-type="linenumber">85,87</context>
+        </context-group>
+        <note priority="1" from="description">Subtitle in the Edit Behavior Model component</note>
+      </trans-unit>
+      <trans-unit id="3205432513050001268" datatype="html">
+        <source>List of behavior models</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-list/behaviormodel-list.component.html</context>
+          <context context-type="linenumber">3,6</context>
+        </context-group>
+        <note priority="1" from="description">Title of the List of Behavior Models tab</note>
+      </trans-unit>
+      <trans-unit id="3354436162258538167" datatype="html">
+        <source>Select a behavior model from the list by clicking its name.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-list/behaviormodel-list.component.html</context>
+          <context context-type="linenumber">6,9</context>
+        </context-group>
+        <note priority="1" from="description">Instructions of the List of Behavior Models tab</note>
+      </trans-unit>
+      <trans-unit id="4130147568910699450" datatype="html">
+        <source> Filter by name: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-list/behaviormodel-list.component.html</context>
+          <context context-type="linenumber">16,20</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-list/simulation-list.component.html</context>
+          <context context-type="linenumber">16,20</context>
+        </context-group>
+        <note priority="1" from="description">Filter text of the List of Behavior Models tab</note>
+      </trans-unit>
+      <trans-unit id="8778616811237742446" datatype="html">
+        <source> Name </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-list/behaviormodel-list.component.html</context>
+          <context context-type="linenumber">33,34</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-list/simulation-list.component.html</context>
+          <context context-type="linenumber">33,34</context>
+        </context-group>
+        <note priority="1" from="description">Column of the table in the List of Behavior Models tab</note>
+      </trans-unit>
+      <trans-unit id="7761458900908356485" datatype="html">
+        <source> Date of creation </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-list/behaviormodel-list.component.html</context>
+          <context context-type="linenumber">38,39</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-list/simulation-list.component.html</context>
+          <context context-type="linenumber">38,39</context>
+        </context-group>
+        <note priority="1" from="description">Column of the table in the List of Behavior Models tab</note>
+      </trans-unit>
+      <trans-unit id="8705343582113374744" datatype="html">
+        <source> Model is valid? </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-list/behaviormodel-list.component.html</context>
+          <context context-type="linenumber">43,45</context>
+        </context-group>
+        <note priority="1" from="description">Column of the table in the List of Behavior Models tab</note>
+      </trans-unit>
+      <trans-unit id="3124228345268060954" datatype="html">
+        <source>Model is valid</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-list/behaviormodel-list.component.html</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-settings/behaviormodel-settings.component.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+        <note priority="1" from="description">Tooltip of the table in the List of Behavior Models tab</note>
+      </trans-unit>
+      <trans-unit id="7998839264691663423" datatype="html">
+        <source>Model is not valid</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-list/behaviormodel-list.component.html</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-settings/behaviormodel-settings.component.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+        <note priority="1" from="description">Tooltip of the table in the List of Behavior Models tab</note>
+      </trans-unit>
+      <trans-unit id="5737984937850391422" datatype="html">
+        <source> Options </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-list/behaviormodel-list.component.html</context>
+          <context context-type="linenumber">51,53</context>
+        </context-group>
+        <note priority="1" from="description">Column of the table in the List of Behavior Models tab</note>
+      </trans-unit>
+      <trans-unit id="3517277191552378401" datatype="html">
+        <source>Make a copy of the behavior model</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-list/behaviormodel-list.component.html</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+        <note priority="1" from="description">Tooltip of the table in the List of Behavior Models tab</note>
+      </trans-unit>
+      <trans-unit id="6565125910813659818" datatype="html">
+        <source>Delete the behavior model</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-list/behaviormodel-list.component.html</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+        <note priority="1" from="description">Tooltip of the table in the List of Behavior Models tab</note>
+      </trans-unit>
+      <trans-unit id="4817384199648360625" datatype="html">
+        <source> No behavior models found. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-list/behaviormodel-list.component.html</context>
+          <context context-type="linenumber">64,70</context>
+        </context-group>
+        <note priority="1" from="description">Text displayed when the behavior models table is empty in the List of Behavior Models tab</note>
+      </trans-unit>
+      <trans-unit id="2431250925839746962" datatype="html">
+        <source>New behavior model</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-list/behaviormodel-list.component.html</context>
+          <context context-type="linenumber">77,80</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-added/behaviormodel-modal-added.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-new/behaviormodel-new.component.html</context>
+          <context context-type="linenumber">7,8</context>
+        </context-group>
+        <note priority="1" from="description">Button of the List of Behavior Models tab</note>
+      </trans-unit>
+      <trans-unit id="2370108682379617189" datatype="html">
+        <source>YYYY/MM/DD HH:mm:ss</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-list/behaviormodel-list.component.ts</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-settings/behaviormodel-settings.component.ts</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-deploy/simulation-deploy.component.ts</context>
+          <context context-type="linenumber">124</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-list/simulation-list.component.ts</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-settings/simulation-settings.component.ts</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+        <note priority="1" from="description">Date format for Dayjs library</note>
+      </trans-unit>
+      <trans-unit id="7482153425799429837" datatype="html">
+        <source> The behavior model has been saved. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-added/behaviormodel-modal-added.component.html</context>
+          <context context-type="linenumber">4,6</context>
+        </context-group>
+        <note priority="1" from="description">Message of the Behavior Model Added modal</note>
+      </trans-unit>
+      <trans-unit id="8998179362936748717" datatype="html">
+        <source>OK</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-added/behaviormodel-modal-added.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-copied/behaviormodel-modal-copied.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-deleted/behaviormodel-modal-deleted.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-edited/behaviormodel-modal-edited.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-inuse/behaviormodel-modal-inuse.component.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsbue/behaviormodel-modal-nodesettingsbue.component.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsps/behaviormodel-modal-nodesettingsps.component.html</context>
+          <context context-type="linenumber">77</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsq/behaviormodel-modal-nodesettingsq.component.html</context>
+          <context context-type="linenumber">67</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-probsettings/behaviormodel-modal-probsettings.component.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-modal-added/simulation-modal-added.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-modal-copied/simulation-modal-copied.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-modal-deleted/simulation-modal-deleted.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-modal-edited/simulation-modal-edited.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-modal-nomodels/simulation-modal-nomodels.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-modal-notdeployable/simulation-modal-notdeployable.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <note priority="1" from="description">Button of the Behavior Model Added modal</note>
+      </trans-unit>
+      <trans-unit id="311504243264063243" datatype="html">
+        <source>Delete behavior model</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-confirmdelete/behaviormodel-modal-confirmdelete.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-deleted/behaviormodel-modal-deleted.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-inuse/behaviormodel-modal-inuse.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <note priority="1" from="description">Title of the Behavior Model Confirm Delete modal</note>
+      </trans-unit>
+      <trans-unit id="3157701358756120885" datatype="html">
+        <source> Are you sure you want to delete the behavior model named &quot;<x id="INTERPOLATION" equiv-text="{{behaviorModelName}}"/>&quot;? </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-confirmdelete/behaviormodel-modal-confirmdelete.component.html</context>
+          <context context-type="linenumber">4,6</context>
+        </context-group>
+        <note priority="1" from="description">Message of the Behavior Model Confirm Delete modal</note>
+      </trans-unit>
+      <trans-unit id="2807800733729323332" datatype="html">
+        <source>Yes</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-confirmdelete/behaviormodel-modal-confirmdelete.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-haserrors/behaviormodel-modal-haserrors.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsps/behaviormodel-modal-nodesettingsps.component.html</context>
+          <context context-type="linenumber">67</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">114,115</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-modal-confirmdelete/simulation-modal-confirmdelete.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-modal-deployleave/simulation-modal-deployleave.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">114,115</context>
+        </context-group>
+        <note priority="1" from="description">Behavior Model Confirm Delete modal yes button</note>
+      </trans-unit>
+      <trans-unit id="3542042671420335679" datatype="html">
+        <source>No</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-confirmdelete/behaviormodel-modal-confirmdelete.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-haserrors/behaviormodel-modal-haserrors.component.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsps/behaviormodel-modal-nodesettingsps.component.html</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">115,119</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-modal-confirmdelete/simulation-modal-confirmdelete.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-modal-deployleave/simulation-modal-deployleave.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">115,119</context>
+        </context-group>
+        <note priority="1" from="description">Behavior Model Confirm Delete modal no button</note>
+      </trans-unit>
+      <trans-unit id="537745865186174164" datatype="html">
+        <source>Copy behavior model</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-copied/behaviormodel-modal-copied.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <note priority="1" from="description">Title of the Behavior Model Copied modal</note>
+      </trans-unit>
+      <trans-unit id="4149565480977488177" datatype="html">
+        <source> The behavior model &quot;<x id="INTERPOLATION" equiv-text="{{behaviorModelName}}"/>&quot; has been copied. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-copied/behaviormodel-modal-copied.component.html</context>
+          <context context-type="linenumber">4,6</context>
+        </context-group>
+        <note priority="1" from="description">Message of the Behavior Model Copied modal</note>
+      </trans-unit>
+      <trans-unit id="1493685866181392863" datatype="html">
+        <source> The behavior model &quot;<x id="INTERPOLATION" equiv-text="{{behaviorModelName}}"/>&quot; has been deleted. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-deleted/behaviormodel-modal-deleted.component.html</context>
+          <context context-type="linenumber">4,6</context>
+        </context-group>
+        <note priority="1" from="description">Message of the Behavior Model Deleted modal</note>
+      </trans-unit>
+      <trans-unit id="4394241935731595719" datatype="html">
+        <source>Edit behavior model</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-edited/behaviormodel-modal-edited.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <note priority="1" from="description">Title of the Behavior Model Edited modal</note>
+      </trans-unit>
+      <trans-unit id="3751719314938931783" datatype="html">
+        <source> The behavior model has been edited. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-edited/behaviormodel-modal-edited.component.html</context>
+          <context context-type="linenumber">4,6</context>
+        </context-group>
+        <note priority="1" from="description">Message of the Behavior Model Edited modal</note>
+      </trans-unit>
+      <trans-unit id="8204702617660052969" datatype="html">
+        <source>Save behavior model</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-haserrors/behaviormodel-modal-haserrors.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <note priority="1" from="description">Title of the Behavior Model Has Errors modal</note>
+      </trans-unit>
+      <trans-unit id="6996191282198019366" datatype="html">
+        <source>The model has errors. Check the list of errors at the bottom of the page.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-haserrors/behaviormodel-modal-haserrors.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <note priority="1" from="description">Message of the Behavior Model Has Errors modal - part 1</note>
+      </trans-unit>
+      <trans-unit id="1613607766970463217" datatype="html">
+        <source>Do you still wish to save the model? Until the model is valid, any simulation it is assigned to will not be deployable.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-haserrors/behaviormodel-modal-haserrors.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+        <note priority="1" from="description">Message of the Behavior Model Has Errors modal - part 2</note>
+      </trans-unit>
+      <trans-unit id="8357669801307880072" datatype="html">
+        <source>The behavior model cannot be deleted, because it&apos;s assigned to one or more simulations. Change the models of the respective simulations before deleting the model.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-inuse/behaviormodel-modal-inuse.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <note priority="1" from="description">Message of the Behavior Model In Use modal - part 1</note>
+      </trans-unit>
+      <trans-unit id="7077164911545275248" datatype="html">
+        <source>Partial list of simulations currently using the &quot;<x id="INTERPOLATION" equiv-text="{{this.behaviorModelName}}"/>&quot; model:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-inuse/behaviormodel-modal-inuse.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+        <note priority="1" from="description">Message of the Behavior Model In Use modal - part 2</note>
+      </trans-unit>
+      <trans-unit id="9168980728373483023" datatype="html">
+        <source>List of simulations currently using the &quot;<x id="INTERPOLATION" equiv-text="{{this.behaviorModelName}}"/>&quot; model:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-inuse/behaviormodel-modal-inuse.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+        <note priority="1" from="description">Message of the Behavior Model In Use modal - part 3</note>
+      </trans-unit>
+      <trans-unit id="5473122780695691174" datatype="html">
+        <source>State properties</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsbue/behaviormodel-modal-nodesettingsbue.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsps/behaviormodel-modal-nodesettingsps.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsq/behaviormodel-modal-nodesettingsq.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <note priority="1" from="description">Title of the Behavior Model Node Settings modal</note>
+      </trans-unit>
+      <trans-unit id="543327146542279" datatype="html">
+        <source>Name of state:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsbue/behaviormodel-modal-nodesettingsbue.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsps/behaviormodel-modal-nodesettingsps.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsq/behaviormodel-modal-nodesettingsq.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">Text of the form of the Behavior Model Node Settings modal</note>
+      </trans-unit>
+      <trans-unit id="2872290019737345391" datatype="html">
+        <source>Example: S1</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsbue/behaviormodel-modal-nodesettingsbue.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsps/behaviormodel-modal-nodesettingsps.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsq/behaviormodel-modal-nodesettingsq.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+        <note priority="1" from="description">Placeholder text of the form of the Behavior Model Node Settings modal</note>
+      </trans-unit>
+      <trans-unit id="6960635782458107082" datatype="html">
+        <source>You must enter the name of the state.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsbue/behaviormodel-modal-nodesettingsbue.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsps/behaviormodel-modal-nodesettingsps.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsq/behaviormodel-modal-nodesettingsq.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+        <note priority="1" from="description">Error message in the text input of the Behavior Model Node Settings modal</note>
+      </trans-unit>
+      <trans-unit id="3709154947047417314" datatype="html">
+        <source>The state name already exists.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsbue/behaviormodel-modal-nodesettingsbue.component.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsps/behaviormodel-modal-nodesettingsps.component.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsq/behaviormodel-modal-nodesettingsq.component.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+        <note priority="1" from="description">Error message in the text input of the Behavior Model Node Settings modal</note>
+      </trans-unit>
+      <trans-unit id="6035040292646576845" datatype="html">
+        <source>The state name is invalid, because it contains the word &quot;new&quot;.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsbue/behaviormodel-modal-nodesettingsbue.component.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+        <note priority="1" from="description">Error message in the text input of the Behavior Model Node Settings modal</note>
+      </trans-unit>
+      <trans-unit id="2523142856425395727" datatype="html">
+        <source>The node name can only contain letters, numbers and spaces.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsbue/behaviormodel-modal-nodesettingsbue.component.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsps/behaviormodel-modal-nodesettingsps.component.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsq/behaviormodel-modal-nodesettingsq.component.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+        <note priority="1" from="description">Error message in the text input of the Behavior Model Node Settings modal</note>
+      </trans-unit>
+      <trans-unit id="2159130950882492111" datatype="html">
+        <source>Cancel</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsbue/behaviormodel-modal-nodesettingsbue.component.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsps/behaviormodel-modal-nodesettingsps.component.html</context>
+          <context context-type="linenumber">78</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsq/behaviormodel-modal-nodesettingsq.component.html</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-probsettings/behaviormodel-modal-probsettings.component.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <note priority="1" from="description">Button of the Behavior Model Node Settings modal</note>
+      </trans-unit>
+      <trans-unit id="7327722715458347160" datatype="html">
+        <source>Minimum transition time (seconds):</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsps/behaviormodel-modal-nodesettingsps.component.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsq/behaviormodel-modal-nodesettingsq.component.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+        <note priority="1" from="description">Text of the form of the Behavior Model Node Settings modal</note>
+      </trans-unit>
+      <trans-unit id="8895634446135325541" datatype="html">
+        <source>Example: 5</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsps/behaviormodel-modal-nodesettingsps.component.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsq/behaviormodel-modal-nodesettingsq.component.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <note priority="1" from="description">Placeholder text of the form of the Behavior Model Node Settings modal</note>
+      </trans-unit>
+      <trans-unit id="5477288970444143350" datatype="html">
+        <source>(seconds)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsps/behaviormodel-modal-nodesettingsps.component.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsps/behaviormodel-modal-nodesettingsps.component.html</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsq/behaviormodel-modal-nodesettingsq.component.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsq/behaviormodel-modal-nodesettingsq.component.html</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+        <note priority="1" from="description">Text of the form of the Behavior Model Node Settings modal</note>
+      </trans-unit>
+      <trans-unit id="5845648592511940047" datatype="html">
+        <source>You must enter a number.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsps/behaviormodel-modal-nodesettingsps.component.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsps/behaviormodel-modal-nodesettingsps.component.html</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsq/behaviormodel-modal-nodesettingsq.component.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsq/behaviormodel-modal-nodesettingsq.component.html</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-probsettings/behaviormodel-modal-probsettings.component.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">61,62</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">78,79</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">95,96</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">130,131</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">170,171</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">188,189</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">61,62</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">78,79</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">95,96</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">130,131</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">170,171</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">188,189</context>
+        </context-group>
+        <note priority="1" from="description">Error message in the text input of the Behavior Model Node Settings modal</note>
+      </trans-unit>
+      <trans-unit id="1158531498126453676" datatype="html">
+        <source>You must enter an integer number.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsps/behaviormodel-modal-nodesettingsps.component.html</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsps/behaviormodel-modal-nodesettingsps.component.html</context>
+          <context context-type="linenumber">56</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsq/behaviormodel-modal-nodesettingsq.component.html</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsq/behaviormodel-modal-nodesettingsq.component.html</context>
+          <context context-type="linenumber">56</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-probsettings/behaviormodel-modal-probsettings.component.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">62,63</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">79,80</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">96,97</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">131,132</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">171,172</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">189,190</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">62,63</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">79,80</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">96,97</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">131,132</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">189,190</context>
+        </context-group>
+        <note priority="1" from="description">Error message in the text input of the Behavior Model Node Settings modal</note>
+      </trans-unit>
+      <trans-unit id="8141126587132490620" datatype="html">
+        <source>You must enter a number greater than or equal to 1.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsps/behaviormodel-modal-nodesettingsps.component.html</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsps/behaviormodel-modal-nodesettingsps.component.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsq/behaviormodel-modal-nodesettingsq.component.html</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsq/behaviormodel-modal-nodesettingsq.component.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+        <note priority="1" from="description">Error message in the text input of the Behavior Model Node Settings modal</note>
+      </trans-unit>
+      <trans-unit id="6823914265969158871" datatype="html">
+        <source>The minimum transition time must be equal to or less than the maximum transition time.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsps/behaviormodel-modal-nodesettingsps.component.html</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsq/behaviormodel-modal-nodesettingsq.component.html</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+        <note priority="1" from="description">Error message in the text input of the Behavior Model Node Settings modal</note>
+      </trans-unit>
+      <trans-unit id="5844369109447954288" datatype="html">
+        <source>Maximum transition time (seconds):</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsps/behaviormodel-modal-nodesettingsps.component.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsq/behaviormodel-modal-nodesettingsq.component.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+        <note priority="1" from="description">Text of the form of the Behavior Model Node Settings modal</note>
+      </trans-unit>
+      <trans-unit id="2576315332679165712" datatype="html">
+        <source>Example: 10</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsps/behaviormodel-modal-nodesettingsps.component.html</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsq/behaviormodel-modal-nodesettingsq.component.html</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+        <note priority="1" from="description">Placeholder text of the form of the Behavior Model Node Settings modal</note>
+      </trans-unit>
+      <trans-unit id="862593700154458655" datatype="html">
+        <source>The maximum transition time must be equal to or greater than the minimum transition time.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsps/behaviormodel-modal-nodesettingsps.component.html</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsq/behaviormodel-modal-nodesettingsq.component.html</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+        <note priority="1" from="description">Error message in the text input of the Behavior Model Node Settings modal</note>
+      </trans-unit>
+      <trans-unit id="6612440231662405909" datatype="html">
+        <source>Relevant page:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-nodesettingsps/behaviormodel-modal-nodesettingsps.component.html</context>
+          <context context-type="linenumber">64</context>
+        </context-group>
+        <note priority="1" from="description">Text of the form of the Behavior Model Node Settings modal</note>
+      </trans-unit>
+      <trans-unit id="3440613506057347923" datatype="html">
+        <source>Link properties</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-probsettings/behaviormodel-modal-probsettings.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <note priority="1" from="description">Title of the Behavior Model Probability Settings modal</note>
+      </trans-unit>
+      <trans-unit id="8196368291124595294" datatype="html">
+        <source>Likelihood of next state (1 to 100%):</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-probsettings/behaviormodel-modal-probsettings.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">Text of the form of the Behavior Model Probability Settings modal</note>
+      </trans-unit>
+      <trans-unit id="3525565377194412039" datatype="html">
+        <source>Example: 50%</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-probsettings/behaviormodel-modal-probsettings.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+        <note priority="1" from="description">Placeholder text of the form of the Behavior Model Probability Settings modal</note>
+      </trans-unit>
+      <trans-unit id="1061436889378536180" datatype="html">
+        <source>You must enter the likelihood of moving to the next state.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-probsettings/behaviormodel-modal-probsettings.component.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+        <note priority="1" from="description">Error message in the text input of the Behavior Model Probability Settings modal</note>
+      </trans-unit>
+      <trans-unit id="8157208143939414606" datatype="html">
+        <source>You must enter a number between 1 and 100.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-probsettings/behaviormodel-modal-probsettings.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-modal-probsettings/behaviormodel-modal-probsettings.component.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">172,173</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">173,178</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">172,173</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">173,178</context>
+        </context-group>
+        <note priority="1" from="description">Error message in the text input of the Behavior Model Probability Settings modal</note>
+      </trans-unit>
+      <trans-unit id="2068935723748311313" datatype="html">
+        <source>Save model</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-new/behaviormodel-new.component.html</context>
+          <context context-type="linenumber">78,79</context>
+        </context-group>
+        <note priority="1" from="description">Button of the New Behavior Model component</note>
+      </trans-unit>
+      <trans-unit id="6608163337974065496" datatype="html">
+        <source>Discard model</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-new/behaviormodel-new.component.html</context>
+          <context context-type="linenumber">79,84</context>
+        </context-group>
+        <note priority="1" from="description">Button of the New Behavior Model component</note>
+      </trans-unit>
+      <trans-unit id="6195821700138146779" datatype="html">
+        <source>Behavior model &quot;<x id="INTERPOLATION" equiv-text="{{behaviorModelName}}"/>&quot;</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-settings/behaviormodel-settings.component.html</context>
+          <context context-type="linenumber">3,5</context>
+        </context-group>
+        <note priority="1" from="description">Title of the Behavior Model Settings component</note>
+      </trans-unit>
+      <trans-unit id="4049624165397822759" datatype="html">
+        <source>Model is valid?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-settings/behaviormodel-settings.component.html</context>
+          <context context-type="linenumber">11,13</context>
+        </context-group>
+        <note priority="1" from="description">Text of the Behavior Model Settings component</note>
+      </trans-unit>
+      <trans-unit id="6726119028748944569" datatype="html">
+        <source>Creation date:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-settings/behaviormodel-settings.component.html</context>
+          <context context-type="linenumber">20,22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-settings/simulation-settings.component.html</context>
+          <context context-type="linenumber">23,25</context>
+        </context-group>
+        <note priority="1" from="description">Text of the Behavior Model Settings component</note>
+      </trans-unit>
+      <trans-unit id="5588424879572332034" datatype="html">
+        <source>Date of last modification:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-settings/behaviormodel-settings.component.html</context>
+          <context context-type="linenumber">26,28</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-settings/simulation-settings.component.html</context>
+          <context context-type="linenumber">35,37</context>
+        </context-group>
+        <note priority="1" from="description">Text of the Behavior Model Settings component</note>
+      </trans-unit>
+      <trans-unit id="5377078063439833222" datatype="html">
+        <source> Edit </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-settings/behaviormodel-settings.component.html</context>
+          <context context-type="linenumber">38,40</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-settings/simulation-settings.component.html</context>
+          <context context-type="linenumber">47,49</context>
+        </context-group>
+        <note priority="1" from="description">Button of the Behavior Model Settings component</note>
+      </trans-unit>
+      <trans-unit id="6660925946511264619" datatype="html">
+        <source> Delete </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-settings/behaviormodel-settings.component.html</context>
+          <context context-type="linenumber">41,45</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-settings/simulation-settings.component.html</context>
+          <context context-type="linenumber">53,57</context>
+        </context-group>
+        <note priority="1" from="description">Button of the Behavior Model Settings component</note>
+      </trans-unit>
+      <trans-unit id="7217504073454382381" datatype="html">
+        <source> Return </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/behaviormodel-settings/behaviormodel-settings.component.html</context>
+          <context context-type="linenumber">49,53</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-settings/simulation-settings.component.html</context>
+          <context context-type="linenumber">61,65</context>
+        </context-group>
+        <note priority="1" from="description">Button of the Behavior Model Settings component</note>
+      </trans-unit>
+      <trans-unit id="3613040985427859219" datatype="html">
+        <source>Simulations</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/home/home.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <note priority="1" from="description">Tab of the Home Page</note>
+      </trans-unit>
+      <trans-unit id="7414342839929910078" datatype="html">
+        <source>Behavior models</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/home/home.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+        <note priority="1" from="description">Tab of the Home Page</note>
+      </trans-unit>
+      <trans-unit id="8091335502461972052" datatype="html">
+        <source>Deploy simulation &quot;<x id="INTERPOLATION" equiv-text="{{simulationName}}"/>&quot;</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-deploy/simulation-deploy.component.html</context>
+          <context context-type="linenumber">3,4</context>
+        </context-group>
+        <note priority="1" from="description">Title of the Simulation Deploy component</note>
+      </trans-unit>
+      <trans-unit id="4930506384627295710" datatype="html">
+        <source>Settings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-deploy/simulation-deploy.component.html</context>
+          <context context-type="linenumber">4,9</context>
+        </context-group>
+        <note priority="1" from="description">Subtitle of the Simulation Deploy component</note>
+      </trans-unit>
+      <trans-unit id="5704369316755081696" datatype="html">
+        <source>Simulation status:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-deploy/simulation-deploy.component.html</context>
+          <context context-type="linenumber">12,14</context>
+        </context-group>
+        <note priority="1" from="description">Text of the Simulation Deploy component</note>
+      </trans-unit>
+      <trans-unit id="1685077983901506852" datatype="html">
+        <source>Time elapsed:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-deploy/simulation-deploy.component.html</context>
+          <context context-type="linenumber">18,20</context>
+        </context-group>
+        <note priority="1" from="description">Text of the Simulation Deploy component</note>
+      </trans-unit>
+      <trans-unit id="1320804336337410610" datatype="html">
+        <source>maximum length reached</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-deploy/simulation-deploy.component.html</context>
+          <context context-type="linenumber">21,22</context>
+        </context-group>
+        <note priority="1" from="description">Simulation time limit text of the Simulation Deploy component</note>
+      </trans-unit>
+      <trans-unit id="3242389496908212028" datatype="html">
+        <source>Start deploy</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-deploy/simulation-deploy.component.html</context>
+          <context context-type="linenumber">30,32</context>
+        </context-group>
+        <note priority="1" from="description">Button of the Simulation Deploy component</note>
+      </trans-unit>
+      <trans-unit id="6840459945865419854" datatype="html">
+        <source>Stop deploy</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-deploy/simulation-deploy.component.html</context>
+          <context context-type="linenumber">33,35</context>
+        </context-group>
+        <note priority="1" from="description">Button of the Simulation Deploy component</note>
+      </trans-unit>
+      <trans-unit id="6112802336640822735" datatype="html">
+        <source>Restart deploy</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-deploy/simulation-deploy.component.html</context>
+          <context context-type="linenumber">36,42</context>
+        </context-group>
+        <note priority="1" from="description">Button of the Simulation Deploy component</note>
+      </trans-unit>
+      <trans-unit id="3193976279273491157" datatype="html">
+        <source>Actions</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-deploy/simulation-deploy.component.html</context>
+          <context context-type="linenumber">44,48</context>
+        </context-group>
+        <note priority="1" from="description">Subtitle of the Simulation Deploy component</note>
+      </trans-unit>
+      <trans-unit id="5152254160211779816" datatype="html">
+        <source>Filter by student number:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-deploy/simulation-deploy.component.html</context>
+          <context context-type="linenumber">52,55</context>
+        </context-group>
+        <note priority="1" from="description">Filter text of the Simulation Deploy component</note>
+      </trans-unit>
+      <trans-unit id="1951089763019042037" datatype="html">
+        <source>Student</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-deploy/simulation-deploy.component.html</context>
+          <context context-type="linenumber">68,69</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-deploy/simulation-deploy.component.html</context>
+          <context context-type="linenumber">80,83</context>
+        </context-group>
+        <note priority="1" from="description">Column of the table in the Simulation Deploy component</note>
+      </trans-unit>
+      <trans-unit id="9216117865911519658" datatype="html">
+        <source>Action</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-deploy/simulation-deploy.component.html</context>
+          <context context-type="linenumber">84,85</context>
+        </context-group>
+        <note priority="1" from="description">Column of the table in the Simulation Deploy component</note>
+      </trans-unit>
+      <trans-unit id="5667900632592970266" datatype="html">
+        <source>Timestamp</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-deploy/simulation-deploy.component.html</context>
+          <context context-type="linenumber">116,117</context>
+        </context-group>
+        <note priority="1" from="description">Column of the table in the Simulation Deploy component</note>
+      </trans-unit>
+      <trans-unit id="7286475218857509962" datatype="html">
+        <source>Return</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-deploy/simulation-deploy.component.html</context>
+          <context context-type="linenumber">149,154</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-editquerylist/simulation-editquerylist.component.html</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-newquerylist/simulation-newquerylist.component.html</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+        <note priority="1" from="description">Button of the Simulation Deploy component</note>
+      </trans-unit>
+      <trans-unit id="2544384825425341779" datatype="html">
+        <source>Stopped</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-deploy/simulation-deploy.component.ts</context>
+          <context context-type="linenumber">112</context>
+        </context-group>
+        <note priority="1" from="description">Status text in the Simulation Deploy component</note>
+      </trans-unit>
+      <trans-unit id="8762834463110071901" datatype="html">
+        <source>Deploying...</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-deploy/simulation-deploy.component.ts</context>
+          <context context-type="linenumber">113</context>
+        </context-group>
+        <note priority="1" from="description">Status text in the Simulation Deploy component</note>
+      </trans-unit>
+      <trans-unit id="2006017584645438598" datatype="html">
+        <source>Deployed</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-deploy/simulation-deploy.component.ts</context>
+          <context context-type="linenumber">114</context>
+        </context-group>
+        <note priority="1" from="description">Status text in the Simulation Deploy component</note>
+      </trans-unit>
+      <trans-unit id="5130175285403807918" datatype="html">
+        <source>Stopping...</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-deploy/simulation-deploy.component.ts</context>
+          <context context-type="linenumber">115</context>
+        </context-group>
+        <note priority="1" from="description">Status text in the Simulation Deploy component</note>
+      </trans-unit>
+      <trans-unit id="4443421139211714497" datatype="html">
+        <source>Restarting...</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-deploy/simulation-deploy.component.ts</context>
+          <context context-type="linenumber">116</context>
+        </context-group>
+        <note priority="1" from="description">Status text in the Simulation Deploy component</note>
+      </trans-unit>
+      <trans-unit id="6839235524859986392" datatype="html">
+        <source>Press the start deploy button to generate actions.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-deploy/simulation-deploy.component.ts</context>
+          <context context-type="linenumber">119</context>
+        </context-group>
+        <note priority="1" from="description">Text displayed when the actions table is empty in the Simulation Deploy component</note>
+      </trans-unit>
+      <trans-unit id="9080439367997979468" datatype="html">
+        <source>No actions received yet.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-deploy/simulation-deploy.component.ts</context>
+          <context context-type="linenumber">120</context>
+        </context-group>
+        <note priority="1" from="description">Text displayed when the actions table is empty in the Simulation Deploy component</note>
+      </trans-unit>
+      <trans-unit id="1589409020202979852" datatype="html">
+        <source>No actions found.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-deploy/simulation-deploy.component.ts</context>
+          <context context-type="linenumber">121</context>
+        </context-group>
+        <note priority="1" from="description">Text displayed when the actions table is empty in the Simulation Deploy component</note>
+      </trans-unit>
+      <trans-unit id="5090388006559424866" datatype="html">
+        <source>Student bookmarked document &quot;<x id="PH" equiv-text="latestBookmarks[i].url"/>&quot;</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-deploy/simulation-deploy.component.ts</context>
+          <context context-type="linenumber">367</context>
+        </context-group>
+        <note priority="1" from="description">Text of the actions table in the Simulation Deploy component</note>
+      </trans-unit>
+      <trans-unit id="6898615186928121266" datatype="html">
+        <source>Student unbookmarked document &quot;<x id="PH" equiv-text="latestBookmarks[i].url"/>&quot;</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-deploy/simulation-deploy.component.ts</context>
+          <context context-type="linenumber">370</context>
+        </context-group>
+        <note priority="1" from="description">Text of the actions table in the Simulation Deploy component</note>
+      </trans-unit>
+      <trans-unit id="2792292169154410789" datatype="html">
+        <source>Student pressed key with keycode <x id="PH" equiv-text="latestKeystrokes[i].keyCode.toString()"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-deploy/simulation-deploy.component.ts</context>
+          <context context-type="linenumber">377</context>
+        </context-group>
+        <note priority="1" from="description">Text of the actions table in the Simulation Deploy component</note>
+      </trans-unit>
+      <trans-unit id="1289538502669768761" datatype="html">
+        <source>Student queried &quot;<x id="PH" equiv-text="latestQueries[i].query"/>&quot;</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-deploy/simulation-deploy.component.ts</context>
+          <context context-type="linenumber">383</context>
+        </context-group>
+        <note priority="1" from="description">Text of the actions table in the Simulation Deploy component</note>
+      </trans-unit>
+      <trans-unit id="824740449326100570" datatype="html">
+        <source>Student entered page &quot;<x id="PH" equiv-text="latestVisitedlinks[i].url"/>&quot;</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-deploy/simulation-deploy.component.ts</context>
+          <context context-type="linenumber">391</context>
+        </context-group>
+        <note priority="1" from="description">Text of the actions table in the Simulation Deploy component</note>
+      </trans-unit>
+      <trans-unit id="8784713392768691984" datatype="html">
+        <source>Student exited page &quot;<x id="PH" equiv-text="latestVisitedlinks[i].url"/>&quot;</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-deploy/simulation-deploy.component.ts</context>
+          <context context-type="linenumber">394</context>
+        </context-group>
+        <note priority="1" from="description">Text of the actions table in the Simulation Deploy component</note>
+      </trans-unit>
+      <trans-unit id="5261522706860800294" datatype="html">
+        <source>Edit simulation &quot;<x id="INTERPOLATION" equiv-text="{{simulationInitialName}}"/>&quot;</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">6,7</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-editquerylist/simulation-editquerylist.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">Title of the Edit Simulation component</note>
+      </trans-unit>
+      <trans-unit id="1347241542439262355" datatype="html">
+        <source>General settings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">7,11</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">7,11</context>
+        </context-group>
+        <note priority="1" from="description">Subtitle of the Edit Simulation component</note>
+      </trans-unit>
+      <trans-unit id="1687946233190757067" datatype="html">
+        <source>Simulation name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">14,16</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">14,16</context>
+        </context-group>
+        <note priority="1" from="description">Text of the form of the Edit Simulation component</note>
+      </trans-unit>
+      <trans-unit id="6810373394641255972" datatype="html">
+        <source>Example: Simulation 1</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-list/simulation-list.component.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+        <note priority="1" from="description">Placeholder text of the form of the Edit Simulation component</note>
+      </trans-unit>
+      <trans-unit id="5823783481606744678" datatype="html">
+        <source>You must enter a name for the simulation.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">22,23</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">22,23</context>
+        </context-group>
+        <note priority="1" from="description">Error message in the text input of the Edit Simulation component</note>
+      </trans-unit>
+      <trans-unit id="1935158004354688294" datatype="html">
+        <source>The simulation name already exists.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">23,24</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">23,24</context>
+        </context-group>
+        <note priority="1" from="description">Error message in the text input of the Edit Simulation component</note>
+      </trans-unit>
+      <trans-unit id="5194316098450946182" datatype="html">
+        <source>The simulation name can only contain letters, numbers and spaces.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">24,27</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">24,27</context>
+        </context-group>
+        <note priority="1" from="description">Error message in the text input of the Edit Simulation component</note>
+      </trans-unit>
+      <trans-unit id="4902817035128594900" datatype="html">
+        <source>Description</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">34,36</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">34,36</context>
+        </context-group>
+        <note priority="1" from="description">Text of the form of the Edit Simulation component</note>
+      </trans-unit>
+      <trans-unit id="6486942186791297556" datatype="html">
+        <source>Example: This is a simulation</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+        <note priority="1" from="description">Placeholder text of the form of the Edit Simulation component</note>
+      </trans-unit>
+      <trans-unit id="1662168919516400436" datatype="html">
+        <source>You must enter a description for the simulation.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">42,45</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">42,45</context>
+        </context-group>
+        <note priority="1" from="description">Error message in the text input of the Edit Simulation component</note>
+      </trans-unit>
+      <trans-unit id="1392223819399449504" datatype="html">
+        <source>Number of students</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">52,54</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">52,54</context>
+        </context-group>
+        <note priority="1" from="description">Text of the form of the Edit Simulation component</note>
+      </trans-unit>
+      <trans-unit id="3644927833123119958" datatype="html">
+        <source>Example: 40</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+        <note priority="1" from="description">Placeholder text of the form of the Edit Simulation component</note>
+      </trans-unit>
+      <trans-unit id="3568490488461093261" datatype="html">
+        <source>You must enter the number of students for the simulation.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">60,61</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">60,61</context>
+        </context-group>
+        <note priority="1" from="description">Error message in the text input of the Edit Simulation component</note>
+      </trans-unit>
+      <trans-unit id="8376083158033832291" datatype="html">
+        <source>You must enter a number greater than zero.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">63,68</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">80,85</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">97,98</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">132,133</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">190,196</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">63,68</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">80,85</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">132,133</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">190,196</context>
+        </context-group>
+        <note priority="1" from="description">Error message in the text input of the Edit Simulation component</note>
+      </trans-unit>
+      <trans-unit id="1747027620060855554" datatype="html">
+        <source>Number of documents</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">69,71</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">69,71</context>
+        </context-group>
+        <note priority="1" from="description">Text of the form of the Edit Simulation component</note>
+      </trans-unit>
+      <trans-unit id="4417589246136848780" datatype="html">
+        <source>Example: 100</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">71</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">71</context>
+        </context-group>
+        <note priority="1" from="description">Placeholder text of the form of the Edit Simulation component</note>
+      </trans-unit>
+      <trans-unit id="8724888361208033578" datatype="html">
+        <source>You must enter the number of documents for the simulation.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">77,78</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">77,78</context>
+        </context-group>
+        <note priority="1" from="description">Error message in the text input of the Edit Simulation component</note>
+      </trans-unit>
+      <trans-unit id="7687549310403012807" datatype="html">
+        <source>Number of relevant documents</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">86,88</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">86,88</context>
+        </context-group>
+        <note priority="1" from="description">Text of the form of the Edit Simulation component</note>
+      </trans-unit>
+      <trans-unit id="7014779311318141747" datatype="html">
+        <source>Example: 15</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">88</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">124</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">88</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">124</context>
+        </context-group>
+        <note priority="1" from="description">Placeholder text of the form of the Edit Simulation component</note>
+      </trans-unit>
+      <trans-unit id="1149214469488687664" datatype="html">
+        <source>You must enter the number of relevant documents for the simulation.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">94,95</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">94,95</context>
+        </context-group>
+        <note priority="1" from="description">Error message in the text input of the Edit Simulation component</note>
+      </trans-unit>
+      <trans-unit id="2357698926518815598" datatype="html">
+        <source>You must enter a number less than or equal to the number of documents of the simulation.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">98,103</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">98,103</context>
+        </context-group>
+        <note priority="1" from="description">Error message in the text input of the Edit Simulation component</note>
+      </trans-unit>
+      <trans-unit id="5479133824073842793" datatype="html">
+        <source>Configure</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">105,106</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">105,106</context>
+        </context-group>
+        <note priority="1" from="description">Button of the Edit Simulation component</note>
+      </trans-unit>
+      <trans-unit id="6966666918948507568" datatype="html">
+        <source>You must add a list of queries.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">106,111</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">106,111</context>
+        </context-group>
+        <note priority="1" from="description">Error message of the list of queries in the Edit Simulation component</note>
+      </trans-unit>
+      <trans-unit id="8316372567992741410" datatype="html">
+        <source>Random generation of actions</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">111,113</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">111,113</context>
+        </context-group>
+        <note priority="1" from="description">Text of the form of the Edit Simulation component</note>
+      </trans-unit>
+      <trans-unit id="1557906630720485974" datatype="html">
+        <source>Maximum length (minutes)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">122,124</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">122,124</context>
+        </context-group>
+        <note priority="1" from="description">Text of the form of the Edit Simulation component</note>
+      </trans-unit>
+      <trans-unit id="5789258551385391380" datatype="html">
+        <source>The maximum posible length is 60 minutes.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">133,138</context>
+        </context-group>
+        <note priority="1" from="description">Error message in the text input of the Edit Simulation component</note>
+      </trans-unit>
+      <trans-unit id="1434086911905568583" datatype="html">
+        <source>Behavior model</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">139,141</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">139,141</context>
+        </context-group>
+        <note priority="1" from="description">Text of the form of the Edit Simulation component</note>
+      </trans-unit>
+      <trans-unit id="2067769281023320825" datatype="html">
+        <source>You must select a behavior model.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">144,148</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">144,147</context>
+        </context-group>
+        <note priority="1" from="description">Error message of the behavior model in the Edit Simulation component</note>
+      </trans-unit>
+      <trans-unit id="5110275865396293561" datatype="html">
+        <source>Filter models by name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">148,149</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">148,149</context>
+        </context-group>
+        <note priority="1" from="description">Text of the form of the Edit Simulation component</note>
+      </trans-unit>
+      <trans-unit id="3785887269153432241" datatype="html">
+        <source>Sensibility (percentage)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">158,160</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">158,160</context>
+        </context-group>
+        <note priority="1" from="description">Text of the form of the Edit Simulation component</note>
+      </trans-unit>
+      <trans-unit id="5553614411974321487" datatype="html">
+        <source>Example: 50</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">160</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">160</context>
+        </context-group>
+        <note priority="1" from="description">Placeholder text of the form of the Edit Simulation component</note>
+      </trans-unit>
+      <trans-unit id="7426662913518482676" datatype="html">
+        <source>You must enter the sensibility for the simulation.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">169,170</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">169,170</context>
+        </context-group>
+        <note priority="1" from="description">Error message in the text input of the Edit Simulation component</note>
+      </trans-unit>
+      <trans-unit id="2943037212126921096" datatype="html">
+        <source>Interval (ms)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">179,181</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">179,181</context>
+        </context-group>
+        <note priority="1" from="description">Text of the form of the Edit Simulation component</note>
+      </trans-unit>
+      <trans-unit id="4212223749992935752" datatype="html">
+        <source>Example: 500</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">181</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">181</context>
+        </context-group>
+        <note priority="1" from="description">Placeholder text of the form of the Edit Simulation component</note>
+      </trans-unit>
+      <trans-unit id="8889620110306476670" datatype="html">
+        <source>You must enter the desired interval between simulation actions.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">187,188</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">187,188</context>
+        </context-group>
+        <note priority="1" from="description">Error message in the text input of the Edit Simulation component</note>
+      </trans-unit>
+      <trans-unit id="3128293408739574" datatype="html">
+        <source>Speed</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.html</context>
+          <context context-type="linenumber">196,198</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">196,198</context>
+        </context-group>
+        <note priority="1" from="description">Text of the form of the Edit Simulation component</note>
+      </trans-unit>
+      <trans-unit id="3878543995923799007" datatype="html">
+        <source>valid</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.ts</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.ts</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-settings/simulation-settings.component.ts</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+        <note priority="1" from="description">Text of the form of the New Simulation component</note>
+      </trans-unit>
+      <trans-unit id="7640664565182744014" datatype="html">
+        <source>invalid</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-edit/simulation-edit.component.ts</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.ts</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-settings/simulation-settings.component.ts</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+        <note priority="1" from="description">Text of the form of the New Simulation component</note>
+      </trans-unit>
+      <trans-unit id="4359807785884811152" datatype="html">
+        <source>Query list settings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-editquerylist/simulation-editquerylist.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-newquerylist/simulation-newquerylist.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+        <note priority="1" from="description">Subtitle of the Edit Simulation Query List component</note>
+      </trans-unit>
+      <trans-unit id="154119175630909161" datatype="html">
+        <source>Please add the queries for the simulation.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-editquerylist/simulation-editquerylist.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-newquerylist/simulation-newquerylist.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <note priority="1" from="description">Edit Simulation Query List component instructions</note>
+      </trans-unit>
+      <trans-unit id="2371032395467406963" datatype="html">
+        <source>Example: What is a neural network?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-editquerylist/simulation-editquerylist.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-newquerylist/simulation-newquerylist.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <note priority="1" from="description">Placeholder text of the Edit Simulation Query List component</note>
+      </trans-unit>
+      <trans-unit id="2861127171538829753" datatype="html">
+        <source>You must enter a query.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-editquerylist/simulation-editquerylist.component.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-newquerylist/simulation-newquerylist.component.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+        <note priority="1" from="description">Error message in the text input of the Edit Simulation Query List component</note>
+      </trans-unit>
+      <trans-unit id="3151147214399700234" datatype="html">
+        <source>The query already exists on the list.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-editquerylist/simulation-editquerylist.component.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-newquerylist/simulation-newquerylist.component.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+        <note priority="1" from="description">Error message in the text input of the Edit Simulation Query List component</note>
+      </trans-unit>
+      <trans-unit id="6548676277933116532" datatype="html">
+        <source>Add query</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-editquerylist/simulation-editquerylist.component.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-newquerylist/simulation-newquerylist.component.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+        <note priority="1" from="description">Button of the Edit Simulation Query List component</note>
+      </trans-unit>
+      <trans-unit id="1667714217417400718" datatype="html">
+        <source>Delete the query</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-editquerylist/simulation-editquerylist.component.html</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-newquerylist/simulation-newquerylist.component.html</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+        <note priority="1" from="description">Tooltip of the delete query button in the Edit Simulation Query List component</note>
+      </trans-unit>
+      <trans-unit id="5082969821547647355" datatype="html">
+        <source>Clear list</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-editquerylist/simulation-editquerylist.component.html</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-newquerylist/simulation-newquerylist.component.html</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+        <note priority="1" from="description">Button of the Edit Simulation Query List component</note>
+      </trans-unit>
+      <trans-unit id="3323678987531382293" datatype="html">
+        <source>List of simulations</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-list/simulation-list.component.html</context>
+          <context context-type="linenumber">3,6</context>
+        </context-group>
+        <note priority="1" from="description">Title of the List of Simulations tab</note>
+      </trans-unit>
+      <trans-unit id="4340956803778820813" datatype="html">
+        <source>Select a simulation from the list by clicking its name.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-list/simulation-list.component.html</context>
+          <context context-type="linenumber">6,9</context>
+        </context-group>
+        <note priority="1" from="description">Instructions of the List of Simulations tab</note>
+      </trans-unit>
+      <trans-unit id="1524002771063158011" datatype="html">
+        <source> Date of last deploy </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-list/simulation-list.component.html</context>
+          <context context-type="linenumber">43,44</context>
+        </context-group>
+        <note priority="1" from="description">Column of the table in the List of Simulations tab</note>
+      </trans-unit>
+      <trans-unit id="525180394446033609" datatype="html">
+        <source> Number of students </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-list/simulation-list.component.html</context>
+          <context context-type="linenumber">48,49</context>
+        </context-group>
+        <note priority="1" from="description">Column of the table in the List of Simulations tab</note>
+      </trans-unit>
+      <trans-unit id="8602686594943960305" datatype="html">
+        <source> Deploy options </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-list/simulation-list.component.html</context>
+          <context context-type="linenumber">53,56</context>
+        </context-group>
+        <note priority="1" from="description">Column of the table in the List of Simulations tab</note>
+      </trans-unit>
+      <trans-unit id="3388738505789529038" datatype="html">
+        <source><x id="START_SMALL_TEXT" ctype="x-small" equiv-text="Go to deploy options&lt;/small&gt;&lt;/button&gt;"/>Go to deploy options<x id="CLOSE_SMALL_TEXT" ctype="x-small" equiv-text="&lt;/small&gt;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-list/simulation-list.component.html</context>
+          <context context-type="linenumber">57,58</context>
+        </context-group>
+        <note priority="1" from="description">Button of the List of Simulations tab</note>
+      </trans-unit>
+      <trans-unit id="3363591278875240966" datatype="html">
+        <source> Other options </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-list/simulation-list.component.html</context>
+          <context context-type="linenumber">63,66</context>
+        </context-group>
+        <note priority="1" from="description">Column of the table in the List of Simulations tab</note>
+      </trans-unit>
+      <trans-unit id="1531818947062131392" datatype="html">
+        <source>Make a copy of the simulation</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-list/simulation-list.component.html</context>
+          <context context-type="linenumber">66</context>
+        </context-group>
+        <note priority="1" from="description">Tooltip of the table in the List of Simulations tab</note>
+      </trans-unit>
+      <trans-unit id="5421449157886672446" datatype="html">
+        <source>Delete the simulation</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-list/simulation-list.component.html</context>
+          <context context-type="linenumber">67</context>
+        </context-group>
+        <note priority="1" from="description">Tooltip of the table in the List of Simulations tab</note>
+      </trans-unit>
+      <trans-unit id="7877570266424194072" datatype="html">
+        <source> No simulations found. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-list/simulation-list.component.html</context>
+          <context context-type="linenumber">77,83</context>
+        </context-group>
+        <note priority="1" from="description">Text displayed when the simulations table is empty in the List of Simulations tab</note>
+      </trans-unit>
+      <trans-unit id="7023657567055629569" datatype="html">
+        <source>New simulation</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-list/simulation-list.component.html</context>
+          <context context-type="linenumber">90,93</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-modal-added/simulation-modal-added.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-modal-nomodels/simulation-modal-nomodels.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">6,7</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-newquerylist/simulation-newquerylist.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">Button of the List of Simulations tab</note>
+      </trans-unit>
+      <trans-unit id="8372007266188249803" datatype="html">
+        <source>Never</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-list/simulation-list.component.ts</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-settings/simulation-settings.component.ts</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+        <note priority="1" from="description">Text to describe a simulation that has never been deployed</note>
+      </trans-unit>
+      <trans-unit id="3668747701917686501" datatype="html">
+        <source> The simulation has been saved. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-modal-added/simulation-modal-added.component.html</context>
+          <context context-type="linenumber">4,6</context>
+        </context-group>
+        <note priority="1" from="description">Message of the Simulation Added modal</note>
+      </trans-unit>
+      <trans-unit id="5702110209513065541" datatype="html">
+        <source>Delete simulation</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-modal-confirmdelete/simulation-modal-confirmdelete.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-modal-deleted/simulation-modal-deleted.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <note priority="1" from="description">Title of the Simulation Confirm Delete modal</note>
+      </trans-unit>
+      <trans-unit id="1397779248058348514" datatype="html">
+        <source> Are you sure you want to delete the simulation named &quot;<x id="INTERPOLATION" equiv-text="{{simulationName}}"/>&quot;? </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-modal-confirmdelete/simulation-modal-confirmdelete.component.html</context>
+          <context context-type="linenumber">4,6</context>
+        </context-group>
+        <note priority="1" from="description">Message of the Simulation Confirm Delete modal</note>
+      </trans-unit>
+      <trans-unit id="6503073575435129774" datatype="html">
+        <source>Copy simulation</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-modal-copied/simulation-modal-copied.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <note priority="1" from="description">Title of the Simulation Copied modal</note>
+      </trans-unit>
+      <trans-unit id="4770730315577244828" datatype="html">
+        <source> The simulation &quot;<x id="INTERPOLATION" equiv-text="{{simulationName}}"/>&quot; has been copied. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-modal-copied/simulation-modal-copied.component.html</context>
+          <context context-type="linenumber">4,6</context>
+        </context-group>
+        <note priority="1" from="description">Message of the Simulation Copied modal</note>
+      </trans-unit>
+      <trans-unit id="8650808030870370782" datatype="html">
+        <source> The simulation &quot;<x id="INTERPOLATION" equiv-text="{{simulationName}}"/>&quot; has been deleted. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-modal-deleted/simulation-modal-deleted.component.html</context>
+          <context context-type="linenumber">4,6</context>
+        </context-group>
+        <note priority="1" from="description">Message of the Simulation Deleted modal</note>
+      </trans-unit>
+      <trans-unit id="6759205696902713848" datatype="html">
+        <source>Warning</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-modal-deployleave/simulation-modal-deployleave.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <note priority="1" from="description">Title of the Simulation Deploy Leave modal</note>
+      </trans-unit>
+      <trans-unit id="6477958985562416440" datatype="html">
+        <source> Leaving the deploy view will cause the current simulation to stop. Are you sure you want to continue? </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-modal-deployleave/simulation-modal-deployleave.component.html</context>
+          <context context-type="linenumber">4,6</context>
+        </context-group>
+        <note priority="1" from="description">Message of the Simulation Deploy Leave modal</note>
+      </trans-unit>
+      <trans-unit id="2610537967919132044" datatype="html">
+        <source>Edit simulation</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-modal-edited/simulation-modal-edited.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <note priority="1" from="description">Title of the Simulation Edited modal</note>
+      </trans-unit>
+      <trans-unit id="8115964089294948510" datatype="html">
+        <source> The simulation has been edited. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-modal-edited/simulation-modal-edited.component.html</context>
+          <context context-type="linenumber">4,6</context>
+        </context-group>
+        <note priority="1" from="description">Message of the Simulation Edited modal</note>
+      </trans-unit>
+      <trans-unit id="7429647199417720314" datatype="html">
+        <source> Before creating a simulation, at least one behavior model must be created. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-modal-nomodels/simulation-modal-nomodels.component.html</context>
+          <context context-type="linenumber">4,6</context>
+        </context-group>
+        <note priority="1" from="description">Message of the Simulation No Models modal</note>
+      </trans-unit>
+      <trans-unit id="8738703724379148868" datatype="html">
+        <source>Deploy simulation</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-modal-notdeployable/simulation-modal-notdeployable.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <note priority="1" from="description">Title of the Simulation Not Deployable modal</note>
+      </trans-unit>
+      <trans-unit id="5654597548899628911" datatype="html">
+        <source> The simulation cannot be deployed, because its assigned behavior model (<x id="INTERPOLATION" equiv-text="{{behaviorModelName}}"/>) is invalid. Change the behavior model assigned to the simulation, or modify the behavior model so that it becomes valid. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-modal-notdeployable/simulation-modal-notdeployable.component.html</context>
+          <context context-type="linenumber">4,6</context>
+        </context-group>
+        <note priority="1" from="description">Message of the Simulation Not Deployable modal</note>
+      </trans-unit>
+      <trans-unit id="1383899960518070569" datatype="html">
+        <source>The maximum possible length is 60 minutes.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">133,138</context>
+        </context-group>
+        <note priority="1" from="description">Error message in the text input of the New Simulation component</note>
+      </trans-unit>
+      <trans-unit id="2456446989174354755" datatype="html">
+        <source>Save simulation</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">204,205</context>
+        </context-group>
+        <note priority="1" from="description">Button of the New Simulation component</note>
+      </trans-unit>
+      <trans-unit id="4848098959556183117" datatype="html">
+        <source>Discard simulation</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-new/simulation-new.component.html</context>
+          <context context-type="linenumber">205,210</context>
+        </context-group>
+        <note priority="1" from="description">Button of the New Simulation component</note>
+      </trans-unit>
+      <trans-unit id="6879401494442838115" datatype="html">
+        <source>Simulation &quot;<x id="INTERPOLATION" equiv-text="{{simulationName}}"/>&quot;</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-settings/simulation-settings.component.html</context>
+          <context context-type="linenumber">3,5</context>
+        </context-group>
+        <note priority="1" from="description">Title of the Simulation Settings component</note>
+      </trans-unit>
+      <trans-unit id="6996799422725544865" datatype="html">
+        <source>Description:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-settings/simulation-settings.component.html</context>
+          <context context-type="linenumber">11,13</context>
+        </context-group>
+        <note priority="1" from="description">Text of the Simulation Settings component</note>
+      </trans-unit>
+      <trans-unit id="8457432204427919243" datatype="html">
+        <source>Behavior model:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-settings/simulation-settings.component.html</context>
+          <context context-type="linenumber">17,19</context>
+        </context-group>
+        <note priority="1" from="description">Text of the Simulation Settings component</note>
+      </trans-unit>
+      <trans-unit id="8752142527462340402" datatype="html">
+        <source>Date of last deploy:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-settings/simulation-settings.component.html</context>
+          <context context-type="linenumber">29,31</context>
+        </context-group>
+        <note priority="1" from="description">Text of the Simulation Settings component</note>
+      </trans-unit>
+      <trans-unit id="8093723337045908843" datatype="html">
+        <source> Deploy </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/simulation-settings/simulation-settings.component.html</context>
+          <context context-type="linenumber">50,52</context>
+        </context-group>
+        <note priority="1" from="description">Button of the Simulation Settings component</note>
+      </trans-unit>
+      <trans-unit id="4037237185880489991" datatype="html">
+        <source>New bookmark</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/JointJS/addNodes/addBookmarkNode.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <note priority="1" from="description">Default name of a new bookmark node in the New Behavior Model and Behavior Model Edit components</note>
+      </trans-unit>
+      <trans-unit id="8910806821370505981" datatype="html">
+        <source>New end</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/JointJS/addNodes/addEndNode.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <note priority="1" from="description">Default name of a new end node in the New Behavior Model and Behavior Model Edit components</note>
+      </trans-unit>
+      <trans-unit id="4946234474563978136" datatype="html">
+        <source>New page</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/JointJS/addNodes/addPageNode.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <note priority="1" from="description">Default name of a new page node in the New Behavior Model and Behavior Model Edit components</note>
+      </trans-unit>
+      <trans-unit id="8271463253402686556" datatype="html">
+        <source>New query</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/JointJS/addNodes/addQueryNode.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <note priority="1" from="description">Default name of a new query node in the New Behavior Model and Behavior Model Edit components</note>
+      </trans-unit>
+      <trans-unit id="6120484241094980362" datatype="html">
+        <source>New SERP</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/JointJS/addNodes/addSERPNode.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <note priority="1" from="description">Default name of a new SERP node in the New Behavior Model and Behavior Model Edit components</note>
+      </trans-unit>
+      <trans-unit id="5162686434580248853" datatype="html">
+        <source>Start</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/JointJS/addNodes/addStartNode.ts</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+        <note priority="1" from="description">Name of a start node in the New Behavior Model component</note>
+      </trans-unit>
+      <trans-unit id="8533628922420076009" datatype="html">
+        <source>New unbookmark</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/JointJS/addNodes/addUnbookmarkNode.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <note priority="1" from="description">Default name of a new unbookmark node in the New Behavior Model and Behavior Model Edit components</note>
+      </trans-unit>
+      <trans-unit id="2084923389535738201" datatype="html">
+        <source>Some nodes (or groups of nodes) in the behavior model are not connected to each other.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/JointJS/validateModel/connectedNodes.ts</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+        <note priority="1" from="description">Model validation error message in the New Behavior Model and Behavior Model Edit components</note>
+      </trans-unit>
+      <trans-unit id="3312894165908118319" datatype="html">
+        <source>The node &apos;<x id="PH" equiv-text="cell.attributes.attrs![&apos;label&apos;]!.text"/>&apos; is not connected to any node before it.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/JointJS/validateModel/connectedNodes.ts</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+        <note priority="1" from="description">Model validation error message in the New Behavior Model and Behavior Model Edit components</note>
+      </trans-unit>
+      <trans-unit id="2691443111737151406" datatype="html">
+        <source>The output likelihoods for node &apos;<x id="PH" equiv-text="nodes[i].label"/>&apos; do not add up to 100%.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/JointJS/validateModel/likelihoodsLessThan100.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+        <note priority="1" from="description">Model validation error message in the New Behavior Model and Behavior Model Edit components</note>
+      </trans-unit>
+      <trans-unit id="5349982043300109433" datatype="html">
+        <source>One or more links are connected on one side to node &apos;<x id="PH" equiv-text="nodes[j].label"/>&apos;, but disconnected on the other side.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/JointJS/validateModel/linksWithoutDestination.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/JointJS/validateModel/linksWithoutDestination.ts</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <note priority="1" from="description">Model validation error message in the New Behavior Model and Behavior Model Edit components</note>
+      </trans-unit>
+      <trans-unit id="3610466709366151903" datatype="html">
+        <source>There are <x id="PH" equiv-text="disconnectedLinkCount.toString()"/> links not connected to any nodes.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/JointJS/validateModel/linksWithoutDestination.ts</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+        <note priority="1" from="description">Model validation error message in the New Behavior Model and Behavior Model Edit components</note>
+      </trans-unit>
+      <trans-unit id="5022147263746927561" datatype="html">
+        <source>The link connecting nodes &apos;<x id="PH" equiv-text="linkSourceNodeLabel"/>&apos; and &apos;<x id="PH_1" equiv-text="linkTargetNodeLabel"/>&apos; has no likelihood of next state.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/JointJS/validateModel/linksWithoutLikelihoods.ts</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+        <note priority="1" from="description">Model validation error message in the New Behavior Model and Behavior Model Edit components</note>
+      </trans-unit>
+      <trans-unit id="4641048252212125838" datatype="html">
+        <source>The node &apos;<x id="PH" equiv-text="nonEndNodes[i].label"/>&apos; has no output connections. Only end nodes may lack output connections.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/JointJS/validateModel/nodesWithoutOutput.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+        <note priority="1" from="description">Model validation error message in the New Behavior Model and Behavior Model Edit components</note>
+      </trans-unit>
+      <trans-unit id="1017589873422761132" datatype="html">
+        <source>The bookmark node &apos;<x id="PH" equiv-text="bookmarkLabel"/>&apos; is not connected to the next page node in the sequence of page nodes of the query.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/JointJS/validateModel/pageBookmarkLinks.ts</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+        <note priority="1" from="description">Model validation error message in the New Behavior Model and Behavior Model Edit components</note>
+      </trans-unit>
+      <trans-unit id="3134491768927628269" datatype="html">
+        <source>After the page node &apos;<x id="PH" equiv-text="cell.attributes.attrs![&apos;label&apos;]!.text"/>&apos;, the chain of page nodes splits into two or more flows.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/JointJS/validateModel/pageBookmarkLinks.ts</context>
+          <context context-type="linenumber">73</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/JointJS/validateModel/pageUnbookmarkLinks.ts</context>
+          <context context-type="linenumber">73</context>
+        </context-group>
+        <note priority="1" from="description">Model validation error message in the New Behavior Model and Behavior Model Edit components</note>
+      </trans-unit>
+      <trans-unit id="4795394649785245158" datatype="html">
+        <source>The unbookmark node &apos;<x id="PH" equiv-text="unbookmarkLabel"/>&apos; is not connected to the next page node in the sequence of page nodes of the query.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/JointJS/validateModel/pageUnbookmarkLinks.ts</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+        <note priority="1" from="description">Model validation error message in the New Behavior Model and Behavior Model Edit components</note>
+      </trans-unit>
+      <trans-unit id="6849619416252655247" datatype="html">
+        <source>The query node &apos;<x id="PH" equiv-text="linkPairs[i].sourceNode.label"/>&apos; is outside the expected chain of linked query nodes that begins after the start node.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/JointJS/validateModel/queryChain.ts</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/JointJS/validateModel/queryChain.ts</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+        <note priority="1" from="description">Model validation error message in the New Behavior Model and Behavior Model Edit components</note>
+      </trans-unit>
+      <trans-unit id="5881876145178332550" datatype="html">
+        <source>of</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/locale/matpaginator-intl.ts</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+        <note priority="1" from="description">Translation of the word of in the MatPaginator text</note>
+      </trans-unit>
+      <trans-unit id="8939587804990976924" datatype="html">
+        <source>Items per page</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/locale/matpaginator-intl.ts</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+        <note priority="1" from="description">MatPaginator text</note>
+      </trans-unit>
+      <trans-unit id="8642445555713453888" datatype="html">
+        <source>First page</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/locale/matpaginator-intl.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+        <note priority="1" from="description">MatPaginator text</note>
+      </trans-unit>
+      <trans-unit id="3629960544875360046" datatype="html">
+        <source>Previous page</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/locale/matpaginator-intl.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <note priority="1" from="description">MatPaginator text</note>
+      </trans-unit>
+      <trans-unit id="3337301694210287595" datatype="html">
+        <source>Next page</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/locale/matpaginator-intl.ts</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <note priority="1" from="description">MatPaginator text</note>
+      </trans-unit>
+      <trans-unit id="6784758141439994527" datatype="html">
+        <source>Last page</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/locale/matpaginator-intl.ts</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+        <note priority="1" from="description">MatPaginator text</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

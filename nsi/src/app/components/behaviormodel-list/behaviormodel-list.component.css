@@ -1,0 +1,77 @@
+table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+body {
+    background-color: #F0E3FF;
+    padding: 1em 1em 1em 1em;
+}
+
+h2 {
+    text-align: center;
+}
+
+.behaviorModelListTable {
+    padding: 0px 5em 0px 5em;
+    max-height: 400px;
+    overflow: auto;
+}
+
+.mat-header-cell {
+    background-color: #B0C4EC;
+    font-weight: bold;
+    color: black;
+}
+
+.mat-cell {
+    background-color: #E0E8F8;
+}
+
+.filter {
+    color: black;
+    background-color: transparent;
+    width: 5px;
+    position: relative;
+    left: -10px;
+}
+
+mat-icon {
+  padding: 0px 10px 0px 0px;
+  cursor: pointer;
+}
+
+.newBehaviorModelButton {
+  padding: 0px 68px 0px 0px;
+}
+
+.check {
+    color: green;
+    cursor: default;
+    transform: scale(1.1);
+}
+
+.close {
+    color: #803434;
+    cursor: default;
+    transform: scale(1.1);
+}
+
+.copy {
+    color: black;
+}
+
+.delete {
+    color: red;
+}
+
+mat-paginator {
+    background-color: #F0E3FF
+}
+
+.mat-header-row:nth-child(2) {
+    position: sticky;
+    top: 56px;
+    background-color: #B0C4EC;
+    z-index: 10000;
+}

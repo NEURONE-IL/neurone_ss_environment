@@ -1,0 +1,17 @@
+<html>
+    <body>
+        <h3 i18n="Title of the Simulation Confirm Deploy Leave modal">Attention</h3>
+        <div i18n="Message of the Simulation Confirm Deploy Leave modal">
+          Leaving the deploy view will cause the current simulation to stop. Are you sure you want to continue?
+        </div>
+        <br>
+        <br>
+
+        <div class="buttonContainer">
+            <div class="btn-group">
+                <button mat-raised-button color="primary" style="background-color: 'primary'; border-radius: 5px; width: 80px; margin-right: 10px;" (click)="onYesButtonClicked()" i18n="Simulation Confirm Deploy Leave modal yes button">Yes</button>
+                <button mat-raised-button mat-dialog-close style="background-color: '#595959'; border-radius: 5px; width: 80px; margin-left: 10px;" i18n="Simulation Confirm Deploy Leave modal no button">No</button>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,31 @@
+<html>
+    <body>
+        <h3 i18n="Title of the Behavior Model Probability Settings modal">Link properties</h3> 
+        <div>
+          <form [formGroup]="probabilityForm" (ngSubmit)="onOKButtonClicked()">
+            <mat-label style="margin-right: 20px;" i18n="Text of the form of the Behavior Model Probability Settings modal">Likelihood of next state (1 to 100%):</mat-label>
+            <mat-form-field>
+              <input required formControlName="currentProbability" matInput placeholder="Example: 50%" i18n-placeholder="Placeholder text of the form of the Behavior Model Probability Settings modal"/>
+              <div class="percent" matSuffix>
+              <button class="clear" *ngIf="probabilityForm.get('currentProbability')?.value" mat-icon-button (click)="this.clearTextInput('currentProbability')">
+                <mat-icon>close</mat-icon>
+              </button>
+                %
+              </div>
+              <mat-error *ngIf="probabilityForm.get('currentProbability')?.hasError('required')" i18n="Error message in the text input of the Behavior Model Probability Settings modal">You must enter the likelihood of moving to the next state.</mat-error>
+              <mat-error *ngIf="probabilityForm.get('currentProbability')?.hasError('notNumber')" i18n="Error message in the text input of the Behavior Model Probability Settings modal">You must enter a number.</mat-error>
+              <mat-error *ngIf="probabilityForm.get('currentProbability')?.hasError('notInteger')" i18n="Error message in the text input of the Behavior Model Probability Settings modal">You must enter an integer number.</mat-error>
+              <mat-error *ngIf="probabilityForm.get('currentProbability')?.hasError('min')" i18n="Error message in the text input of the Behavior Model Probability Settings modal">You must enter a number between 1 and 100.</mat-error>
+              <mat-error *ngIf="probabilityForm.get('currentProbability')?.hasError('max')" i18n="Error message in the text input of the Behavior Model Probability Settings modal">You must enter a number between 1 and 100.</mat-error>
+            </mat-form-field>
+          </form>
+        </div>
+
+        <br><br>
+
+        <div class="btn-group" style="text-align: right">
+            <button type="submit" [disabled]="probabilityForm.invalid" mat-raised-button color="primary" style="border-radius: 5px; width: 80px; margin-right: 10px;" (click)="onOKButtonClicked()" i18n="Button of the Behavior Model Probability Settings modal">OK</button>
+            <button mat-raised-button mat-dialog-close style="background-color: '#595959'; border-radius: 5px; width: 80px; margin-left: 10px;" i18n="Button of the Behavior Model Probability Settings modal">Cancel</button>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,34 @@
+<html>
+    <body>
+    	<h3 i18n="Title of the Behavior Model Node Settings modal">State properties</h3>	
+        <div>
+          <form [formGroup]="nodeSettingsForm" (ngSubmit)="onOKButtonClicked()">
+            <mat-label style="margin-right: 10px;" i18n="Text of the form of the Behavior Model Node Settings modal">Name of state:</mat-label>
+            <mat-form-field style="margin-left: 90px;">
+              <input required formControlName="nodeName" matInput placeholder="Example: S1" i18n-placeholder="Placeholder text of the form of the Behavior Model Node Settings modal" maxlength="40"/>
+
+              <button class="clear" *ngIf="nodeSettingsForm.get('nodeName')?.value" matSuffix mat-icon-button (click)="this.clearTextInput('nodeName')">
+          		  <mat-icon>close</mat-icon>
+        	  </button>
+
+              <mat-error *ngIf="nodeSettingsForm.get('nodeName')?.hasError('required')" i18n="Error message in the text input of the Behavior Model Node Settings modal">You must enter the name of the state.</mat-error>
+              <mat-error *ngIf="nodeSettingsForm.get('nodeName')?.hasError('nodeNameExists')" i18n="Error message in the text input of the Behavior Model Node Settings modal">The state name already exists.</mat-error>
+              <mat-error *ngIf="nodeSettingsForm.get('nodeName')?.hasError('invalidName')" i18n="Error message in the text input of the Behavior Model Node Settings modal">The state name is invalid, because it contains the word "new".</mat-error>
+              <mat-error *ngIf="nodeSettingsForm.get('nodeName')?.hasError('invalidCharacters')" i18n="Error message in the text input of the Behavior Model Node Settings modal">The node name can only contain letters, numbers and spaces.</mat-error>
+            </mat-form-field>
+
+            <div style="font-size: 12px; font-family: roboto; text-align: left; margin-left: 206px; margin-top: -15px;" *ngIf="nodeSettingsForm.get('nodeName')?.value.length == 40" i18n="Character limit message in the text input of the Behavior Model Node Settings modal">You have reached the maximum number of characters.</div>
+
+            <div style="color: white; font-size: 12px; font-family: roboto; text-align: left; margin-left: 206; margin-top: -15px;" *ngIf="nodeSettingsForm.get('nodeName')?.value.length < 40">.</div>
+
+            <br><br><br>
+
+          </form>
+        </div>
+
+        <div class="btn-group" style="text-align: right">
+            <button type="submit" [disabled]="nodeSettingsForm.invalid" mat-raised-button color="primary" style="border-radius: 5px; width: 80px; margin-right: 10px;" (click)="onOKButtonClicked()" i18n="Button of the Behavior Model Node Settings modal">OK</button>
+            <button mat-raised-button mat-dialog-close style="background-color: '#595959'; border-radius: 5px; width: 80px; margin-left: 10px;" i18n="Button of the Behavior Model Node Settings modal">Cancel</button>
+        </div>
+    </body>
+</html>

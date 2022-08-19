@@ -1,0 +1,19 @@
+<html>
+    <body>
+    	<h3 i18n="Title of the Behavior Model Has Errors modal">Save behavior model</h3>
+        <div>
+          <span i18n="Message of the Behavior Model Has Errors modal - part 1">The model has errors. Check the list of errors at the bottom of the page.</span>
+          <br><br>
+          <span i18n="Message of the Behavior Model Has Errors modal - part 2">Do you still wish to save the model? Until the model is valid, any simulation it is assigned to will not be deployable.</span>
+        </div>
+        <br>
+        <br>
+
+        <div class="buttonContainer">
+            <div class="btn-group">
+                <button mat-raised-button color="primary" style="border-radius: 5px; width: 80px; margin-right: 10px;" (click)="onYesButtonClicked()" i18n="Behavior Model Has Errors modal yes button">Yes</button>
+                <button mat-raised-button mat-dialog-close style="background-color: '#595959'; border-radius: 5px; width: 80px; margin-left: 10px;" (click)="onNoButtonClicked()" i18n="Behavior Model Has Errors modal no button">No</button>
+            </div>
+        </div>
+    </body>
+</html>

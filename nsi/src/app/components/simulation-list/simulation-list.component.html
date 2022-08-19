@@ -1,18 +1,18 @@
 <body>
 
-  <h2>List of simulations</h2>
+  <h2 i18n="Title of the List of Simulations tab">List of simulations</h2>
 
   <br />
-  <span style="padding-left: 70px;">Select a simulation from the list by clicking its name.</span>
+  <span style="padding-left: 70px;" i18n="Instructions of the List of Simulations tab">Select a simulation from the list by clicking its name.</span>
   <br /><br />
 
   <div class="simulationListTable" >
 
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort> 
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z0" matSort>
 
       <ng-container matColumnDef="filterTitle">>
         <th mat-header-cell *matHeaderCellDef [style.width.%]="20"
-          [attr.colspan]="1">
+          [attr.colspan]="1" i18n="Filter text of the List of Simulations tab" >
           Filter by name:
         </th>
       </ng-container>
@@ -21,7 +21,7 @@
         <th mat-header-cell *matHeaderCellDef
           [attr.colspan]="5">
           <mat-form-field [style.width.%]="50" floatLabel="never">
-            <input matInput (keyup)="applyFilter($event)" placeholder="Example: Simulation 1" [(ngModel)]="this.filterInput" maxlength="200">
+            <input matInput (keyup)="applyFilter($event)" placeholder="Example: Simulation 1" i18n-placeholder="Filter placeholder text of the List of Simulations tab" [(ngModel)]="this.filterInput" maxlength="200">
             <button class="filter" *ngIf="this.filterInput" matSuffix mat-icon-button (click)="this.removeFilter()">
               <mat-icon>close</mat-icon>
             </button>
@@ -30,47 +30,53 @@
       </ng-container>
 
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="Column of the table in the List of Simulations tab"> Name </th>
         <td mat-cell class="simulationName" *matCellDef="let simulation" (click)="goToSimulationSettings(simulation._id)" style="cursor: pointer;"> {{simulation.name}} </td>
       </ng-container>
 
       <ng-container matColumnDef="creationDate">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Date of creation </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="Column of the table in the List of Simulations tab"> Date of creation </th>
         <td mat-cell *matCellDef="let simulation"> {{simulation.creationDate}} </td>
       </ng-container>
 
       <ng-container matColumnDef="lastDeployDate">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Date of last deploy </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="Column of the table in the List of Simulations tab"> Date of last deploy </th>
         <td mat-cell *matCellDef="let simulation"> {{simulation.lastDeployDate}} </td>
       </ng-container>
 
       <ng-container matColumnDef="numberStudents">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Number of students </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="Column of the table in the List of Simulations tab"> Number of students </th>
         <td mat-cell *matCellDef="let simulation"> {{simulation.numberStudents}} </td>
       </ng-container>
 
       <ng-container matColumnDef="deployOptions">
-        <th mat-header-cell *matHeaderCellDef> Deploy options </th>
+        <th mat-header-cell *matHeaderCellDef i18n="Column of the table in the List of Simulations tab"> Deploy options </th>
 
         <td mat-cell *matCellDef="let simulation">
           <div style="text-align: left;">
-            <button class="deployOptionsButton" mat-raised-button color="primary" style="border-radius: 5px;" (click)="deploySimulation(simulation._id)"><small>Go to deploy options</small></button>
+            <button class="deployOptionsButton" mat-raised-button color="primary" style="border-radius: 5px;" (click)="deploySimulation(simulation._id)" i18n="Button of the List of Simulations tab"><small>Go to deploy options</small></button>
           </div>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="otherOptions">
-        <th mat-header-cell *matHeaderCellDef> Other options </th>
+        <th mat-header-cell *matHeaderCellDef i18n="Column of the table in the List of Simulations tab"> Other options </th>
 
         <td mat-cell *matCellDef="let simulation">
-          <mat-icon class="copy" matTooltip="Make a copy of the simulation" (click)="openCopyNotificationModal(simulation._id, simulation.name)">content_copy</mat-icon>
-          <mat-icon class="delete" matTooltip="Delete the simulation" (click)="openDeleteConfirmModal(simulation._id, simulation.name)">delete</mat-icon>
+          <mat-icon class="copy" matTooltip="Make a copy of the simulation" i18n-matTooltip="Tooltip of the table in the List of Simulations tab" (click)="openCopyNotificationModal(simulation._id, simulation.name)">content_copy</mat-icon>
+          <mat-icon class="delete" matTooltip="Delete the simulation" i18n-matTooltip="Tooltip of the table in the List of Simulations tab" (click)="openDeleteConfirmModal(simulation._id, simulation.name)">delete</mat-icon>
         </td>
       </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="['filterTitle', 'filterTextbox']"></tr>
-      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+      <tr mat-header-row *matHeaderRowDef="['filterTitle', 'filterTextbox']; sticky: true"></tr>
+      <tr mat-header-row *matHeaderRowDef="columns; sticky: true"></tr>
       <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+
+      <tr *matNoDataRow>
+        <td class="mat-cell" [attr.colspan]="columns.length" style="text-align: center; height: 47px;" i18n="Text displayed when the simulations table is empty in the List of Simulations tab">
+          No simulations found.
+        </td>
+      </tr>
 
     </table>
 
@@ -81,7 +87,7 @@
   <br />
 
   <div class="newSimulationButton" style="text-align: right;">
-    <button mat-raised-button color="primary" (click)="goToNewSimulation()" style="border-radius: 5px;">New simulation</button>
+    <button mat-raised-button color="primary" (click)="goToNewSimulation()" style="border-radius: 5px;" i18n="Button of the List of Simulations tab">New simulation</button>
   </div>
 
 </body>

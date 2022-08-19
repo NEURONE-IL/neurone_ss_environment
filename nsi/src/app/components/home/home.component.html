@@ -1,0 +1,6 @@
+<div class="content" role="main">
+  <mat-tab-group [@.disabled]="true" [(selectedIndex)]="selectedTab">
+    <mat-tab label="Simulations" i18n-label="Tab of the Home Page"> <app-simulation-list></app-simulation-list> </mat-tab>
+    <mat-tab label="Behavior models" i18n-label="Tab of the Home Page"> <app-behaviormodel-list></app-behaviormodel-list> </mat-tab>
+  </mat-tab-group>
+</div>

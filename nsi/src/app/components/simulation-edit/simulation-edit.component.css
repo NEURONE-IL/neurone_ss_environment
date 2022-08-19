@@ -1,0 +1,66 @@
+body {
+    text-align: center;
+    margin: auto;
+    max-width: 800px;
+}
+
+mat-label {
+    width: 300px;
+}
+
+mat-radio-button {
+    margin: 0 12px;
+}
+
+.radio {
+    text-align: left;
+    margin: 0 100px;
+}
+
+.slider {
+    text-align: left;
+    margin: 0 0 0 100px;
+}
+
+mat-slider {
+    width: 300px;
+}
+
+.clear {
+    color: black;
+    background-color: transparent;
+    width: 5px;
+    position: relative;
+    left: -14px;
+    top: 4px;
+}
+
+mat-icon {
+  padding: 0px 10px 0px 0px;
+}
+
+mat-error {
+    display: none;
+}
+
+form mat-error:first-child {
+    display: block;
+}
+
+button:disabled {
+    background-color: lightgreen;
+    cursor: default;
+}
+
+button {
+    background-color: green;
+}
+
+.percent {
+    position: relative;
+    left: -10px;
+}
+
+.description {
+    resize: none;
+}

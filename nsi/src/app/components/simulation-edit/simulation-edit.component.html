@@ -1,0 +1,214 @@
+<html>
+    <body>
+
+    	<br /><br /><br /><br />
+
+		<h2 i18n="Title of the Edit Simulation component">Edit simulation "{{simulationInitialName}}"</h2>
+		<h3 i18n="Subtitle of the Edit Simulation component">General settings</h3>
+
+		<br /><br />
+
+		<form [formGroup]="simulationForm" (ngSubmit)="editSimulation()">
+
+	        <mat-form-field [style.width.%]="70" appearance="fill">
+				<mat-label i18n="Text of the form of the Edit Simulation component">Simulation name</mat-label>
+
+				<input matInput placeholder="Example: Simulation 1" i18n-placeholder="Placeholder text of the form of the Edit Simulation component" required formControlName="name" maxlength="100">
+
+	            <button class="clear" *ngIf="simulationForm.get('name')?.value" matSuffix mat-icon-button (click)="this.clearTextInput('name')">
+              		<mat-icon>close</mat-icon>
+            	</button>
+
+				<mat-error *ngIf="simulationForm.get('name')?.hasError('required')" i18n="Error message in the text input of the Edit Simulation component">You must enter a name for the simulation.</mat-error>
+				<mat-error *ngIf="simulationForm.get('name')?.hasError('nameExists')" i18n="Error message in the text input of the Edit Simulation component">The simulation name already exists.</mat-error>
+                <mat-error *ngIf="simulationForm.get('name')?.hasError('invalidCharacters')" i18n="Error message in the text input of the Edit Simulation component">The simulation name can only contain letters, numbers and spaces.</mat-error>
+			</mat-form-field>
+
+			<div style="font-size: 11px; font-family: roboto; text-align: left; margin-left: 130px; margin-top: -11px;" *ngIf="simulationForm.get('name')?.value.length == 100" i18n="Character limit message in the text input of the Edit Simulation component">You have reached the maximum number of characters.</div>
+
+			<div style="color: white; font-size: 11px; font-family: roboto; text-align: left; margin-left: 130px; margin-top: -11px;" *ngIf="simulationForm.get('name')?.value.length < 100">.</div>
+
+			<br>
+
+	        <mat-form-field [style.width.%]="70" appearance="fill">
+				<mat-label i18n="Text of the form of the Edit Simulation component">Description</mat-label>
+
+				<textarea class="description" matInput placeholder="Example: This is a simulation" i18n-placeholder="Placeholder text of the form of the Edit Simulation component" required formControlName="description" rows="6" maxlength="400"></textarea>
+
+	            <button class="clear" *ngIf="simulationForm.get('description')?.value" matSuffix mat-icon-button (click)="this.clearTextInput('description')">
+              		<mat-icon>close</mat-icon>
+            	</button>
+
+				<mat-error *ngIf="simulationForm.get('description')?.hasError('required')" i18n="Error message in the text input of the Edit Simulation component">You must enter a description for the simulation.</mat-error>
+			</mat-form-field>
+
+			<div style="font-size: 11px; font-family: roboto; text-align: left; margin-left: 130px; margin-top: -10px;" *ngIf="simulationForm.get('description')?.value.length == 400" i18n="Character limit message in the text input of the Edit Simulation component">You have reached the maximum number of characters.</div>
+
+			<div style="color: white; font-size: 11px; font-family: roboto; text-align: left; margin-left: 130px; margin-top: -10px;" *ngIf="simulationForm.get('description')?.value.length < 400">.</div>
+
+			<br>
+
+	        <mat-form-field [style.width.%]="70" appearance="fill">
+				<mat-label i18n="Text of the form of the Edit Simulation component">Number of students</mat-label>
+
+				<input matInput placeholder="Example: 40" i18n-placeholder="Placeholder text of the form of the Edit Simulation component" required formControlName="numberStudents">
+
+	            <button class="clear" *ngIf="simulationForm.get('numberStudents')?.value" matSuffix mat-icon-button (click)="this.clearTextInput('numberStudents')">
+              		<mat-icon>close</mat-icon>
+            	</button>
+
+				<mat-error *ngIf="simulationForm.get('numberStudents')?.hasError('required')" i18n="Error message in the text input of the Edit Simulation component">You must enter the number of students for the simulation.</mat-error>
+				<mat-error *ngIf="simulationForm.get('numberStudents')?.hasError('notNumber')" i18n="Error message in the text input of the Edit Simulation component">You must enter a number.</mat-error>
+				<mat-error *ngIf="simulationForm.get('numberStudents')?.hasError('notInteger')" i18n="Error message in the text input of the Edit Simulation component">You must enter an integer number.</mat-error>
+				<mat-error *ngIf="simulationForm.get('numberStudents')?.hasError('min')" i18n="Error message in the text input of the Edit Simulation component">You must enter a number greater than zero.</mat-error>
+			</mat-form-field>
+
+			<br><br>
+
+	        <mat-form-field [style.width.%]="70" appearance="fill">
+			 	<mat-label i18n="Text of the form of the Edit Simulation component">Number of documents</mat-label>
+
+				<input matInput placeholder="Example: 100" i18n-placeholder="Placeholder text of the form of the Edit Simulation component" required formControlName="numberDocuments">
+
+	            <button class="clear" *ngIf="simulationForm.get('numberDocuments')?.value" matSuffix mat-icon-button (click)="this.clearTextInput('numberDocuments')">
+              		<mat-icon>close</mat-icon>
+            	</button>
+
+				<mat-error *ngIf="simulationForm.get('numberDocuments')?.hasError('required')" i18n="Error message in the text input of the Edit Simulation component">You must enter the number of documents for the simulation.</mat-error>
+				<mat-error *ngIf="simulationForm.get('numberDocuments')?.hasError('notNumber')" i18n="Error message in the text input of the Edit Simulation component">You must enter a number.</mat-error>
+				<mat-error *ngIf="simulationForm.get('numberDocuments')?.hasError('notInteger')" i18n="Error message in the text input of the Edit Simulation component">You must enter an integer number.</mat-error>
+				<mat-error *ngIf="simulationForm.get('numberDocuments')?.hasError('min')" i18n="Error message in the text input of the Edit Simulation component">You must enter a number greater than zero.</mat-error>
+			</mat-form-field>
+
+			<br><br>
+
+	        <mat-form-field [style.width.%]="70" appearance="fill">
+				<mat-label i18n="Text of the form of the Edit Simulation component">Number of relevant documents</mat-label>
+
+			 	<input matInput placeholder="Example: 15" i18n-placeholder="Placeholder text of the form of the Edit Simulation component" required formControlName="numberRelevantDocuments">
+
+	            <button class="clear" *ngIf="simulationForm.get('numberRelevantDocuments')?.value" matSuffix mat-icon-button (click)="this.clearTextInput('numberRelevantDocuments')">
+              		<mat-icon>close</mat-icon>
+            	</button>
+
+				<mat-error *ngIf="simulationForm.get('numberRelevantDocuments')?.hasError('required')" i18n="Error message in the text input of the Edit Simulation component">You must enter the number of relevant documents for the simulation.</mat-error>
+				<mat-error *ngIf="simulationForm.get('numberRelevantDocuments')?.hasError('notNumber')" i18n="Error message in the text input of the Edit Simulation component">You must enter a number.</mat-error>
+				<mat-error *ngIf="simulationForm.get('numberRelevantDocuments')?.hasError('notInteger')" i18n="Error message in the text input of the Edit Simulation component">You must enter an integer number.</mat-error>
+				<mat-error *ngIf="simulationForm.get('numberRelevantDocuments')?.hasError('min')" i18n="Error message in the text input of the Edit Simulation component">You must enter a number greater than zero.</mat-error>
+				<mat-error *ngIf="simulationForm.get('numberRelevantDocuments')?.hasError('lessThanNumberDocuments')" i18n="Error message in the text input of the Edit Simulation component">You must enter a number less than or equal to the number of documents of the simulation.</mat-error>
+			</mat-form-field>
+
+			<br><br>
+
+			<span style="padding: 0 243px 0 0; text-align: left;" *ngIf="(checkQueryLength() != 0) || !queryListEmpty">List of queries</span>
+			<span style="color: red; padding: 0 243px 0 0; text-align: left;" *ngIf="(checkQueryLength() === 0) && queryListEmpty">List of queries</span>
+            <button mat-raised-button color="primary" style="border-radius: 5px; width: 200px; margin-right: 10px; background-color: #4778F4;" (click)="openQueryListPage()" i18n="Button of the Edit Simulation component">Configure</button>
+			<p style="color: red; font-size: 11px; font-family: roboto; text-align: left; margin-left: 130px" *ngIf="(checkQueryLength() === 0) && queryListEmpty" i18n="Error message of the list of queries in the Edit Simulation component">You must add a list of queries.<p>
+
+			<br>
+
+			<div class="radio">
+				<mat-label style="margin: 0 30px;" i18n="Text of the form of the Edit Simulation component">Random generation of actions</mat-label>
+
+				<mat-radio-group formControlName="randomActions" style="margin-left: 125px">
+					<mat-radio-button value="true"><span i18n="Radio button of the form of the Edit Simulation component">Yes</span></mat-radio-button>
+					<mat-radio-button value="false"><span i18n="Radio button of the form of the Edit Simulation component">No</span></mat-radio-button>
+				</mat-radio-group>
+			</div>
+
+			<br><br>
+
+	        <mat-form-field [style.width.%]="70" appearance="fill">
+				<mat-label i18n="Text of the form of the Edit Simulation component">Maximum length (minutes)</mat-label>
+
+			 	<input matInput placeholder="Example: 15" i18n-placeholder="Placeholder text of the form of the Edit Simulation component" formControlName="length">
+
+	            <button class="clear" *ngIf="simulationForm.get('length')?.value" matSuffix mat-icon-button (click)="this.clearTextInput('length')">
+              		<mat-icon>close</mat-icon>
+            	</button>
+
+            	<mat-error *ngIf="simulationForm.get('length')?.hasError('notNumber')" i18n="Error message in the text input of the Edit Simulation component">You must enter a number.</mat-error>
+				<mat-error *ngIf="simulationForm.get('length')?.hasError('notInteger')" i18n="Error message in the text input of the Edit Simulation component">You must enter an integer number.</mat-error>
+				<mat-error *ngIf="simulationForm.get('length')?.hasError('min')" i18n="Error message in the text input of the Edit Simulation component">You must enter a number greater than zero.</mat-error>
+				<mat-error *ngIf="simulationForm.get('length')?.hasError('max')" i18n="Error message in the text input of the Edit Simulation component">The maximum posible length is 60 minutes.</mat-error>
+			</mat-form-field>
+
+			<br><br>
+ 
+			<mat-form-field [style.width.%]="44" style="margin-right: 30px;" appearance="fill">
+				<mat-label i18n="Text of the form of the Edit Simulation component">Behavior model</mat-label>
+
+				<mat-select formControlName="behaviorModelId">
+			    	<mat-option *ngFor="let behaviorModelProperties of behaviorModelsPropertiesFormListWithFilter" value="{{behaviorModelProperties._id}}">{{behaviorModelProperties.name}} [{{behaviorModelProperties.valid}}]</mat-option>
+				</mat-select>
+				<mat-error *ngIf="simulationForm.get('behaviorModelId')?.hasError('required')" i18n="Error message of the behavior model in the Edit Simulation component">You must select a behavior model.</mat-error>
+			</mat-form-field>
+
+			<mat-form-field style="max-width: 180px;">
+				<mat-label i18n="Text of the form of the Edit Simulation component">Filter models by name</mat-label>
+	      <input matInput (keyup)="applyFilter($event)" placeholder="Example: Model 1" i18n-placeholder="Placeholder text of the form of the Edit Simulation component" formControlName="behaviorModelFilter" maxlength="200">
+	      <button class="clear" *ngIf="simulationForm.get('behaviorModelFilter')?.value" matSuffix mat-icon-button (click)="this.removeFilter()">
+	        <mat-icon>close</mat-icon>
+	    	</button>
+    	</mat-form-field>
+
+			<br><br>
+
+	        <mat-form-field [style.width.%]="70" appearance="fill">
+				<mat-label i18n="Text of the form of the Edit Simulation component">Sensibility (percentage)</mat-label>
+
+				<input matInput placeholder="Example: 50" i18n-placeholder="Placeholder text of the form of the Edit Simulation component" required formControlName="sensibility">
+
+              	<div class="percent" matSuffix>
+		            <button class="clear" *ngIf="simulationForm.get('sensibility')?.value" matSuffix mat-icon-button (click)="this.clearTextInput('sensibility')">
+	              		<mat-icon>close</mat-icon>
+	            	</button>
+	                %
+	             </div>
+
+				<mat-error *ngIf="simulationForm.get('sensibility')?.hasError('required')" i18n="Error message in the text input of the Edit Simulation component">You must enter the sensibility for the simulation.</mat-error>
+				<mat-error *ngIf="simulationForm.get('sensibility')?.hasError('notNumber')" i18n="Error message in the text input of the Edit Simulation component">You must enter a number.</mat-error>
+				<mat-error *ngIf="simulationForm.get('sensibility')?.hasError('notInteger')" i18n="Error message in the text input of the Edit Simulation component">You must enter an integer number.</mat-error>
+				<mat-error *ngIf="simulationForm.get('sensibility')?.hasError('min')" i18n="Error message in the text input of the Edit Simulation component">You must enter a number between 1 and 100.</mat-error>
+				<mat-error *ngIf="simulationForm.get('sensibility')?.hasError('max')" i18n="Error message in the text input of the Edit Simulation component">You must enter a number between 1 and 100.</mat-error>
+			</mat-form-field>
+
+			<br><br>
+
+	        <mat-form-field [style.width.%]="70" appearance="fill">
+				<mat-label i18n="Text of the form of the Edit Simulation component">Interval (ms)</mat-label>
+
+			 	<input matInput placeholder="Example: 500" i18n-placeholder="Placeholder text of the form of the Edit Simulation component" required formControlName="interval">
+
+	            <button class="clear" *ngIf="simulationForm.get('interval')?.value" matSuffix mat-icon-button (click)="this.clearTextInput('interval')">
+              		<mat-icon>close</mat-icon>
+            	</button>
+
+				<mat-error *ngIf="simulationForm.get('interval')?.hasError('required')" i18n="Error message in the text input of the Edit Simulation component">You must enter the desired interval between simulation actions.</mat-error>
+				<mat-error *ngIf="simulationForm.get('interval')?.hasError('notNumber')" i18n="Error message in the text input of the Edit Simulation component">You must enter a number.</mat-error>
+				<mat-error *ngIf="simulationForm.get('interval')?.hasError('notInteger')" i18n="Error message in the text input of the Edit Simulation component">You must enter an integer number.</mat-error>
+				<mat-error *ngIf="simulationForm.get('interval')?.hasError('min')" i18n="Error message in the text input of the Edit Simulation component">You must enter a number greater than zero.</mat-error>
+			</mat-form-field>
+
+			<br><br>
+
+			<div class="slider">
+				<mat-label style="margin: 0 30px;" i18n="Text of the form of the Edit Simulation component">Speed</mat-label>
+				
+				<mat-slider min="0.5" max="3" step="0.05" style="margin: 0 30px;" formControlName="speed" (input)="onSliderChange($event)"></mat-slider> {{simulationForm.value.speed}}x
+			</div>
+
+    		<br /><br />
+
+	        <div class="btn-group" style="padding: 0 0 0 140px;">
+	            <button id="submit" type="submit" [disabled]="simulationForm.invalid || (checkQueryLength() === 0)" mat-raised-button color="primary" style="border-radius: 5px; width: 200px; margin-right: 10px;" i18n="Button of the Edit Simulation component">Save changes</button>
+	            <button type="button" mat-raised-button style="background-color: '#595959'; border-radius: 5px; width: 200px; margin-left: 10px;" (click)="discardChanges()" i18n="Button of the Edit Simulation component">Discard changes</button>
+	        </div>
+
+		</form>
+
+        <br><br>
+
+    </body>
+
+</html>

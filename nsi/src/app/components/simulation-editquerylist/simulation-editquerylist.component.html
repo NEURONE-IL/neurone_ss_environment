@@ -1,0 +1,67 @@
+<html>
+    <body>
+
+    	<br /><br /><br /><br />
+
+		<h2 i18n="Title of the Edit Simulation Query List component">Edit simulation "{{simulationInitialName}}"</h2>
+		<h3 i18n="Subtitle of the Edit Simulation Query List component">Query list settings</h3>
+
+		<br /><br />
+
+		<p style="text-align: left; padding: 0 120px;" i18n="Edit Simulation Query List component instructions">Please add the queries for the simulation.</p>
+
+		<form [formGroup]="queryForm" (ngSubmit)="addQuery('query')">
+
+	        <mat-form-field [style.width.%]="70" appearance="fill">
+				<mat-label i18n="Text input of the Edit Simulation Query List component">Query</mat-label>
+
+				<input matInput placeholder="Example: What is a neural network?" i18n-placeholder="Placeholder text of the Edit Simulation Query List component" required formControlName="query" (input)="onInputChange()" maxlength="200">
+
+	            <button class="clear" *ngIf="queryForm.get('query')?.value" matSuffix mat-icon-button (click)="this.clearTextInput('query')">
+              		<mat-icon>close</mat-icon>
+            	</button>
+
+				<mat-error *ngIf="queryForm.get('query')?.hasError('required')" i18n="Error message in the text input of the Edit Simulation Query List component">You must enter a query.</mat-error>
+				<mat-error *ngIf="queryForm.get('query')?.hasError('queryExists')" i18n="Error message in the text input of the Edit Simulation Query List component">The query already exists on the list.</mat-error>
+			</mat-form-field>
+
+			<div style="font-size: 11px; font-family: roboto; text-align: left; margin-left: 130px; margin-top: -15px;" *ngIf="queryForm.get('query')?.value.length == 200" i18n="Character limit message in the text input of the Edit Simulation Query List component">You have reached the maximum number of characters.</div>
+
+            <div style="color: white; font-size: 11px; font-family: roboto; text-align: left; margin-left: 130px; margin-top: -15px;" *ngIf="queryForm.get('query')?.value.length < 200">.</div>
+
+	        <div class="btn-group">
+	            <button type="submit" #submitQuery [disabled]="queryForm.invalid || forceDisableSubmitButton" mat-raised-button color="primary" style="border-radius: 5px; width: 200px; margin-left: 360px;" i18n="Button of the Edit Simulation Query List component">Add query</button>
+	        </div>
+
+	    </form>
+
+	    <br><br>
+
+	    <div class="queryList" #queryListRef>
+			<mat-list>
+			  	<mat-list-item *ngFor="let query of queryList">
+			  		<table style="width: 100%;">
+			  			<tr>
+			  				<td style="width: 95%;">{{query}}</td>
+			    			<td style="width: 5%;"><span style="text-align: left;"><mat-icon class="delete" matTooltip="Delete the query" i18n-matTooltip="Tooltip of the delete query button in the Edit Simulation Query List component" (click)="deleteQuery(query)" (click)="deleteQuery(query)">delete</mat-icon></span></td>
+			    		</tr>
+			    	</table>
+			  	</mat-list-item>
+			</mat-list>
+		</div>
+
+		<br>
+
+        <button [disabled]="queryList.length == 0" mat-raised-button color="primary" style="border-radius: 5px; width: 200px; margin-left: 360px;" (click)="clearQueryList()" i18n="Button of the Edit Simulation Query List component">Clear list</button>
+
+	    <br><br><br><br>
+
+		<div class="btn-group" style="text-align: right; margin-right: 120px;">
+            <button mat-raised-button color="primary" style="border-radius: 5px; width: 200px;" (click)="saveQueryList()" i18n="Button of the Edit Simulation Query List component">Return</button>
+	    </div>
+
+	    <br><br><br><br>
+
+    </body>
+
+</html>

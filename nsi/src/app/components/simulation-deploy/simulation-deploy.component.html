@@ -1,0 +1,156 @@
+<html>
+    <br /><br /><br /><br />
+    <h2 style="text-align: center;" i18n="Title of the Simulation Deploy component">Deploy simulation "{{simulationName}}"</h2>
+		<h3 i18n="Subtitle of the Simulation Deploy component">Settings</h3>
+    <body>
+
+      <div class="deployConfig">
+
+	      <div id="deployInfo">
+	        <mat-grid-list cols="3" rowHeight="15px">
+	          <mat-grid-tile [colspan]="1" [rowspan]="5">
+	            <mat-label><b><span i18n="Text of the Simulation Deploy component">Simulation status:</span></b></mat-label>
+	          </mat-grid-tile>
+	          <mat-grid-tile [colspan]="2" [rowspan]="5">
+	            <div class="info">{{status}}</div>
+	          </mat-grid-tile>
+	          <mat-grid-tile [colspan]="1" [rowspan]="5">
+	            <mat-label><b><span i18n="Text of the Simulation Deploy component">Time elapsed:</span></b></mat-label>
+	          </mat-grid-tile>
+	          <mat-grid-tile [colspan]="2" [rowspan]="5">
+	            <div class="info"><cd-timer #basicTimer format="ms" [endTime]="endTime" (onComplete)="triggerStop()"></cd-timer> <span *ngIf="showMaxLengthReached"> [</span><span *ngIf="showMaxLengthReached" i18n="Simulation time limit text of the Simulation Deploy component">maximum length reached</span> <span *ngIf="showMaxLengthReached">]</span></div>
+	          </mat-grid-tile>
+	        </mat-grid-list>
+	      </div>
+
+	      <br><br>
+
+	      <div class="btn-group" style="text-align: center">
+	        <button id="deploy" [disabled]="!deployEnabled" mat-raised-button color="primary" style="margin-right: 20px;" (click)="deploy()">
+	            <mat-icon class="iconStart">play_arrow</mat-icon>  <span style="margin-left: 15px;" i18n="Button of the Simulation Deploy component">Start deploy</span>
+	        </button>
+	        <button id="stop" [disabled]="!stopEnabled" type="submit" class="submitButton" mat-raised-button color="primary" style="margin-right: 20px;" (click)="stop()">
+	           	<mat-icon class="iconStop">stop</mat-icon> <span style="margin-left: 18px;" i18n="Button of the Simulation Deploy component">Stop deploy</span>
+	        </button>
+	        <button id="restart" [disabled]="!restartEnabled" mat-raised-button color="primary" (click)="restart()">
+				<mat-icon class="iconRestart">autorenew</mat-icon>  <span style="margin-left: 22px;" i18n="Button of the Simulation Deploy component">Restart deploy</span>
+	        </button>
+	      </div>
+
+	  </div>
+
+      <br><br><br>
+
+			<h3 i18n="Subtitle of the Simulation Deploy component">Actions</h3>
+
+      <div class="actionsTable">
+
+        <table mat-table #actionsTable [dataSource]="dataSource" class="mat-elevation-z0" matSort> 
+
+	      <ng-container matColumnDef="filterTitle">>
+	        <th mat-header-cell *matHeaderCellDef [style.width.%]="20"
+	          [attr.colspan]="1" i18n="Filter text of the Simulation Deploy component">Filter by student number:</th>
+	      </ng-container>
+
+	      <ng-container matColumnDef="filterTextbox">>
+	        <th mat-header-cell *matHeaderCellDef
+	          [attr.colspan]="2">
+	          <mat-form-field [style.width.%]="80" floatLabel="never">
+	            <input matInput (keyup)="applyFilter($event)" placeholder="Example: 5" i18n="Filter placeholder text of the Simulation Deploy component" [(ngModel)]="this.filterInput" maxlength="200">
+	            <button class="filter" *ngIf="this.filterInput" matSuffix mat-icon-button (click)="this.removeFilter()">
+	              <mat-icon>close</mat-icon>
+	            </button>
+	          </mat-form-field>
+	        </th>
+	      </ng-container>
+
+	      <ng-container matColumnDef="username">
+	        <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="Column of the table in the Simulation Deploy component">Student</th>
+	        <td mat-cell class="username" *matCellDef="let action" [style.color]="action.type === 'B'
+	        ? 'green'
+	        : action.type === 'U'
+	        ? 'red'
+	        : action.type === 'K'
+	        ? 'blue'
+	        : action.type === 'Q'
+	        ? 'purple'
+	        : action.type === 'V'
+	        ? 'black'
+	        : 'black'
+	        "> <span i18n="Text of the table in the Simulation Deploy component">Student</span> {{action.username}} </td>
+	      </ng-container>
+
+	      <ng-container matColumnDef="action">
+	        <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="Column of the table in the Simulation Deploy component">Action</th>
+	        <td mat-cell *matCellDef="let action" [style.color]="
+	        action.type === 'B'
+	        ? 'green'
+	        : action.type === 'U'
+	        ? 'red'
+	        : action.type === 'K'
+	        ? 'blue'
+	        : action.type === 'Q'
+	        ? 'purple'
+	        : action.type === 'V'
+	        ? 'black'
+	        : 'black'
+	        ">
+	        	<img [src]="
+	        action.type === 'B'
+	        ? '/assets/behaviormodel-bookmark.png'
+	        : action.type === 'U'
+	        ? '/assets/behaviormodel-unbookmark.png'
+	        : action.type === 'K'
+	        ? '/assets/deploy-keystroke.png'
+	        : action.type === 'Q'
+	        ? '/assets/behaviormodel-query.png'
+	        : action.type === 'V'
+	        ? '/assets/behaviormodel-page.png'
+	        : '/assets/deploy-genericaction.png'
+	        " style="height: 18px; margin-right: 5px; vertical-align: middle">
+	        	  {{action.action}}
+	        </td>
+	      </ng-container>
+
+	      <ng-container matColumnDef="localTimestamp">
+	        <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="Column of the table in the Simulation Deploy component">Timestamp</th>
+	        <td mat-cell *matCellDef="let action" [style.color]="
+	        action.type === 'B'
+	        ? 'green'
+	        : action.type === 'U'
+	        ? 'red'
+	        : action.type === 'K'
+	        ? 'blue'
+	        : action.type === 'Q'
+	        ? 'purple'
+	        : action.type === 'V'
+	        ? 'black'
+	        : 'black'
+	        "> {{action.localTimestamp}} </td>
+	      </ng-container>
+
+	      <tr mat-header-row *matHeaderRowDef="['filterTitle', 'filterTextbox']; sticky: true"></tr>
+	      <tr mat-header-row *matHeaderRowDef="columns; sticky: true"></tr>
+	      <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+
+	      <tr *matNoDataRow>
+	        <td class="mat-cell" [attr.colspan]="columns.length" style="text-align: center; height: 47px;">
+	          {{emptyActionsTableText}}
+	        </td>
+	      </tr>
+
+	    </table>
+
+	    <mat-paginator class="paginator" showFirstLastButtons [pageSizeOptions]="[5, 10, 25]"></mat-paginator>
+
+      <br><br><br><br>
+
+      <div style="text-align: right; margin-right: 0px;"> 
+        <button class="additionalOptionsButton" mat-raised-button color="primary" (click)="goToSimulationSettings()" i18n="Button of the Simulation Deploy component">Return</button>
+      </div>
+
+	  </div> 
+      
+      <br><br><br><br>
+    </body>
+</html>

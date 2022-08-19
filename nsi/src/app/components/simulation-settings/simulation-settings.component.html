@@ -1,6 +1,6 @@
 <html>
     <br /><br /><br /><br />
-    <h2 style="text-align: center;">Simulation "{{simulationName}}"</h2>
+    <h2 style="text-align: center;" i18n="Title of the Simulation Settings component">Simulation "{{simulationName}}"</h2>
     <body>
 
       <br>
@@ -8,31 +8,31 @@
       <div id="simulationInfo">
         <mat-grid-list cols="3" rowHeight="30px">
           <mat-grid-tile [colspan]="1" [rowspan]="5">
-            <mat-label id="descriptionLabel"><b>Description:</b></mat-label>
+            <mat-label id="descriptionLabel"><b><span i18n="Text of the Simulation Settings component">Description:</span></b></mat-label>
           </mat-grid-tile>
           <mat-grid-tile [colspan]="2" [rowspan]="5">
             <div id="descriptionInfo">{{simulationDescription}}</div>
           </mat-grid-tile>
           <mat-grid-tile [colspan]="1" [rowspan]="2">
-            <mat-label><b>Behavior model:</b></mat-label>
+            <mat-label><b><span i18n="Text of the Simulation Settings component">Behavior model:</span></b></mat-label>
           </mat-grid-tile>
           <mat-grid-tile [colspan]="2" [rowspan]="2">
             <div class="info">{{simulationBehaviorModelName}} [{{simulationBehaviorModelValidString}}]</div>
           </mat-grid-tile>
           <mat-grid-tile [colspan]="1" [rowspan]="2">
-            <mat-label><b>Creation date:</b></mat-label>
+            <mat-label><b><span i18n="Text of the Simulation Settings component">Creation date:</span></b></mat-label>
           </mat-grid-tile>
           <mat-grid-tile [colspan]="2" [rowspan]="2">
             <div class="info">{{simulationCreationDate}}</div>
           </mat-grid-tile>
           <mat-grid-tile [colspan]="1" [rowspan]="2">
-            <mat-label><b>Date of last deploy:</b></mat-label>
+            <mat-label><b><span i18n="Text of the Simulation Settings component">Date of last deploy:</span></b></mat-label>
           </mat-grid-tile>
           <mat-grid-tile [colspan]="2" [rowspan]="2">
             <div class="info">{{simulationLastDeployDate}}</div>
           </mat-grid-tile>
           <mat-grid-tile [colspan]="1" [rowspan]="2">
-            <mat-label><b>Date of last modification:</b></mat-label>
+            <mat-label><b><span i18n="Text of the Simulation Settings component">Date of last modification:</span></b></mat-label>
           </mat-grid-tile>
           <mat-grid-tile [colspan]="2" [rowspan]="2">
             <div class="info">{{simulationLastModificationDate}}</div>
@@ -43,13 +43,13 @@
       <br>
 
       <div class="btn-group" style="text-align: center">
-        <button mat-raised-button color="primary" (click)="configureSimulation()" style="margin-right: 20px;">
+        <button mat-raised-button color="primary" (click)="configureSimulation()" style="margin-right: 20px;" i18n="Button of the Simulation Settings component">
             Edit
         </button>
-        <button type="submit" class="submitButton" mat-raised-button color="primary" style="margin-right: 20px;" (click)="deploySimulation()">
+        <button type="submit" class="submitButton" mat-raised-button color="primary" style="margin-right: 20px;" (click)="deploySimulation()" i18n="Button of the Simulation Settings component">
             Deploy
         </button>
-        <button mat-raised-button color="primary" (click)="openDeleteConfirmModal()" style="background-color: 'red';">
+        <button mat-raised-button color="primary" (click)="openDeleteConfirmModal()" style="background-color: 'red';" i18n="Button of the Simulation Settings component">
             Delete
         </button>
       </div>
@@ -57,7 +57,7 @@
       <br><br><br><br>
 
       <div style="text-align: right; margin-right: 65px;">
-        <button class="additionalOptionsButton" mat-raised-button color="primary" routerLink="/home-page;">
+        <button class="additionalOptionsButton" mat-raised-button color="primary" routerLink="/home;" i18n="Button of the Simulation Settings component">
             Return
         </button>
       </div>
