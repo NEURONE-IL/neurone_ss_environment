@@ -72,7 +72,7 @@ To prevent simultaneous backend operations which can conflict with each other:
 8. Start the backend by running the "npm run dev" command. This will run the backend in development mode, but you can add more run configurations. If no problems are encountered, three messages will be displayed: one will state that the server is running, and the other two will report that the MongoDB connections were successful.
 9. In the "nse_frontend" directory, open the "src/app/settings.ts" file. Add the required setting to point the frontend to the backend URL (for example: `http://localhost:4000`).
 10. Run the "npm install" command inside the "nse_frontend" directory.
-11. Start the frontend by running the "ng serve" command. This will run the frontend with a development server. To run 
+11. Start the frontend by running the "ng serve" command. This will run the frontend with a development server.
 12. At this point, both the simulator environment and the simulator itself should be up and running. Use your browser to access the environment through the specific localhost port (for example: `http://localhost:4200`).
 13. For internationalization, you will find a "messages.xlf" file in the "nse_frontend/src/locale" path. This file can be copied and modified to translate the interface into different languages. This contemplates all the text of the interface, including date formatting and the paginator buttons (please do not delete or modify the "matpaginator-intl.ts" file, as it is necessary to facilitate the translation of the paginator). After creating the modified file, the "angular.json" file must be edited to add a new start configuration that will use the translated file. The frontend can then be started in a translated version.
 
