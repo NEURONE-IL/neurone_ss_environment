@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "nsi": {
+    "nse_frontend": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/nsi",
+            "outputPath": "dist/nse_frontend",
             "localize": false,
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -64,9 +64,6 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
-            },
-            "es": {
-              "localize": ["es"],
             }
           },
           "defaultConfiguration": "production"
@@ -75,13 +72,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "nsi:build:production"
+              "browserTarget": "nse_frontend:build:production"
             },
             "development": {
-              "browserTarget": "nsi:build:development"
-            },
-            "es": {
-              "browserTarget": "nsi:build:development,es"
+              "browserTarget": "nse_frontend:build:development"
             }
           },
           "localize": true,
@@ -90,15 +84,9 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "nsi:build"
+            "browserTarget": "nse_frontend:build"
           },
           "configurations": {
-            "es": {
-              "outputPath": "src/locale",
-              "outFile": "messages.es.xlf",
-              "i18nFormat": "xlf",
-              "i18nLocale": "es"
-            }
           }
         },
         "test": {
@@ -124,12 +112,10 @@
       "i18n": {
         "sourceLocale": "en-US",
         "locales": {
-          "es": {
-            "translation": "src/locale/messages.es.xlf",
           }
         }
       }
     }
   },
-  "defaultProject": "nsi"
+  "defaultProject": "nse_frontend"
 }

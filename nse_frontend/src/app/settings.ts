@@ -5,6 +5,6 @@ export class Settings {
 	// Format: http://ip:port
 	// Important note: please DO NOT add a slash at the end
 
-	public static backendURL = "http://localhost:4000";
+	public static backendURL = "";
 
 }
