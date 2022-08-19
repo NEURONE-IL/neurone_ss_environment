@@ -48,9 +48,17 @@ For the functionality of behavior model design:
 - Configuration of settings files (FRONTEND: src/app/settings.ts) (BACKEND: settings.env)
 - Internationalization
 
+## Operation
+
+For each deploy, the environment creates a database, adds a readWrite user, creates a metadata entry in another table, and deploys using said database. After stopping the simulation, the database remains but is deleted when the next deploy is started.
+
 ## Important notes
 
 - MongoDB version used
 - Timestamps from simulator
+- Comments on each function and a few additional explanatory comments
+- Commented lines that allow addition of additional properties in simplified behavior model JSON
 
 ## Further reading
+
+- Thesis
