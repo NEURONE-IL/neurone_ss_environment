@@ -1,17 +1,28 @@
-# neurone_ss_environment
+# NEURONE Student Simulator Environment (NSE)
+*Developed in 2022 by Mateo Sepúlveda*
 
-**FRONTEND USES:**
+## Description
+
+## Technologies employed
+
+### Frontend
+
+Framework:
+- Angular (and Angular CLI)
 
 For UI components:
 - Angular Material [ng add @angular/material]
 
-For date handling:
+For easier date formatting:
 - Day.js [npm install --save dayjs]
 
 For the simulation deploy timer:
 - Angular-Cd-Timer [npm install angular-cd-timer]
 
-For diagrams:
+For internationalization:
+- Angular Localize
+
+For the functionality of behavior model design:
 - JointJS [npm install --save jointjs]
 - jQuery [npm install --save jquery@3.6.0]
 - Lodash [npm install --save lodash@4.17.21]
@@ -21,8 +32,25 @@ For diagrams:
 - Lodash types [npm install --save @types/lodash]
 - Backbone types [npm install --save @types/backbone]
 
-**BACKEND USES:**
+### Backend
 
 - NodeJS
 - Express
-- (Another library -- check backend)
+- async-mutex
+
+### Database
+
+- MongoDB
+
+## Installation and configuration
+
+- Installation
+- Configuration of settings files (FRONTEND: src/app/settings.ts) (BACKEND: settings.env)
+- Internationalization
+
+## Important notes
+
+- MongoDB version used
+- Timestamps from simulator
+
+## Further reading
