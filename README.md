@@ -2,7 +2,7 @@
 
 ## Description
 
-This repository contains the source code of an environment (interface) developed for the NEURONE Student Simulator (v2). It can be used to store multiple simulation settings, and deploy the respective simulations, while presenting the user with a list of the actions performed by each simulated student. The environment also provides a drag-and-drop designer which can be used to create behavior models based on Markov Chains. These models are necessary for the simulations to be deployed.
+This repository contains the source code of an environment (interface) developed for the NEURONE Student Simulator (v2). It can be used to store multiple simulation settings and deploy the respective simulations, while presenting the user with a list of the actions performed by each simulated student. The environment also provides a drag-and-drop designer which can be used to create behavior models based on Markov Chains. These models are necessary for the simulations to be deployed.
 
 ## Main technologies used
 
